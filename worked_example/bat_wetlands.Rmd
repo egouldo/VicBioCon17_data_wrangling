@@ -1,0 +1,181 @@
+---
+title: "Bat Wetlands"
+output: html_notebook
+---
+
+```{r load-libraries-data}
+library(tidyverse)
+bat_dat <- read_csv("../data/bat_dat.csv")
+bat_species_data <- bat_dat %>% 
+        select(1:19) %>% # species only
+        mutate(Habitat = as.factor(Habitat),
+               Habitat = ifelse(Habitat == 1, "Wetland", "Non-Wetland"))
+bat_species_data
+site_var_data <- bat_dat %>% select(1:3, 20:83)
+site_var_data
+```
+
+Let's start the analysis off simply, we'll split the dataset into two (a 'species' dataset, and an 'site_variables' dataset, the species dataset will keep the habitat and season columns, so that we can merge it in with the 'site_variables'). We can get the students to merge in the second dataset after they've got a bit of a handle on the basics.
+
+One idea is to teach some basics of actively interacting with the data in the console to get a handle on the shape / structure of the data:
+
+1. `View()` RStudio functionality nice viewer.
+2. `glimpse()` shows you all variables (columns) in the data, and a 'glimppse of the first bunch of elements)()
+
+Other interactice things to point out: 'using 'tab' to bring up suggested columns, so you can filter through them, useful when you have very many variables, and you can't remember what you called them.
+
+
+## Bat Species Richness
+
+(Before we get them to do this, we could make them compute bat spp richness themselves... so we can drop the Batspp col. from the original dataset)
+
+Is species richness dependent on wetland y/n?
+
+```{r richness-by-wetland}
+richness <- bat_species_data %>% 
+        select(Site, Habitat, Season, BatSpecies) %>%
+        group_by(Habitat) %>% #For each habitat
+        summarise(mean_richness = mean(BatSpecies),
+                  sd_richness = sd(BatSpecies),
+                  n_richness = n()) %>%
+        mutate(se_richness = sd_richness / sqrt(n_richness),
+               ci_richness = qt(1 - (0.05 / 2), n_richness - 1) * se_richness) 
+
+ggplot(data = richness,aes(x = Habitat, y = mean_richness)) +
+        geom_bar(stat = "identity") +
+        geom_errorbar(aes(ymin = mean_richness - ci_richness, 
+                          ymax = mean_richness + ci_richness), 
+                      width = 0.1)
+
+```
+
+
+What happens if we incorporate effects of season?
+
+```{r richness-by-wetland_and_season}
+richness_by_season <- bat_species_data %>% 
+        select(Site, Habitat, Season, BatSpecies) %>%
+        group_by(Habitat, Season) %>% #For each habitat
+        summarise(mean_richness = mean(BatSpecies),
+                  sd_richness = sd(BatSpecies),
+                  n_richness = n()) %>%
+        mutate(se_richness = sd_richness / sqrt(n_richness),
+               ci_richness = qt(1 - (0.05 / 2), n_richness - 1) * se_richness)
+
+ggplot(data = richness_by_season, 
+       aes(x = Habitat, y = mean_richness, fill = factor(Season))) +
+        geom_bar(stat = "identity", position = position_dodge()) +
+        geom_errorbar(aes(ymin = mean_richness - sd_richness, 
+                          ymax = mean_richness + sd_richness), 
+                      width = 0.1,
+                      position = position_dodge(0.9)) # shifts the error bars over the correct bar
+```
+
+No significant difference (alpha = 0.05) in bat richness between wetland and non-wetland sites, even when you check for the influence of season...
+
+What could be going on?
+Do other site / environmental variables influence species richness?
+We could also look at species richness ~f(environmental covariates):
+
+### Examining individual species responses
+
+**Pedagogy Point: This analysis can demonstrate applications of reshaping data from wide to long... and illustrates *when* this might be necessary. We start small, looking at one species and doing a plot for it, then we scale up the coding / analysis to multiple species.**
+
+**Coding Point: this plot illustrates how to create a frequency plot**
+
+Do some species depend on wetland more than others? Is their distribution more strongly associated with wetland than with non-wetland?
+
+```{r Chgouldii-frequ-plot}
+bat_dat %>% glimpse
+# so we select the first 17 columns, except and season, we keep site as the unique identifier / key column for each row.
+bat_dat %>% select(1:17, -Season) %>%
+        select(1:3) %>%
+        mutate(Habitat = as.factor(Habitat)) %>%
+        ggplot(aes(x = Chgouldii, fill = Habitat)) +
+        geom_bar()
+
+```
+
+Just looking at the above species, we get the sense that for this bat species, higher species richness observations are less common than lower species richness observations. But that higher species richness observations are more frequent at wetland sites than at non-wetland sites. It might be more informative to look at a summary statistic for this species and compare this value among different wetland sites, however:
+
+```{r Chgouldii-richness}
+Chgouldii_richness <- bat_dat %>% select(1:17, -Season) %>%
+        select(1:3) %>%
+        mutate(Habitat = as.factor(Habitat)) %>%
+        group_by(Habitat) %>%
+        summarise(mean_richness = mean(Chgouldii),
+                  sd_richness = sd(Chgouldii),n_richness = n()) %>%
+        mutate(se_richness = sd_richness / sqrt(n_richness),
+               ci_richness = qt(1 - (0.05 / 2), n_richness - 1) * se_richness)
+
+Chgouldii_richness
+
+Chgouldii_richness %>%
+        ggplot(aes(x = Habitat, y = mean_richness)) +
+        geom_bar(stat = "identity") +
+        geom_errorbar(aes(ymin = mean_richness - ci_richness, 
+                          ymax = mean_richness + ci_richness), 
+                      width = 0.1)
+```
+
+
+For Ch gouldii, we can see that mean richness is greater at wetland sites than at non-wetland sites, however because the 95% confidence intervals are over-lapping, we can't rule out with 95% confidence, that there is a true difference. But we have merged seasons here, what if we want to un-pack the effect of season on this?
+
+```{r Chgouldii-richness-season}
+bat_dat %>%
+        select(1:4) %>%
+        mutate(Habitat = as.factor(Habitat), Season = as.factor(Season)) %>% # TODO this should be done in the initial tidying stage so we don't have to keep repeating this... init tidying phase is also a good pedagogical way of testing out the dplyr verbs
+        group_by(Habitat, Season) %>%
+        summarise(mean_richness = mean(Chgouldii),
+                  sd_richness = sd(Chgouldii),n_richness = n()) %>%
+        mutate(se_richness = sd_richness / sqrt(n_richness),
+               ci_richness = qt(1 - (0.05 / 2), n_richness - 1) * se_richness) %>% 
+        ggplot(aes(x = Habitat, y = mean_richness, fill = Season)) +
+        geom_bar(stat = "identity", position = "dodge") +
+        geom_errorbar(aes(ymin = mean_richness - ci_richness, 
+                          ymax = mean_richness + ci_richness), 
+                      width = 0.1,
+                      position = position_dodge(0.9))
+```
+
+What pattern do you see?
+- Variation in bat richness is seasonal, as well as being influenced by Habitat.
+- Difference in richness due to Habitat is still not significant even when we remove the effect of seasonality. HOWEVER, it is close to significatn (at alpha = 0.05) for the first season. 
+
+
+Let's take a look at all the other species... However, this is really cumbersome if we want to repeat this for ALL species... What if we could do the data tidying and analysis for each species all at the same time?
+
+**Coding Lesson: reshaping data from long to wide - an essential tool in data analysis**
+
+** Pedagogy / Coding Lesson: Grouped summaries or mutates. Explain how this translates into an analysis question, e.g. FOr each Habitat, for each species, take the mean of the richness column.**
+
+** Plotting Lesson: multiple facets**
+
+
+```{r indiv-spp-richness}
+bat_dat %>% # drop the nspp per Mmacr col
+        select(1:17, -`Nspp/Mmacr`, -`CG/Mormlp`) %>% # TODO could also illustrate how to remove columns containing a '/' dplyr
+        mutate(Habitat = as.factor(Habitat),
+               Season = as.factor(Season)) %>%
+        group_by(Habitat, Season) %>%
+        gather(key = species, value = richness, -Habitat, -Site, -Season) %>% # illustrate what happens when we don't choose to ignore the other columns by using the 'minus' sign... they get included as an entity in the key column 'species' and it gets confused about what value to put in the 'richness' column for everything... 
+        group_by(Habitat, Season, species) %>%
+        summarise(mean_richness = mean(richness),
+                  sd_richness = sd(richness),n_richness = n()) %>%
+        mutate(se_richness = sd_richness / sqrt(n_richness),
+               ci_richness = qt(1 - (0.05 / 2), n_richness - 1) * se_richness) %>%
+        ggplot(aes(x = Habitat, y = mean_richness, fill = Season)) +
+        geom_bar(stat = "identity", position = "dodge") +
+        geom_errorbar(aes(ymin = mean_richness - ci_richness, 
+                          ymax = mean_richness + ci_richness), 
+                      width = 0.1,
+                      position = position_dodge(0.9)) + 
+        facet_wrap(~species, nrow = 2) # multiple facets
+```
+
+
+
+### Site / Environmental covariate influence on bat richness: Continuous response and predictor variables... (so far been working with dichotomous predictor).
+
+Let's pick a handful of individual species to investigate the effects of some continuous predictor variables on their richness...
+
