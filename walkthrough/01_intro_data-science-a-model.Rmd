@@ -1,0 +1,7 @@
+---
+title: "A conceptual model of data analysis"
+author: "Elise Gould"
+date: "09/01/2017"
+output: html_document
+---
+
