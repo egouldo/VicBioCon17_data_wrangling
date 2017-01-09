@@ -1,11 +1,17 @@
 ---
-title: "Bat Wetlands"
+title: "Melbourne's Wetland Bats"
 output: html_notebook
 ---
 
 ```{r load-libraries-data}
 library(tidyverse)
+library(magrittr)
 bat_dat <- read_csv("../data/bat_dat.csv")
+# Tidy:
+
+## Fix spelling error for Ferny Creek:
+bat_dat %<>% mutate(Site = replace(Site, Site == "Ferny Crrek", "Ferny Creek"))
+
 bat_species_data <- bat_dat %>% 
         select(1:19) %>% # species only
         mutate(Habitat = as.factor(Habitat),
@@ -79,9 +85,9 @@ We could also look at species richness ~f(environmental covariates):
 
 ### Examining individual species responses
 
-**Pedagogy Point: This analysis can demonstrate applications of reshaping data from wide to long... and illustrates *when* this might be necessary. We start small, looking at one species and doing a plot for it, then we scale up the coding / analysis to multiple species.**
+*Pedagogy Point: This analysis can demonstrate applications of reshaping data from wide to long... and illustrates *when* this might be necessary. We start small, looking at one species and doing a plot for it, then we scale up the coding / analysis to multiple species.*
 
-**Coding Point: this plot illustrates how to create a frequency plot**
+*Coding Point: this plot illustrates how to create a frequency plot*
 
 Do some species depend on wetland more than others? Is their distribution more strongly associated with wetland than with non-wetland?
 
@@ -145,11 +151,13 @@ What pattern do you see?
 
 Let's take a look at all the other species... However, this is really cumbersome if we want to repeat this for ALL species... What if we could do the data tidying and analysis for each species all at the same time?
 
-**Coding Lesson: reshaping data from long to wide - an essential tool in data analysis**
+*Coding Lesson: reshaping data from long to wide - an essential tool in data analysis*
 
-** Pedagogy / Coding Lesson: Grouped summaries or mutates. Explain how this translates into an analysis question, e.g. FOr each Habitat, for each species, take the mean of the richness column.**
+*Pedagogy / Coding Lesson: Grouped summaries or mutates. Explain how this translates into an analysis question, e.g. FOr each Habitat, for each species, take the mean of the richness column.*
 
-** Plotting Lesson: multiple facets**
+*Plotting Lesson: multiple facets*
+
+*Coding tip: style guide - whatever you pipe goes onto the next line. Can break up a long function call over multiple lines, splitting by each argument.*
 
 
 ```{r indiv-spp-richness}
@@ -161,7 +169,7 @@ bat_dat %>% # drop the nspp per Mmacr col
         gather(key = species, value = richness, -Habitat, -Site, -Season) %>% # illustrate what happens when we don't choose to ignore the other columns by using the 'minus' sign... they get included as an entity in the key column 'species' and it gets confused about what value to put in the 'richness' column for everything... 
         group_by(Habitat, Season, species) %>%
         summarise(mean_richness = mean(richness),
-                  sd_richness = sd(richness),n_richness = n()) %>%
+                  sd_richness = sd(richness), n_richness = n()) %>%
         mutate(se_richness = sd_richness / sqrt(n_richness),
                ci_richness = qt(1 - (0.05 / 2), n_richness - 1) * se_richness) %>%
         ggplot(aes(x = Habitat, y = mean_richness, fill = Season)) +
@@ -175,7 +183,23 @@ bat_dat %>% # drop the nspp per Mmacr col
 
 
 
-### Site / Environmental covariate influence on bat richness: Continuous response and predictor variables... (so far been working with dichotomous predictor).
+### Site / Environmental covariate influence on bat richness and activity: 
 
-Let's pick a handful of individual species to investigate the effects of some continuous predictor variables on their richness...
+*Teaching point: Continuous response and predictor variables... (so far been working with dichotomous predictor).*
 
+Let's pick a handful of individual species to investigate the effects of some continuous predictor variables on their richness... Visit the paper to pick out the salient predictor variables.
+
+**landscape scale factors**
+
+Measures affecting indivdual activity (feeding) and overall richness:
+
+- presence of water in urban Melbourne
+
+**site/local scale factors**
+
+bat richness and effects on individual species:
+
+- dist to bushland (both)
+- heavy metal pollution within water body (both)
+- areas with high levels of artificial night light (richness, activity except for spp. adapted to urban environments)
+- increased surrounding tree cover (richness)
