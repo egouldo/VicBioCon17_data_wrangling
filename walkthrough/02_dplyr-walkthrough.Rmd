@@ -1,0 +1,38 @@
+---
+title: "A walkthrough of dplyr and tidy data"
+author: "Elise Gould"
+date: "09/01/2017"
+output: github_document
+---
+
+## What is 'dplyr', and you should use it for data wrangling
+
+dplyr makes wrangling your data frames a breeze. dplyr is a metaphorical set of ‘pliers’ for wrangling your data frames (d-plyr, duh), to do things like row- or column-wise subsetting, conduct group-wise operations on multiple subsets of data, or merge data frame and matching rows by value rather than position. Everything you can do in dplyr, you can do in base R. So why bother? dplyr is expressive, and verb-focused, rather than object-focused, meaning that common data manipulation problems take less code and less mental effort to write. This means it's easy for your collaborators (including your future-self) to read. Moreover, much of dplyr’s work is implemented behind the scenes in C++ code, making wrangling larger data frames lightning-fast! 
+
+
+## What is tidy data?
+
+## Dplyr, a "grammar" of data manipulation
+
+
+### Learning our verbs and writing sentences:
+
+- row-wise subsetting: `filter()` takes logical conditions as arguments
+- column-wise subsetting: `select()` takes column names or `tidyr` functions to select matching columns
+
+- Create new variables, change existing variables: `mutate()`
+- summarise data with summary statistics: `summarise()`
+
+- Reorder rows: `arrange()`
+- Rename variables: `rename()`
+
+- Writing sentences, connecting your verbs: `%>%` pipe operator for connecting each operation into a pipeline.
+
+### A common syntax:
+
+Each of the verbs above follow the same syntax:
+
+- first argument is a data-frame
+- other arguments describe what to do to that data frame, you refer to columns in the data frame directly, no need to use the $ operator
+- the function returns a new data frame
+- input and output dataframes are *tidy* dataframes
