@@ -1,0 +1,16 @@
+---
+title: "Getting your data into R"
+author: "Elise Gould"
+date: "17/01/2017"
+output: html_document
+---
+
+We will focus on how to read plain-text rectangular files into R.
+`readr::read_csv()` reads comma delimited files. I.e. tabular data stored as plain-text with each value in a row delimited by a comma, and usually ending in the file extension `.csv`.
+
+```{r}
+library(tidyverse) 
+#get some dummy data here.
+#readr::read_csv()
+```
+
