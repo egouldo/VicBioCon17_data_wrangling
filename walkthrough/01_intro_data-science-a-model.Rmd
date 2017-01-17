@@ -5,3 +5,92 @@ date: "09/01/2017"
 output: html_document
 ---
 
+So what is data wrangling and how does it fit into a broader framework of data analysis / or what others might call data science?
+
+Well to answer the first question, it is easier to start with the second. Almost all data analysis problems can fit into the workflow below.
+
+![A conceptual model of data science by Hadley Wickham: http://r4ds.had.co.nz/diagrams/data-science.png](../assets/data-science.png)
+
+**1. Import** We need to get our data into R to be able to do any analysis on it using R. This involves importing the data, which is usually stored in a file, database, or perhaps on a web-based API. We will focus on using data stored in a file. 
+
+Structure of data in Ecology and Conservation... relational data.... 
+
+**2. Tidy** 
+
+Tidying our data doesn't simply mean ensuring that there are no errors that might have occurred during the data capture / transcription stage. "Tidy" data means that it is stored with a consistent structure that matches "the semantics of the dataset." We will explore this in more detail later. But for now, tidy data is stored such that each column is a variable, and each row is an 'observation.' Hadley argues that tidy data allows you to focus on understanding your data and dealing with pertinent questions of your data rather than on constantly shaping it.
+
+
+**3. Transform**
+
+Once we have tidy data, we must transform it. Transforming data could take the following actions:
+
+- Focusing in on individual observations of interest, such as all observations for a particular response variable, like diversity, at a single transect.
+- Computing summary variables, such as counts, or means. An example of a count variable might be the diversity of some group of target species at a quadrat, like number of different bat species. If we sampled multiple quadrats at a site, perhaps we might like to take the mean and standard deviation of bat diversity across all quadrats to account for any spatial heterogeneity.
+- Creating new variables that are functions of existing variables, perhaps because you wish to change the scale or units of an existing variable.
+
+**4. Knowledge Generation: Visualise**
+
+Visualisations can highlight unexpected observations, or new questions about the data. It can also tell you whether you need to collect more or even different data. 
+
+*5. Knowledge Generation: Model*
+
+Modeling requires that our analysis questions are precise before we can choose what and how to model. We are going to skip this step in this workshop. If you wish to learn about modelling, check out  [Hadley's chapter on modelling in R for Data Science](http://r4ds.had.co.nz/model-intro.html).
+
+**6. Communicate**
+
+This is arguably the most important step of data analysis. Today we will be writing our code within Rmarkdown documents, which allow us to mix code and text to tell a bit of a story about bats in urban Melbourne.
+
+##  Iterating through these steps: Mario pipelines.
+
+Multiple iterations thorugh that cycle.
+
+Often we have different analysis questions we would like to answer. Often because we are building an understanding of our dataset with different questions, or perhaps using different sets of tools. So stepping through this cycle is not a singular linear iteration through this cycle from start to finish, but rather a messy repetetitious cycling through these different steps. For example, we often need to transform our data differently to answer different questions.
+
+Also, we can use modelling and visualisation as our tools to understand our data, but each is complementary in that they have different strengths and weaknesses, so we need to do both. And in doing so, we might need to iterate through the cycle again (This idea is hadleys.)
+
+analysis vs. programming questions.. see notes for Libby. These different steps in the model of data science are programming questions, essentially questions about what we do to the data and how. However our overall workflow might look different when we consider the series of analyses we do to build a picture of our dataset that generates new knowledge and understanding.
+
+### An example...
+
+# Home Challenge:
+
+Consider a project requiring data analysis in R that you are currently working on.
+
+- If you have already collected the data, what shape or structure is the data in? Is it 'tidy'? I.e. does each column represent a unique variable, and each row an observation?
+- If you havent collected any data yet, consider the experimental design of your surveys. List any variables you are measuring / recording in the field. What is the smallest unit of sampling in your survey design? What constitutes a replicate, or a pseudo-replicate? What is the largest unit of sampling in your survey design? What constitutes a single 'observation'? Is the number of observations per sampling unit static or dynamic (i.e. changes depending on what species are inside your sampling unit)? Are you able to design the layout of your 'tidy' data frame.
+
+Structuring data with a hierarchical survey design.
+
+Ecological data is often hierarchical because our surveys are.
+
+Working from left to right, a good way to format your data is to begin with the sampling units in the first few columns, working from your largest sampling unit, to your smallest sampling unit or observation.
+
+When do you need multiple tables / relational dataframes? If in your tidy dataframe you are writing the same observation more than once, i.e. some variable for a sampling unit / replicate that is higher up the hierarchy than the smallest level of observation. I.e. if you have multiple observations for the smallest replicate, then any variable describing the replicate / sampling unit, will have to be repeated for each observation... This is superfluous, and can cause errors during transcription, so is best to be avoided. It is worth having a second, or even third table for a set of variables describing each level of sampling. Provide example of such structure.
+
+# About the structure of this workshop
+
+We will be drawing on the core packages in Hadley Wickhams "tidyverse".
+You can install the required packages onto your computer using the following:
+
+```{r, eval=FALSE}
+install.packages("tidyverse")
+library(tidyverse) # load libraries
+```
+
+A note on the code syntax adopted in these workshop materials:
+
+In case you want to install the individual packages you wish to use in your analysis, rather than the whole suite of packages from the tidyverse, we can call the function from the specific package using `::`. For example, if I wish to use the `filter` function from `dplyr`, I simply write: `dplyr::filter()`. This has two purposes, in the context of this workshop, a pedagogical one, being that you can learn which functions ship with which package (and install only the relevent package), and two, a practical one, the filter function also belongs to the `stats` package. By calling a function direclty and explicitly from the intended package, you can ensure that you are calling the correct function. R will use the same-named function from the package that was loaded first.
+
+We will run through the materials in the "./walkthrough" folder. Each "chapter" of the course is written in an 'Rmarkdown' document. At the end of each document there are one or more 'challenges' to complete. Each challenge will get you to implement some of the functions using a real ecological data set. The aim is to work through a series of analysis questions that build on one another to generate knowledge and understanding about this dataset.
+
+This workshop will give you the toolbox and a generalisable roadmap for navigating your data analysis to be able to do the same for your own datasets.
+
+## About the datasets:
+
+
+
+
+
+# References:
+
+These notes have been informed by Hadley Wickham's book R4DS.
