@@ -26,7 +26,7 @@ Let's start the analysis off simply, we'll split the dataset into two (a 'specie
 
 One idea is to teach some basics of actively interacting with the data in the console to get a handle on the shape / structure of the data:
 
-1. `View()` RStudio functionality nice viewer.
+1. `utils::View()` RStudio functionality nice viewer.
 2. `tibble::glimpse()` shows you all variables (columns) in the data, and a 'glimpse of the first bunch of elements)()
 
 Other interactive things to point out: 'using 'tab' to bring up suggested columns, so you can filter through them, useful when you have very many variables, and you can't remember what you called them.
