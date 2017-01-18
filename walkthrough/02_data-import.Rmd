@@ -4,13 +4,75 @@ author: "Elise Gould"
 date: "17/01/2017"
 output: html_document
 ---
+### *5mins*
 
 We will focus on how to read plain-text rectangular files into R.
 `readr::read_csv()` reads comma delimited files. I.e. tabular data stored as plain-text with each value in a row delimited by a comma, and usually ending in the file extension `.csv`.
 
-```{r}
+- Why CSV?? notes on data format from reproducibility papers
+- filepaths relative vs. hardcoded, R convention for where the working directory is... changes depending on where you are running code from.
+        - in the console, the working directory is the root directory for the project.
+        - in an Rmarkdown document, the working directory is the position of the Rmarkdown document..
+
+Don't forget that you need to assign the dataset to an object in R's working memory, using a name of your choice and the special operator `<-`
+
+```{r load-libs-data}
 library(tidyverse) 
-#get some dummy data here.
-#readr::read_csv()
+ #ecological data wiki? awaiting membership confirmation
+ #dummy_dat <- readr::read_csv(file = ) 
+
 ```
 
+## Overviewing your imported data
+
+Once your data has been imported into R, it's useful to examine it to firstly get a sense of your data, and secondly to aid in diagnosing any inaccuracies that might have occurred either during data capture, data transcription from hard to digital, if your field data was recorded on paper, or perhaps there was an error during the import of the data into R (sometimes R can convert your column to the wrong 'type' e.g. a character instead of numeric value). Overviewing your data after import is simple yet critical task and should take place before any data wrangling or analysis - it could potentially save future-you much time down and heartache down the track.
+
+*Printing in the console*
+
+Looking at your data frame in the console often clogs your console, and doesn't tell you much about the type of data in each column. The column names might often be obscured. If your console is completely clogged by a dataframe with many rows, you might not even be able to see the first few rows.
+
+**Challenge (easy)**
+
+Run each line of code in the console below.
+
+```{r tbls}
+iris # Clogs your console, am I right?
+dplyr::tbl_df(iris) # Much better!
+```
+
+`tbl_df()` converts your dataframe to the class `tbl` (pronounced 'tibble')
+
+Only the data that can fit on the screen will be displayed. Note that when printed to the console, `tbl`'s dimensions are printed at the top of the print response, and any variables that do not fit onto the screen are listed at the bottom of the printout. Importantly the 'type' of each column is displayed in angle brackets, e.g. `<dbl>` for type double, `<chr>` for type character.
+
+In programming language, dplyr functions are said not to have 'side-effects', meaning that unless you assign any of your changes to an object, your code is simply printed the console, rather than being saved to the object in R's memory.
+
+
+```{r assign_tbls}
+class(iris) # Coercion to class tbl has not been saved!
+class(dplyr::tbl_df(iris)) # This is the correct output!
+iris <- dplyr::tbl_df(iris) # Lets save the changes to R's memory by assigning it to the existing object 'iris'
+iris_copy <- dplyr::tbl_df(iris) # if we give a new name, rather than the name of the existing object, this saves the output from our commands to a new object, here its called 'iris_copy'
+```
+
+*Getting a glimpse of your data*
+
+Dplyr's `glimpse()` function yields an information dense summary of tbl data, and is particularly handy when you have many variables in your dataset.
+
+```{r glimpse}
+dplyr::glimpse(iris)
+```
+
+*Viewing your data*
+
+The base utilities `View()` function allows you to navigate your data within RStudio in a spread-sheet like format.You can sort or order your your rows on a particular variable, by hitting the up or down arrow on each column heading. You can also filter rows based on ranges for one or more variables. This functionality is great for building a mental-picture of your data, and for checking on the outputs of your code as you go about wrangling your data. 
+
+**Challenge (easy)**
+
+Run the following line in your console. 
+
+1. In the pop-up window, try sorting your data on one variable
+2. Experiment with filtering on one or more rows.
+
+```{r View, eval=FALSE}
+View(iris)
+```
