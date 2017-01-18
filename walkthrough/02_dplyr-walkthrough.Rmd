@@ -5,9 +5,7 @@ date: "09/01/2017"
 output: github_document
 ---
 
-## WHAT ABOUT THE DATA IMPORT PHASE?? where to address this.
-
-## What is 'dplyr', and you should use it for data wrangling
+## What is 'dplyr', and why you should use it for data wrangling
 
 dplyr makes wrangling your data frames a breeze. dplyr is a metaphorical set of ‘pliers’ for wrangling your data frames (d-plyr, duh), to do things like row- or column-wise subsetting, conduct group-wise operations on multiple subsets of data, or merge data frame and matching rows by value rather than position. Everything you can do in dplyr, you can do in base R. So why bother? dplyr is expressive, and verb-focused, rather than object-focused, meaning that common data manipulation problems take less code and less mental effort to write. This means it's easy for your collaborators (including your future-self) to read. Moreover, much of dplyr’s work is implemented behind the scenes in C++ code, making wrangling larger data frames lightning-fast! 
 
@@ -56,3 +54,50 @@ Each of the verbs above follow the same syntax:
 - other arguments describe what to do to that data frame, you refer to columns in the data frame directly, no need to use the $ operator
 - the function returns a new data frame
 - input and output dataframes are *tidy* dataframes
+
+## Making your code more readable, for future-you and other collaborators PUT THIS HERE OR PUT THIS IN A SECTION THAT BEGINS TO PIECE TOGETHER MULTIPLE DPLYR OPERATIONS?? E.g. http://seananderson.ca/2014/09/13/dplyr-intro.html
+
+Future-you is your closest collaborator. To make returning back to code you haven't looked at in ages a breeze, enter the pipe `%>%`.
+
+The pipe simply passes an object on the left hand side as the first argument of a function on the right hand side. You can use them on any object within R, your object doesn't necessarily have to be a data frame. If you wish to pass the object on the left hand side as an argument other than the first, we type a `.` in place of the object within the function on the right hand side.
+
+```
+x %>% f(y) is the same as f(x,y)
+y %>% f(x, ., z) is the same as f(x, y, z)
+```
+Here's a trivial example to help you get an idea of how they work, we'll use pipes all throughout the remainder of the workshop.
+
+**A trivial example without pipes**
+
+```{r no-pipes}
+
+```
+
+
+**And now with pipes**
+
+```{r pipes}
+
+```
+
+
+**WHY pipes?**
+
+Your code is more readable: 
+
+- You dont have to read your functions from the inside out, so you can observe the sequence of operations more clearly and with little effort.
+- You are less likely to create intermediate objects, so its easier to keep track of which object is the appropriate object to be working with
+
+Your code is easier to write: 
+
+- Your code is easier to type, flowing from one function to the next, just as your train of thought does
+- You won't miss a closing bracket when you type your code with pipes
+
+
+Your code is easier to debug: 
+
+- you can run each operation line-by-line, isolating which part of your code is failing
+
+
+
+
