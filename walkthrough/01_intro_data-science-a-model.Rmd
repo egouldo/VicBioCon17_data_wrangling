@@ -5,6 +5,8 @@ date: "09/01/2017"
 output: html_document
 ---
 
+### 10mins
+
 So what is data wrangling and how does it fit into a broader framework of data analysis / or what others might call data science?
 
 Well to answer the first question, it is easier to start with the second. Almost all data analysis problems can fit into the workflow below.
