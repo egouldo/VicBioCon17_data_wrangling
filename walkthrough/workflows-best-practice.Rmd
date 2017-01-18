@@ -1,0 +1,16 @@
+---
+title: "Putting it all together: Workflows and Best Practice"
+author: "Elise Gould"
+date: "18/01/2017"
+output: html_document
+---
+
+### Setting up your project directory
+
+What folders should you have, what files should go where
+
+### File paths, relative vs. hard-coded
+
+### R scripts, vs. Rmarkdown documents
+
+### Setting up a new project
