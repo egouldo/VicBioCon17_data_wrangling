@@ -80,6 +80,7 @@ Here's a trivial example to help you get an idea of how they work, we'll use pip
 
 ```
 
+How to read the code: say 'then' when you encounter the pipe at the end of each line.
 
 **WHY pipes?**
 
