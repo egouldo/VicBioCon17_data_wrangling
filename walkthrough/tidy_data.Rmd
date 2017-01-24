@@ -44,6 +44,8 @@ If you want more details on this, ready hadley's tidy data paper.
 
 ## Why is tidy data important / useful?
 
+also, ggplot2 works with tidy data, and so does dplyr... so we may as well make our data tidy!
+
 and NOT just for any data analysis with R, why is it SPECIFICALLY important in ecology / conservation.
 
 see the other papers on tidy data and ecology about it facilitating reproducibility and meta-analysis. Or facilitates longitudinal study... revisiting sites, for example.
@@ -79,3 +81,34 @@ Note this is good for thinking about key-vars and measure-vars when gathering an
 
 When do you need multiple tables / relational dataframes? If in your tidy dataframe you are writing the same observation more than once, i.e. some variable for a sampling unit / replicate that is higher up the hierarchy than the smallest level of observation. I.e. if you have multiple observations for the smallest replicate, then any variable describing the replicate / sampling unit, will have to be repeated for each observation... This is superfluous, and can cause errors during transcription, so is best to be avoided. It is worth having a second, or even third table for a set of variables describing each level of sampling. Provide example of such structure.
 
+
+### Gather and Spread: wide to long, messy to tidy and back again.
+
+issue: column headers are values, not variables names
+
+pp 5 - 6:
+Often datasets are designed for presentation, rather than for analysis, and so column headers are actually values not variables names.
+Sometimes we don't actually want tidy data. In some cases it can be useful in messy form. It can be stored efficiently for, say completely crossed designs, and can be useful for certain matrix operations.
+Data might not be 'tidy' when we transcribe it from our field data sheets to digital spreadsheets / csv's because its tedious to repeatedly type some variables out. 
+
+Reasons when to use other non-tidy data strucutres (from R4ds):
+
+1. alternative representations have substantial performance or space advantages
+2. specialised fields have evolved their own conventions for storign data that may be quite different to the conventions of tidy data.
+
+See Jeff leeks post on non-tidy data: http://simplystatistics.org/2016/02/17/non-tidy-data/
+
+what do we do when we want our data tidy, but its easier to capture it messy / wide?
+
+*Gathering/Melting*
+
+when one variable might be spread across multiple columns (i.e. common headers are values not variable names).
+We 'melt' or 'gather it by turning columns into rows, this is oft called making datasets long. But this term is imprecise.
+
+
+
+*Spreading/Casting*
+
+One observation might be spread across multiple rows.
+
+*Gather and Spread are not symmetrical*
