@@ -9,8 +9,35 @@ output: html_document
 
 What folders should you have, what files should go where
 
+@TODO find my notes on this
+
+Noble, W. S. (2009) A Quick Guide to Organizing Computational Biology Projects (ed F. Lewitter). PLoS Comp Biol. 5, e1000424.
+
 ### File paths, relative vs. hard-coded
 
+### RAW data
+DATA MASTERFILE--- DO NOT EDIT OVER MISTAKES.... want the data as RAW as possible. WHY find refs on this.
+
+White, E., Baldridge, E., Brym, Z., Locey, K., McGlinn, D., Supp, S. (2013) Nine simple ways to make it easier to (re)use your data. IEE. 6, 1–10.
+
+Provide RAW and PRocessed forms of the data.
+Explain the differences between them with metadata, and commented code.
+SHARE the code that morphs the code from raw to processed for analysis.
+
+"Often, the data used in scientific analyses are mod- ified in some way from the original form in which they were collected. Values are averaged, units are convert- ed, or indices are calculated from direct measurements or observations to address the focal research questions and to fix issues associated with the raw data. However, the best way to process data depends on the question being asked, and corrections for common data limit- ations often change as better approaches are developed. It can also be very difficult to combine data from mult- iple sources that have each been processed in different ways. Therefore, to make your data as useful as possible it is best to share the data in as raw a form as possible. That means providing your data in a form that is as close as possible to the field measurements and observ- ations from which your analysis started.
+This is not to say that your data are best suited for analysis in the raw form, but providing it in the raw form gives data users the most flexibility."
+
 ### R scripts, vs. Rmarkdown documents
+
+when should something go into a script, and when should it go into an RMarkdown document...
+tricky topic, and a decision youll want to make depending on your own personal workflow.
+
+My rules:
+
+- R scripts for cleaning and tidying data, generating data files, or long analyses.
+- RMarkdown files for exploratory data analyses, WHAT ELSE.
+- generating or altering of files should happen NOT in RMarkdown docs.
+
+- put as MUCH as you can in R. All changes should occurr here. NOT in excel.
 
 ### Setting up a new project
