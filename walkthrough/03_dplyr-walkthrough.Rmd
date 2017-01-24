@@ -10,7 +10,6 @@ output: github_document
 dplyr makes wrangling your data frames a breeze. dplyr is a metaphorical set of ‘pliers’ for wrangling your data frames (d-plyr, duh), to do things like row- or column-wise subsetting, conduct group-wise operations on multiple subsets of data, or merge data frame and matching rows by value rather than position. Everything you can do in dplyr, you can do in base R. So why bother? dplyr is expressive, and verb-focused, rather than object-focused, meaning that common data manipulation problems take less code and less mental effort to write. This means it's easy for your collaborators (including your future-self) to read. Moreover, much of dplyr’s work is implemented behind the scenes in C++ code, making wrangling larger data frames lightning-fast! 
 
 
-
 ## Dplyr, a "grammar" of data manipulation
 
 
@@ -27,20 +26,24 @@ dplyr makes wrangling your data frames a breeze. dplyr is a metaphorical set of 
 - Reorder rows: `arrange()`
 - Rename variables: `rename()`
 
-- Writing sentences, connecting your verbs: `%>%` pipe operator for connecting each operation into a pipeline.
 
-### A common syntax:
+
+### Dplyr verbs have a common syntax:
 
 Each of the verbs above follow the same syntax:
 
 - first argument is a data-frame
-- other arguments describe what to do to that data frame, you refer to columns in the data frame directly, no need to use the $ operator
-- the function returns a new data frame
-- input and output dataframes are *tidy* dataframes
+- subsequent arguments describe what to do to that data frame, using the variable names (no quote, i.e. 'bare'). you refer to columns in the data frame directly, no need to use the $ operator
+- the function / verb returns a new data frame
+- input and output dataframes are *tidy* dataframes for all dplyr verbs
 
 
 
-## Making your code more readable, for future-you and other collaborators PUT THIS HERE OR PUT THIS IN A SECTION THAT BEGINS TO PIECE TOGETHER MULTIPLE DPLYR OPERATIONS?? E.g. http://seananderson.ca/2014/09/13/dplyr-intro.html
+## Writing sentences:
+
+Making your code more readable, for future-you and other collaborators PUT THIS HERE OR PUT THIS IN A SECTION THAT BEGINS TO PIECE TOGETHER MULTIPLE DPLYR OPERATIONS?? E.g. http://seananderson.ca/2014/09/13/dplyr-intro.html
+
+- Writing sentences, connecting your verbs: `%>%` pipe operator for connecting each operation into a pipeline.
 
 Future-you is your closest collaborator. To make returning back to code you haven't looked at in ages a breeze, enter the pipe `%>%`.
 
