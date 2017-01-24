@@ -1,0 +1,97 @@
+---
+title: "version control, open science, with git and github"
+author: "Elise Gould"
+date: "24/01/2017"
+output: html_document
+---
+
+@TODO Find my notes on why git, and why github etc... they are somewhere..
+
+Ram, K. (2013) Git can facilitate greater reproducibility and increased transparency in science. Source Code Biol Med. 8, 7.
+
+# WHY Version control
+
+British Ecological Society (2014) A Guide to Data Management in Ecology and Evolution. (ed K. Harrison). British Ecological Society. [online]. Available from: www.britishecologicalsociety.org/publications/journals:
+
+communicating the decision process of cleaning data clearly.
+- repeatable
+- perfectly described and transparent
+- can fix and correct scripts later
+- COMMENT your code
+- "make the path from raw data to what is used in the analysis, clear and reproducible"
+
+
+# Documenting, Sharing and collaborating on github - open science, metadata, data documentation
+
+Also can recommend using the OSF for these details.
+
+why share? Citability! Posterity. open science. longitudinal studies. meta-analyses. Lost data, wasted knowledge! Pete's notes on motivations.
+
+A well-documented and reproducible open repository, with good meta-data can facilitate new problem formulations and frameworks. Bonnet, P., Shasha, D., Freire, J. (2012) Computational reproducibility: state-of-the-art, challenges, and database research opportunities. Sigmod'12 Proceedings of ….
+
+## WHY GITHUB
+easy to find, accessible, will most likely to be preserved for a long time. Ifyou link this to the OSF, it's preserved in perpetuity.
+
+## WHY DOCUMENT YOUR CODE? and How?
+Helps people USE your code.
+
+## What should go in your README?
+Again, list from: British Ecological Society (2014) A Guide to Data Management in Ecology and Evolution. (ed K. Harrison). British Ecological Society. [online]. Available from: www.britishecologicalsociety.org/publications/journals.
+
+### project level
+project aim, objectives, hypotheses
+personnel involved throughout the project, including who to contact for questions
+details of sponsors
+data structure and organisation of files
+software used to prepare and read the data
+procedures used for data processing, including quality control and versioning, and the dates these were carried out
+known problems limiting data use
+instructions on how to cite the data
+intellectual property rights and other licensing considerations
+
+Elsewhere, perhaps a documentation folder:
+data collection methods, details of instrumentation, environmental conditions during collection, copies of collection instructions if applicable
+standards used
+
+### data level
+This should not go in the readme.... not sold on a gold standard procedure for this yet
+
+- names, lavels, descriptions for variables
+- detailed explanation of codes used
+- definitions of acronyms or specialist terminology
+- reasons for missing values
+- derived data created from the raw file, including the code or algorithm used to create them.
+- note that much of this documentaiton is embedded in the analysis
+
+### Metadata
+
+- descriptive: fields such as title, author, abstract keywords
+- administrative: rights, permissions and data on formatting
+- structural: explanations of e.g. tables in the data
+- create metadata AS YOU GO, at the same time... your memory is much worse than you perceive it to be.
+
+White, E., Baldridge, E., Brym, Z., Locey, K., McGlinn, D., Supp, S. (2013) Nine simple ways to make it easier to (re)use your data. IEE. 6, 1–10.
+
+Why metadata: "The first key to using data is understanding it. Meta- data is information about the data, including how it was collected, what the units of measurement are, and descriptions of how to best use the data (Michener and Jones 2012). Clear metadata makes it easier to figure out if a dataset is appropriate for a project. It also makes data easier to use by both the original investigators and by other scientists by making it easy to figure out how to work with the data. Without clear metadata, datasets can be overlooked or go unused due to the difficulty of understanding the data (Fraser and Gluck 1999, Zimmerman 2003). Undocumented data also becomes less useful over time as information about the data is gradually lost (Michener et al. 1997)."
+
+WHAT metadata: 
+
+"Metadata can take several forms, including descript- tive file and column names, a written description of the data, images (i.e., maps, photographs), and specially structured information that can be read by computers (either as separate files or part of the data files; i.e., machine readable metadata). Good metadata should provide the following information (Michener et al. 1997, Zimmerman 2003, Strasser et al. 2012): 
+- The what, when, where, and how of data collect- ion.
+- How to find and access the data.   
+- Suggestions on the suitability of the data for ans-wering specific questions.
+- Warnings about known problems or inconsist-
+encies in the data, e.g., general descriptions of data limitations or a column in a table to indicate the quality of individual data points.
+- Information to check that the data are properly
+imported, e.g., the number of rows and columns in the dataset and the total sum of numerical columns."
+
+"Writing good metadata does not necessarily require a lot of extra time. The easiest way to develop metadata is to start describing your data during the planning and data collection stages. This will help you stay organized, make it easier to work with your data after it has been collected, and make eventual publication of the data easier."
+
+# notes on licensing
+
+White, E., Baldridge, E., Brym, Z., Locey, K., McGlinn, D., Supp, S. (2013) Nine simple ways to make it easier to (re)use your data. IEE. 6, 1–10.
+
+"Including an explicit license with your data is the best way to let others know exactly what they can and cannot do with the data you shared. Following the Panton Principles http://pantonprinciples.org we recom- mend:
+1. Using well established licenses (or waivers) in order to clearly communicate the rights and resp- onsibilities of both the people providing the data and the people using it.
+2. Using the most open license (or waiver) possible, because even minor restrictions on data use can have unintended consequences for the reuse of the data (Schofield et al. 2009, Poisot et al. 2013).
+The Creative Commons Zero (CC0) public domain dedication places no restrictions on data use and is considered by many to be one of the best ways to share data (e.g., (Schofield et al. 2009, Poisot et al. 2013), http://blog.datadryad.org/2011/10/05/why-does-dryad- use-cc0/). Several other licenses and waivers also accomplish these same goals http://opendefinition.org/ licenses/#Data. Having a clear and open license (or waiver) will increase the chance that other scientists will be comfortable using your data."
