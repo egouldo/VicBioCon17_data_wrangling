@@ -79,7 +79,16 @@ dplyr::tbl_df(iris) # Much better!
 
 `tbl_df()` converts your dataframe to the class `tbl` (pronounced 'tibble')
 
-Only the data that can fit on the screen will be displayed. Note that when printed to the console, `tbl`'s dimensions are printed at the top of the print response, and any variables that do not fit onto the screen are listed at the bottom of the printout. Importantly the 'type' of each column is displayed in angle brackets, e.g. `<dbl>` for type double, `<chr>` for type character.
+Only the data that can fit on the screen will be displayed. Note that when printed to the console, `tbl`'s dimensions are printed at the top of the print response, and any variables that do not fit onto the screen are listed at the bottom of the printout. Importantly the 'type' of each column is displayed in angle brackets: 
+
+- `<int>` for type integer
+- `<dbl>` for doubles, or real numbers
+- `<chr>` for character vectors, or strings
+- `<dttm>` date-times
+- `<lgl>` logical, vectors that contain only `TRUE` or `FALSE`
+- `<fctr>` factors, representing categorical variables with a fixed number of possible values
+- `<date>` date
+
 
 In programming language, dplyr functions are said not to have 'side-effects', meaning that unless you assign any of your changes to an object, your code is simply printed the console, rather than being saved to the object in R's memory.
 
