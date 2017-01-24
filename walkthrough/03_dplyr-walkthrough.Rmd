@@ -10,23 +10,6 @@ output: github_document
 dplyr makes wrangling your data frames a breeze. dplyr is a metaphorical set of ‘pliers’ for wrangling your data frames (d-plyr, duh), to do things like row- or column-wise subsetting, conduct group-wise operations on multiple subsets of data, or merge data frame and matching rows by value rather than position. Everything you can do in dplyr, you can do in base R. So why bother? dplyr is expressive, and verb-focused, rather than object-focused, meaning that common data manipulation problems take less code and less mental effort to write. This means it's easy for your collaborators (including your future-self) to read. Moreover, much of dplyr’s work is implemented behind the scenes in C++ code, making wrangling larger data frames lightning-fast! 
 
 
-## What is tidy data?
-
-Tidy data is a consistent way to organise your data in R. Today we'll focus on the practicalities of making yoru data tidy. For more detail on the underlying theory, Hadley's paper: [http://www.jstatsoft.org/v59/i10/paper](http://www.jstatsoft.org/v59/i10/paper).
-
-**The basics:**
-
-- Each variable is represented by a single column.
-- Each observation has its own row.
-- Each value has its own cell.
-
-## Why is tidy data important / useful?
-
-and NOT just for any data analysis with R, why is it SPECIFICALLY important in ecology / conservation.
-
-see the other papers on tidy data and ecology about it facilitating reproducibility and meta-analysis. Or facilitates longitudinal study... revisiting sites, for example.
-
-Knowing about tidy data is also really important when you are planning future field surveys. By knowing the number of samples you plan to take, as well as the design of the survey in terms of hierarchy, and the different response / predictor variables you are sampling, then you can have your empty CSV file ready to go and fill in the file as you record the data.
 
 ## Dplyr, a "grammar" of data manipulation
 
@@ -54,6 +37,8 @@ Each of the verbs above follow the same syntax:
 - other arguments describe what to do to that data frame, you refer to columns in the data frame directly, no need to use the $ operator
 - the function returns a new data frame
 - input and output dataframes are *tidy* dataframes
+
+
 
 ## Making your code more readable, for future-you and other collaborators PUT THIS HERE OR PUT THIS IN A SECTION THAT BEGINS TO PIECE TOGETHER MULTIPLE DPLYR OPERATIONS?? E.g. http://seananderson.ca/2014/09/13/dplyr-intro.html
 
