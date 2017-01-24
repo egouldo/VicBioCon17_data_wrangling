@@ -1,0 +1,81 @@
+---
+title: "tidy_data"
+author: "Elise Gould"
+date: "24/01/2017"
+output: html_document
+---
+
+## What is data tidying:
+
+Wickham, H. (2014) Tidy data. Journal of Statistical Software. 59 (10).
+
+'The act of structuring datasets to facilitate analysis'
+
+Note that 'data preparation is not just a first step, but has to be repeated many times over the course of analysis as new problems come to light, or new data is collected'
+
+## What is tidy data?
+
+Tidy data is a consistent way to organise your data in R. Today we'll focus on the practicalities of making yoru data tidy. For more detail on the underlying theory, Hadley's paper: [http://www.jstatsoft.org/v59/i10/paper](http://www.jstatsoft.org/v59/i10/paper).
+
+It's a standard that makes initial data cleaning easier, it facilitates initial exploration and analysis of the data.
+
+tidy data and tidy tools. Tidy tools take tidy data as their input, and return new outputs that are also tidy.
+
+**The basics:**
+
+
+'tidy datasets provide a standardised way to link the structure of a dataset (its physical layout) with its semantics (its meaning).' Wickham, H. (2014) Tidy data. Journal of Statistical Software. 59(10).
+
+"rows" and "columns" are not good enough to describe the semantic structure of tabular data. because if you transpose the table, you have a different appearance / layout.
+
+A dataset is a collection of values, variables, and observations.
+
+- Values are usually either numbers (if quantitative), or strings (if qualitative). They are organised in two ways:
+- Every value belongs to a variable: A variable is contains all values that measure the same underlying attribute (e.g. height, temp, duration) across units.
+- AND an observation: An observation contains all values measured on the same unit, which could be a person, a day etc. across attributes or variables.
+
+*Appearance / layout of tidy data*
+
+- Each variable is represented by a single column.
+- Each observation has its own row.
+- Each value has its own cell.
+
+If you want more details on this, ready hadley's tidy data paper.
+
+## Why is tidy data important / useful?
+
+and NOT just for any data analysis with R, why is it SPECIFICALLY important in ecology / conservation.
+
+see the other papers on tidy data and ecology about it facilitating reproducibility and meta-analysis. Or facilitates longitudinal study... revisiting sites, for example.
+
+Knowing about tidy data is also really important when you are planning future field surveys. By knowing the number of samples you plan to take, as well as the design of the survey in terms of hierarchy, and the different response / predictor variables you are sampling, then you can have your empty CSV file ready to go and fill in the file as you record the data.
+
+each row is a single observation, each column a single variable or type of measurement.
+One column for each type of informaiton. EXCEPT, cross-tab structure data, where columns contain measurements of the same variable (e.g. in differen sites, treatments). Nah, should keep it long I reckon.
+single value per cell (i.e. no units in the cell) You can put the units into a metadata file.
+break taxonomic information up into single components, with one column each for family, genus, species, subspecies, etc. Helps having to split strings later, BUT, is do-able with dplyr.
+
+### NULL VALUES
+NULL vs. MISSING values. Most ecological data sets contain missing or empty data values.
+NA, 0. See hadleys guide.
+
+### Contextual data
+
+"Ecological and evolutionary data are often combined with other kinds of data. You can make it easier to com- bine your data with other data sources by including con- textual data that appears across similar data sources. Two of the most common kinds of contextual data in ecology and evolution are taxonomy and geographic location. While this type of data is known and recorded in most studies (e.g, in field notebooks, on maps) it is frequently not included with the data. In general, if you have collected additional data or notes about a study organism or field site, there is a good chance that it will be useful to someone else, so including it with your data when you share it is a good idea. This kind of informat- ion can be included either as part of the data itself (e.g., in a new column or an additional table) or can be includ- ed in the metadata (e.g., the geographic location of the study site). For geographic data it is also important to include the datum (e.g., WGS-84) and sufficient précis- ion (e.g., 4 decimals places if using decimal degrees) to allow the data to be combined with other geographic datasets." White, E., Baldridge, E., Brym, Z., Locey, K., McGlinn, D., Supp, S. (2013) Nine simple ways to make it easier to (re)use your data. IEE. 6, 1–10.
+
+# Home Challenge (MOVE TO TIDY DATA MODULE)
+
+Consider a project requiring data analysis in R that you are currently working on.
+
+- If you have already collected the data, what shape or structure is the data in? Is it 'tidy'? I.e. does each column represent a unique variable, and each row an observation?
+- If you havent collected any data yet, consider the experimental design of your surveys. List any variables you are measuring / recording in the field. What is the smallest unit of sampling in your survey design? What constitutes a replicate, or a pseudo-replicate? What is the largest unit of sampling in your survey design? What constitutes a single 'observation'? Is the number of observations per sampling unit static or dynamic (i.e. changes depending on what species are inside your sampling unit)? Are you able to design the layout of your 'tidy' data frame.
+
+Structuring data with a hierarchical survey design.
+
+Ecological data is often hierarchical because our surveys are.
+
+Working from left to right, a good way to format your data is to begin with the sampling units in the first few columns, working from your largest sampling unit, to your smallest sampling unit or observation. As hadley says in his tidy data paper: the order of variables, and of observations does not affect analysis, a good orderin gmakes it easier to scan the raw values. We can organise variables based on their role in the analysis, i.e. whether they are fixed by the design of the data collection, or whether they are measured during the course of the experiment. I think htis is a most natural way of thinking about ecological datasets in particular, when we have some hierarchical structure of the data. Fixed variables are always known in advance. Measure variables are those we measure in the study.
+Note this is good for thinking about key-vars and measure-vars when gathering and separating data. Fixed variables should always come first, followed by measured variables. Each should be ordered so that related variables are contiguous. (p5, Wickham, H. (2014) Tidy data. Journal of Statistical Software. 59(10)).
+
+When do you need multiple tables / relational dataframes? If in your tidy dataframe you are writing the same observation more than once, i.e. some variable for a sampling unit / replicate that is higher up the hierarchy than the smallest level of observation. I.e. if you have multiple observations for the smallest replicate, then any variable describing the replicate / sampling unit, will have to be repeated for each observation... This is superfluous, and can cause errors during transcription, so is best to be avoided. It is worth having a second, or even third table for a set of variables describing each level of sampling. Provide example of such structure.
+

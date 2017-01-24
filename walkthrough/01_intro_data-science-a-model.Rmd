@@ -54,20 +54,7 @@ analysis vs. programming questions.. see notes for Libby. These different steps 
 
 ### An example...
 
-# Home Challenge:
 
-Consider a project requiring data analysis in R that you are currently working on.
-
-- If you have already collected the data, what shape or structure is the data in? Is it 'tidy'? I.e. does each column represent a unique variable, and each row an observation?
-- If you havent collected any data yet, consider the experimental design of your surveys. List any variables you are measuring / recording in the field. What is the smallest unit of sampling in your survey design? What constitutes a replicate, or a pseudo-replicate? What is the largest unit of sampling in your survey design? What constitutes a single 'observation'? Is the number of observations per sampling unit static or dynamic (i.e. changes depending on what species are inside your sampling unit)? Are you able to design the layout of your 'tidy' data frame.
-
-Structuring data with a hierarchical survey design.
-
-Ecological data is often hierarchical because our surveys are.
-
-Working from left to right, a good way to format your data is to begin with the sampling units in the first few columns, working from your largest sampling unit, to your smallest sampling unit or observation.
-
-When do you need multiple tables / relational dataframes? If in your tidy dataframe you are writing the same observation more than once, i.e. some variable for a sampling unit / replicate that is higher up the hierarchy than the smallest level of observation. I.e. if you have multiple observations for the smallest replicate, then any variable describing the replicate / sampling unit, will have to be repeated for each observation... This is superfluous, and can cause errors during transcription, so is best to be avoided. It is worth having a second, or even third table for a set of variables describing each level of sampling. Provide example of such structure.
 
 # About the structure of this workshop
 
