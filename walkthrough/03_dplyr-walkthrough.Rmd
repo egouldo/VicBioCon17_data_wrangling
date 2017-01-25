@@ -33,7 +33,7 @@ dplyr makes wrangling your data frames a breeze. dplyr is a metaphorical set of 
 Each of the verbs above follow the same syntax:
 
 - first argument is a data-frame
-- subsequent arguments describe what to do to that data frame, using the variable names (no quote, i.e. 'bare'). you refer to columns in the data frame directly, no need to use the $ operator
+- subsequent arguments describe what to do to that data frame, using the variable names (no quote, i.e. 'bare'). you refer to columns in the data frame directly, no need to use the $ operator.
 - the function / verb returns a new data frame
 - input and output dataframes are *tidy* dataframes for all dplyr verbs
 
