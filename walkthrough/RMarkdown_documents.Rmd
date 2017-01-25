@@ -1,0 +1,15 @@
+---
+title: "Rmarkdown Documents"
+author: "Elise Gould"
+date: "25/01/2017"
+output: html_document
+---
+
+TOpics to cover:
+
+- YAML headers
+- code chunks versus text
+- knitting document: Rmd, to MD, to HTML, Rmd to Latex to PDF.
+- Explain that its separate isolated world, must load own libraries
+- working directories. Relative to file. When you run the code from the chunk RStudio is smart enough to fix the working directory, but if you run the same line in the console, it will error
+- when to use Rmarkdown versus R Scripts.
