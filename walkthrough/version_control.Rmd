@@ -5,6 +5,21 @@ date: "24/01/2017"
 output: html_document
 ---
 
+Points:
+
+- why version control, why git what is it (links to docs).
+- difference between git, github, and RStudio interface to github
+- explain how to veiw changes before committing (using the DIFF)
+- Staging files (tick the ones you want to 'commit')
+- commiting versus pushing.
+- illustrate commit history in both github and in git. Start with github, and show example of the repository containing hte workshop materials.
+
+Philosophy / best-practice:
+commit early commit often
+good commit messages
+commit log and history. Your own research log. Wont overview how to revert back, undo mistakes. But you can get this information at some link.
+
+
 @TODO Find my notes on why git, and why github etc... they are somewhere..
 
 Ram, K. (2013) Git can facilitate greater reproducibility and increased transparency in science. Source Code Biol Med. 8, 7.
