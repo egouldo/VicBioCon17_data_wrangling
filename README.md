@@ -6,6 +6,7 @@ Code here is copyright of Elise Gould, 2017. Please note these materials are sti
 
 Data copyright Tanja Straka, 2016, paper doi: [doi: 10.1002/ece3.2224](doi: 10.1002/ece3.2224)
 
+- ADD LINK TO THIS REPOSOTIRY: WHERE TO FIND IT SO PARTICIPANTS CAN View the docs on their computer and follow instructions.
 
 ## Bat Data Analysis Questions to explore:
 
