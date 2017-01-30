@@ -1,0 +1,60 @@
+---
+title: "Installation and Configuration Instructions"
+author: "Elise Gould"
+date: "30/01/2017"
+output: html_document
+---
+
+
+
+# Software Installation Instructions:
+
+## Windows
+
+### R
+
+### RStudio
+
+### Git via GitHub
+
+## Mac
+
+## Windows
+
+### R
+
+### RStudio
+
+### Git via GitHub
+
+# Set-up your GitHub account:
+
+# Configuring RStudio for use with Github and Git:
+
+You need to activate git for use in RStudio on your system:
+
+1. Tools > Global Options
+2. Click Git/SVN
+3. Enable version control interface for RStudio projects
+4. If blank, enter the path for your git executable where provided
+Windows, if you followed the installation instructions above it will be:
+`C:\Users\'username'\AppData\Local\GitHub\PortableGit_'numbersandletters'\cmd\git.exe`
+Mac:
+`/usr/bin/git`
+5. Link git to github:
+- click on 'create RSA key'
+- close the window
+- click on view public key, and copy tje text to your clipboard.
+- Head back to GitHub (ensure you are logged in)
+- Go to your account settings, select 'SSH and GPG keys'
+- Click 'New SSH key' and paste in the public key you have copied from RStudio, save your key.
+
+Now you need to tell git who you are on GitHub.
+
+1. Tools > Shell
+2. Type the following into the shell, substituting the username and email address with your credentials you used to sign up to GitHub with.
+
+```
+git config --global user.email "mail@someemailaddress.com"
+git config --global user.name "your_username"
+```
