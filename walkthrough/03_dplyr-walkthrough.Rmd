@@ -1,13 +1,21 @@
----
+@---
 title: "A walkthrough of dplyr and tidy data"
 author: "Elise Gould"
 date: "09/01/2017"
 output: github_document
 ---
 
+```{r echo = FALSE, eval=TRUE}
+library(tidyverse)
+bat_dat <- read_csv(file = "../data/bat_dat.csv")
+```
+
+
 ## What is 'dplyr', and why you should use it for data wrangling
 
-dplyr makes wrangling your data frames a breeze. dplyr is a metaphorical set of ‘pliers’ for wrangling your data frames (d-plyr, duh), to do things like row- or column-wise subsetting, conduct group-wise operations on multiple subsets of data, or merge data frame and matching rows by value rather than position. Everything you can do in dplyr, you can do in base R. So why bother? dplyr is expressive, and verb-focused, rather than object-focused, meaning that common data manipulation problems take less code and less mental effort to write. This means it's easy for your collaborators (including your future-self) to read. Moreover, much of dplyr’s work is implemented behind the scenes in C++ code, making wrangling larger data frames lightning-fast! 
+dplyr makes wrangling your data frames a breeze. dplyr is a metaphorical set of ‘pliers’ for wrangling your data frames (d-plyr, duh), to do things like row- or column-wise subsetting, conduct group-wise operations on multiple subsets of data, or merge data frame and matching rows by value rather than position. 
+
+Everything you can do in dplyr, you can do in base R. So why bother? dplyr is expressive, and verb-focused, rather than object-focused, meaning that common data manipulation problems take less code and less mental effort to write. This means it's easy for your collaborators (including your future-self) to read. Moreover, much of dplyr’s work is implemented behind the scenes in C++ code, making wrangling larger data frames lightning-fast! 
 
 
 ## Dplyr, a "grammar" of data manipulation
@@ -15,18 +23,16 @@ dplyr makes wrangling your data frames a breeze. dplyr is a metaphorical set of 
 
 ### Learning our verbs and writing sentences:
 
-(Lets do this in order of the data wrangling workflow)
+@TODO (Lets do this in order of the data wrangling workflow)
 
 - row-wise subsetting: `filter()` takes logical conditions as arguments
-- column-wise subsetting: `select()` takes column names or `tidyr` functions to select matching columns
+- column-wise subsetting: `select()` takes column names or tidyr functions to select matching columns
 
 - Create new variables, change existing variables: `mutate()`
 - summarise data with summary statistics: `summarise()`
 
 - Reorder rows: `arrange()`
 - Rename variables: `rename()`
-
-
 
 ### Dplyr verbs have a common syntax:
 
@@ -37,9 +43,33 @@ Each of the verbs above follow the same syntax:
 - the function / verb returns a new data frame
 - input and output dataframes are *tidy* dataframes for all dplyr verbs
 
+**Filtering and Subsetting**
 
+Let's get only the values from season 1
+
+```{r filtering}
+filter(.data = bat_dat, Season == 1)
+
+```
+
+Let's get only the following columns, different ways to filter:
+matching, logical conditions, by position, by colnames, telling R to drop cols using the minus sign (every column except for these)
+
+```{r selecting}
+
+```
+
+
+**Mutate**
+
+**Summarise**
+
+
+** **
 
 ## Writing sentences:
+
+Often we want to combine actions, e.g. you might want to select and filter at the same time.
 
 Making your code more readable, for future-you and other collaborators PUT THIS HERE OR PUT THIS IN A SECTION THAT BEGINS TO PIECE TOGETHER MULTIPLE DPLYR OPERATIONS?? E.g. http://seananderson.ca/2014/09/13/dplyr-intro.html
 
@@ -88,5 +118,5 @@ Your code is easier to debug:
 - you can run each operation line-by-line, isolating which part of your code is failing
 
 
-
+### Grouped operations: Split, apply, combine operations
 
