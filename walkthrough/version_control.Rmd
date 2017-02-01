@@ -8,12 +8,151 @@ output: html_document
 
 ## Why version control?
 
+[Final.doc](../assets/phdcomics_FINAL.gif)
+
+As scientists we often engage in version control at one stage of a project or another, without even realising it. Usually this occurs in an informal and haphazard fashion. This often takes the form of multiple revisions of papers codes or datasets being saved duplicate copies with filenames that are uninformative (*draft_1.doc*, *draft_2.doc*, etc., Ram, 2013).
+
+Common problems:
+- Come back to this after a few months or a year, which one is the most recent version?
+- what is the difference between two different versions of a file? Which lines were changed, and how were they changed? Do you remember the rationale behind two different versions?
+- What if you make changes and overwrite a file without saving it as a new document?
+
+A dedicated version control system can help you address these issues. But the necessity of a VCS probably wont become apparent until you are in the throes of using it.
+
+A version control system acknowledges that there is only *one* project: i.e. everything that you are currently working on. All past versions are tucked away from your current workspace, inside your version control system. But are still accessible should you need to view them, or rollback any changes. Moreover, a version control system allows you to have a snapshot of the project at any one moment [why use version control guide](https://www.git-tower.com/learn/git/ebook/en/command-line/basics/why-use-version-control)
+
+Importantly a good version control system allows you to communicate the decision process of data cleaning or analysis clearly and transparently (BES, 2014). Essentially acts as a lab notebook.
 
 
-Points:
+**Version control with Git & why use it**
 
-- why version control, why git what is it (links to docs).
-- difference between git, github, and RStudio interface to github
+1. Restoring previous versions of a file
+2. Understanding what you did and why -> everytime you save a new version of your project, git requires you to provide a short description of what was changed. If the changes occurred to a text file, including a script containing code, you can see precisely what changed within the file.
+3. Backup -> ALthough not strictly a backup system in its own right, git can act as a backup, especially when you use GitHub, a cloud-based storage of your project that is version-controlled under git.
+
+Git is one such software system for implementing version control. It runs on your computer locally and works best when tracking files stored as plain text rather than binary files like word documents. Git records the changes you make to your projects files. Storing the entire history of your project locally, also called a 'repository'.
+
+## The basic git workflow:
+
+[The Git Workflow: areas and actions to move changes between them. From: http://r-bio.github.io/intro-git-rstudio/](../assets/git_areas.png)
+
+1. create / edit / modify a file inside your repository
+2. Once happy with the changes, you `stage` them  in the staging area. You can choose to stage only some of the changes in a file, or you can stage changes in multiple files.
+3. By `commit`ting those changes, git creates a permanent snapshot of the file in your project's directory. A mandatory part of the 'committing' process is writing an accompanying 'commit message' that outlines twhat you did to the file.
+
+Once you have committed a file for the first time, it becomes 'tracked', meaning that any time you modify a file, those changes will be picked up by git, and noted in your workspace, waiting for you to choose to stage and commit those changes or discard them.
+
+## Version Control with GitHub: gitting your work into the cloud
+
+While git runs locally on your computer, GitHub is a commercial website that lets you store your git repository for free. There are many web clients that do this now, however GitHub is one of the friendliest to use, and most widely used.
+
+Storing your repository in the cloud has many benefits, including but not limited to:
+
+1. Working collaboratively: different collaborators can push their changes to the GitHub repository, and pull any changes that others have made from GitHub to their local computer.
+2. It provides a backup of your project and the entire repository
+3. You can share your source code and datasets with others, in the spirit of open science.
+
+Using GitHub in addition to running git locally on your computer requires two more additional steps to the workflow:
+
+4. `Push`ing your changes made on your local computer to GitHub
+5. If you have made any changes to the GitHub repository on the website, or else you are collaborating with others that have pushed changes to GitHub, you will need to ensure that those changes are downloaded to your computer by `pull`ing them.
+
+## Challenge: A walkthrough with git and github in RStudio
+
+1. Create a new R script, called `se.R`. . Write the following inside the script and save it in in the `./R/` folder because it is a function.
+
+```{r, eval = FALSE}
+se <- function(x){
+        sqrt(var(x) / length(x))
+}
+```
+
+2. Open up the git tab. Note that There are question marks besides the file because it is not yet known or tracked by git. 
+
+3. When you check the box next to this file, the question marks change to an `A`, indicating that the file has been added to the stage. 
+This means that we want that file to be a part of the next revision of the project...
+
+[](../assets/git/01_create_file.png)
+
+The file has not yet been version controlled though, we have simply moved it to the staging area, indicating that we *intend* to add it to the next revision. So we have to `commit` the file.
+
+4. hit the commit button, and you will see the review window appear
+
+[](../assets/git/02_add_file_review_changes.png)
+
+Note the green text appearing in green. This window is the 'diff' window and shows you what exact changes have occurred in the file. Green represents additions, red represents deletions.
+
+Enter an informative commit message in the appropriate window. And press 'commit'
+
+```
+Add function that computes standard error of the mean
+```
+
+A log window will open up letting you know that the commit worked. You will see that the file has been removed from the current workspace in the git pane, because there are no changes that have occurred since the file was last committed.
+
+### Viewing repository History
+
+Note the three revisions of the project, with the most recent revision occuring at the top of the list. Your Commit message is listed for each snapshot or revision. As well as the author and data of the commit. Each commit also has a SHA hash, which is a string of letters and numbers unique to every commit.
+
+[Viewing project history](../assets/git/03_viewing_history.png)
+
+### Making changes
+
+Modify the `se.R` script to:
+
+```{r evalu = FALSE}
+# Standard error function
+se <- function(x)
+  sqrt(var(x, na.rm=TRUE) / length(na.omit(x)))
+```
+
+The file will now appear in the git pane, with the 'M' symbol beside, representing that it has been modified.
+
+[Modifying files](../assets/git/04_making_changes.png)
+
+Select the checkbox to stage the file, the M now moves position, indicating that it has been staged for committing. Write the following commit message, and commit the file.
+
+```
+Modify se function to ignore NA values.
+```
+
+### Pushing to GitHub
+
+1. View the history of the file in RStudio.
+2. Go to GitHub and view the repository, click on '2 commits' to view the history of the repository
+3. You will see that the last two commits you just made including the addition and modification of the `se.R` file are not reflected in the repository. This is because we havent sent those changes back to GitHub yet.
+4. Go back to the Git pane in RStudio, and click the `push` button. You will see another log message telling you that the changes have been pushed to the address of the GitHub repository.
+5. Now go back to GitHub and view your change. Your GitHub and local repository should now be in sync.
+
+[Your GitHub repository should now be in sync with your local repository](../assets/git/05_pushing.png)
+
+### Pulling from GitHub
+
+Pulling is useful when changes have been made to the online repository perhaps by someone else, or by yourself within GitHub (useful when working away from your main computer where the repository is stored).
+
+We are going to update the README on GitHub itself.
+
+1. Click on the README.md file in the list of files within the repository home page on GitHub.
+2. Click on the pen icon to open the file editor.
+3. Paste the text below into the README file.
+
+
+```
+NOTES ON WHAT SHOULD GO IN THE README.
+```
+
+4. Scroll down to the bottom of the screen. Write an informative commit message, such as: `Add notes on good README contents` Hit 'Commit changes', selecting 'commit directly to the `master` branch.
+[](../assets/git/06_committing_within_GitHub.png)
+5. Hit the commit button and and return back to your repository's home page. Notice the last commit message has appeared next to the README file in the file list.
+6. Return to RStudio. Remember that you need to manually suck these changes from the GitHub repository. Do so by hitting 'Pull' inside the Git pane. Your local and GitHub repositories will now be in sync.
+
+## Git Philosophies
+
+1. Commit Early, Commit Often
+2. GOOD informative commit messages
+
+(do we need to discuss branches)?
+
 - explain how to veiw changes before committing (using the DIFF)
 - Staging files (tick the ones you want to 'commit')
 - commiting versus pushing.
@@ -27,18 +166,11 @@ commit log and history. Your own research log. Wont overview how to revert back,
 
 @TODO Find my notes on why git, and why github etc... they are somewhere..
 
-Ram, K. (2013) Git can facilitate greater reproducibility and increased transparency in science. Source Code Biol Med. 8, 7.
 
-# WHY Version control
+### Advanced Features / Workflows:
 
-British Ecological Society (2014) A Guide to Data Management in Ecology and Evolution. (ed K. Harrison). British Ecological Society. [online]. Available from: www.britishecologicalsociety.org/publications/journals:
+- Working with multiple changes
 
-communicating the decision process of cleaning data clearly.
-- repeatable
-- perfectly described and transparent
-- can fix and correct scripts later
-- COMMENT your code
-- "make the path from raw data to what is used in the analysis, clear and reproducible"
 
 
 # Documenting, Sharing and collaborating on github - open science, metadata, data documentation
@@ -52,66 +184,18 @@ A well-documented and reproducible open repository, with good meta-data can faci
 ## WHY GITHUB
 easy to find, accessible, will most likely to be preserved for a long time. Ifyou link this to the OSF, it's preserved in perpetuity.
 
-## WHY DOCUMENT YOUR CODE? and How?
-Helps people USE your code.
+### Advanced features:
 
-## What should go in your README?
-Again, list from: British Ecological Society (2014) A Guide to Data Management in Ecology and Evolution. (ed K. Harrison). British Ecological Society. [online]. Available from: www.britishecologicalsociety.org/publications/journals.
+We have been running through a workflow for the solo-analyst. But there are some particular rules you need to follow for when you are working on someone elses repository. Here is a good walkthrough of this: [intro to git in RStudio, at Nice R code](http://r-bio.github.io/intro-git-rstudio/)
 
-### project level
-project aim, objectives, hypotheses
-personnel involved throughout the project, including who to contact for questions
-details of sponsors
-data structure and organisation of files
-software used to prepare and read the data
-procedures used for data processing, including quality control and versioning, and the dates these were carried out
-known problems limiting data use
-instructions on how to cite the data
-intellectual property rights and other licensing considerations
+- branching: duplicates your repository on a different branch, so that you can experiment with new features without breaking the original project. If you like the changes, you can merge them back into your main project (which occurs on the `master` branch).
 
-Elsewhere, perhaps a documentation folder:
-data collection methods, details of instrumentation, environmental conditions during collection, copies of collection instructions if applicable
-standards used
+### References
 
-### data level
-This should not go in the readme.... not sold on a gold standard procedure for this yet
+This page has been adapted from using Rich FitzJohns example.
 
-- names, lavels, descriptions for variables
-- detailed explanation of codes used
-- definitions of acronyms or specialist terminology
-- reasons for missing values
-- derived data created from the raw file, including the code or algorithm used to create them.
-- note that much of this documentaiton is embedded in the analysis
+British Ecological Society (2014) A Guide to Data Management in Ecology and Evolution. (ed K. Harrison). British Ecological Society. [online]. Available from: www.britishecologicalsociety.org/publications/journals
 
-### Metadata
+Ram, K. (2013) Git can facilitate greater reproducibility and increased transparency in science. Source Code Biol Med. 8, 7.
 
-- descriptive: fields such as title, author, abstract keywords
-- administrative: rights, permissions and data on formatting
-- structural: explanations of e.g. tables in the data
-- create metadata AS YOU GO, at the same time... your memory is much worse than you perceive it to be.
-
-White, E., Baldridge, E., Brym, Z., Locey, K., McGlinn, D., Supp, S. (2013) Nine simple ways to make it easier to (re)use your data. IEE. 6, 1–10.
-
-Why metadata: "The first key to using data is understanding it. Meta- data is information about the data, including how it was collected, what the units of measurement are, and descriptions of how to best use the data (Michener and Jones 2012). Clear metadata makes it easier to figure out if a dataset is appropriate for a project. It also makes data easier to use by both the original investigators and by other scientists by making it easy to figure out how to work with the data. Without clear metadata, datasets can be overlooked or go unused due to the difficulty of understanding the data (Fraser and Gluck 1999, Zimmerman 2003). Undocumented data also becomes less useful over time as information about the data is gradually lost (Michener et al. 1997)."
-
-WHAT metadata: 
-
-"Metadata can take several forms, including descript- tive file and column names, a written description of the data, images (i.e., maps, photographs), and specially structured information that can be read by computers (either as separate files or part of the data files; i.e., machine readable metadata). Good metadata should provide the following information (Michener et al. 1997, Zimmerman 2003, Strasser et al. 2012): 
-- The what, when, where, and how of data collect- ion.
-- How to find and access the data.   
-- Suggestions on the suitability of the data for ans-wering specific questions.
-- Warnings about known problems or inconsist-
-encies in the data, e.g., general descriptions of data limitations or a column in a table to indicate the quality of individual data points.
-- Information to check that the data are properly
-imported, e.g., the number of rows and columns in the dataset and the total sum of numerical columns."
-
-"Writing good metadata does not necessarily require a lot of extra time. The easiest way to develop metadata is to start describing your data during the planning and data collection stages. This will help you stay organized, make it easier to work with your data after it has been collected, and make eventual publication of the data easier."
-
-# notes on licensing
-
-White, E., Baldridge, E., Brym, Z., Locey, K., McGlinn, D., Supp, S. (2013) Nine simple ways to make it easier to (re)use your data. IEE. 6, 1–10.
-
-"Including an explicit license with your data is the best way to let others know exactly what they can and cannot do with the data you shared. Following the Panton Principles http://pantonprinciples.org we recom- mend:
-1. Using well established licenses (or waivers) in order to clearly communicate the rights and resp- onsibilities of both the people providing the data and the people using it.
-2. Using the most open license (or waiver) possible, because even minor restrictions on data use can have unintended consequences for the reuse of the data (Schofield et al. 2009, Poisot et al. 2013).
-The Creative Commons Zero (CC0) public domain dedication places no restrictions on data use and is considered by many to be one of the best ways to share data (e.g., (Schofield et al. 2009, Poisot et al. 2013), http://blog.datadryad.org/2011/10/05/why-does-dryad- use-cc0/). Several other licenses and waivers also accomplish these same goals http://opendefinition.org/ licenses/#Data. Having a clear and open license (or waiver) will increase the chance that other scientists will be comfortable using your data."
+Gandrud, C. (2016) Reproducible Research with R and R Studio, Second Edition. CRC Press.
