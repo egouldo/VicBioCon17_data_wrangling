@@ -1,8 +1,10 @@
 # "Data Wrangling for Ecologists": Course Materials to accompany the workshop Victorian Biodiversity Conference (2017)
 
+Please note these materials are still in active development as of 2 February 2017.
+
 [https://vicbiocon17.dryfta.com/en/](https://vicbiocon17.dryfta.com/en/)
 
-Code here is copyright of Elise Gould, 2017. Please note these materials are still in active development.
+Code here is copyright of Elise Gould, 2017. 
 
 Data copyright Tanja Straka, 2016, paper doi: [doi: 10.1002/ece3.2224](doi: 10.1002/ece3.2224)
 
