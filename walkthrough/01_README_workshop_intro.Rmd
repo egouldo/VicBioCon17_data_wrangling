@@ -1,0 +1,34 @@
+---
+title: "README: welcome to the workshop"
+author: "Elise Gould"
+date: "03/02/2017"
+output: html_document
+---
+
+# About the structure of this workshop
+
+We will be drawing on the core packages in Hadley Wickhams "tidyverse".
+You can install the required packages onto your computer using the following: 
+
+```{r, eval = FALSE}
+install.packages("tidyverse")
+```
+```{r eval = TRUE, echo = TRUE}
+library(tidyverse) # load libraries
+```
+
+**Challenge** Open RStudio and type the above into your console.
+
+### If you need help
+
+We will have a post-it note system in use: If you are having difficulty please stick a red post-it note on your computer so we can come over and get you up to speed if you fall behind or need help completing a challenge task.
+
+### A note on the code syntax adopted throughout workshop materials:
+
+In case you want to install individual packages from the tidyverse, rather than the whole suite of packages, I have specified the package that each function comes from using the `::` symbol. For example, if I wish to use the `filter` function from `dplyr`, I simply write: `dplyr::filter()`. The double-colon between the package name and the function ensures that the function is called from the specified package. This has two purposes, (1) in the context of this workshop, a pedagogical one, being that you can learn which functions ship with which package (and for your own project install only the relevent package), and (2), a practical one. For example, the filter function also belongs to the `stats` package. By calling a function direclty and explicitly from the intended package (in this case dplyr), you can ensure that you are calling the intended function. R will use the same-named function from the package that was loaded first, which might not be the one you intend to use.
+
+We will run through the materials in the "./walkthrough" folder. Each "chapter" of the course is written in an 'Rmarkdown' document. Throughout and at the end of each document there are one or more challenges to complete. Each challenge will ask you to implement some of the functions using a real ecological data set. The aim is to work through a series of analysis questions that build on one another to iteratively generate knowledge and understanding about this dataset. We hope to show you how to do this by simultaneously using best-practice workflows for robust, portable and reproducible data analysis. At the end of the workshop you will have a toolbox and a generalisable roadmap for navigating data analysis for your own datasets.
+
+
+## About the dataset we will be working with:
+
