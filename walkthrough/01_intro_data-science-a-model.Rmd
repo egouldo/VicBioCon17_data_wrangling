@@ -5,15 +5,15 @@ date: "09/01/2017"
 output: html_document
 ---
 
-### 10mins
+# A framework for data analysis
 
 So what is data wrangling and how does it fit into a broader framework of data analysis / or what others might call data science?
 
-Well to answer the first question, it is easier to start with the second. Almost all data analysis problems can fit into the workflow below.
+To answer the first question, it is easier to start with the second. Almost all data analysis problems can fit into the workflow below.
 
 ![A conceptual model of data science by Hadley Wickham: http://r4ds.had.co.nz/diagrams/data-science.png](../assets/data-science.png)
 
-**1. Import** We need to get our data into R to be able to do any analysis on it using R. This involves importing the data, which is usually stored in a file, database, or perhaps on a web-based API. We will focus on using data stored in a file. 
+**1. Import** We need to get our data into R to be able to do any analysis on it using R. This involves importing the data, which is usually stored in a file, database, or perhaps on a web-based API. We will focus on using data stored in a text-file for this course.
 
 Structure of data in Ecology and Conservation... relational data.... 
 
@@ -24,7 +24,7 @@ Tidying our data doesn't simply mean ensuring that there are no errors that migh
 
 **3. Transform**
 
-Once we have tidy data, we must transform it. Transforming data could take the following actions:
+Once we have tidy data, we must transform it. Transforming data could include any of the following actions:
 
 - Focusing in on individual observations of interest, such as all observations for a particular response variable, like diversity, at a single transect.
 - Computing summary variables, such as counts, or means. An example of a count variable might be the diversity of some group of target species at a quadrat, like number of different bat species. If we sampled multiple quadrats at a site, perhaps we might like to take the mean and standard deviation of bat diversity across all quadrats to account for any spatial heterogeneity.
@@ -55,26 +55,6 @@ analysis vs. programming questions.. see notes for Libby. These different steps 
 ### An example...
 
 
-
-# About the structure of this workshop
-
-We will be drawing on the core packages in Hadley Wickhams "tidyverse".
-You can install the required packages onto your computer using the following:
-
-```{r, eval=FALSE}
-install.packages("tidyverse")
-library(tidyverse) # load libraries
-```
-
-A note on the code syntax adopted in these workshop materials:
-
-In case you want to install the individual packages you wish to use in your analysis, rather than the whole suite of packages from the tidyverse, we can call the function from the specific package using `::`. For example, if I wish to use the `filter` function from `dplyr`, I simply write: `dplyr::filter()`. This has two purposes, in the context of this workshop, a pedagogical one, being that you can learn which functions ship with which package (and install only the relevent package), and two, a practical one, the filter function also belongs to the `stats` package. By calling a function direclty and explicitly from the intended package, you can ensure that you are calling the correct function. R will use the same-named function from the package that was loaded first.
-
-We will run through the materials in the "./walkthrough" folder. Each "chapter" of the course is written in an 'Rmarkdown' document. At the end of each document there are one or more 'challenges' to complete. Each challenge will get you to implement some of the functions using a real ecological data set. The aim is to work through a series of analysis questions that build on one another to generate knowledge and understanding about this dataset.
-
-This workshop will give you the toolbox and a generalisable roadmap for navigating your data analysis to be able to do the same for your own datasets.
-
-## About the datasets:
 
 
 
