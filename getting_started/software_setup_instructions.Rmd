@@ -107,4 +107,12 @@ Mac:
 - Go to your account settings, select 'SSH and GPG keys'
 - Click 'New SSH key' and paste in the public key you have copied from RStudio, save your key.
 
+# R package installation:
 
+Open RStudio and type the following into the console (make sure to hit enter so your command is sent to R):
+
+```{r, eval = FALSE}
+install.packages("tidyverse")
+```
+
+This will install the required packages, just in case we encounter issues on the day of the workshop.
