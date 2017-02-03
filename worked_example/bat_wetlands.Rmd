@@ -10,7 +10,7 @@ bat_dat <- read_csv("../data/bat_dat.csv")
 # Tidy:
 
 ## Fix spelling error for Ferny Creek:
-bat_dat %<>% 
+bat_dat <- bat_dat %>% 
         mutate(Site = replace(Site, Site == "Ferny Crrek", "Ferny Creek"))
 
 bat_species_data <- bat_dat %>% 
