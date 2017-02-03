@@ -54,7 +54,29 @@ analysis vs. programming questions.. see notes for Libby. These different steps 
 
 ### An example...
 
+# Challenge:
 
+1. Open a new RScript, save it as `tidy_data.R` in the root project directory.
+2. Write an informative document title using the comment function (start line with `#` symbol)
+3. Load all the tidyverse libraries within the script.
+4. Save the script, make a commit with a good commit message and push to GitHub.
+
+*A note on R's memory, scripts and the console* @TODO COMPLETE THIS
+
+workspace vs. scripts. what's a workspace
+
+R's memory is usually reset at the end of each session, or at least it should be (i.e. each time you quit the project or close RStudio). Although you can opt to save the workspace at the end of the session automatically (it is written as an `.RData` file). This is a sure way to encounter errors, although it can be convenient. Errors can be encounted if you have modified the code generating an R object.
+
+
+in RStudio you can opt to load any objects that you had in Rs memory at time of closing. But this is a sure way to encounter errors, especially if you have edited your code in an editor, but havent sent those commands to the console to update the object. It is best practice to NOT save the 'workspace', or all of the in-memory objects, at the 
+
+Ensure you have the following settings in-place for RStudio:
+
+```
+RStudio>Preferences/Settings > General:
+Restore .RData into workspace on start-up: de-select if selected
+Save workspace to .RData on exit: -> NEVER
+```
 
 
 
