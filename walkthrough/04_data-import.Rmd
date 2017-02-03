@@ -4,27 +4,42 @@ author: "Elise Gould"
 date: "17/01/2017"
 output: github_document
 ---
-### *5mins*
-### @TODO: save CSV file from eco data and import it with readr
 
-We will focus on how to read plain-text rectangular files into R.
+# Storing data and adding it to your project
+
+*Rectangular, text-files*
+
+We will focus on how to read plain-text rectangular files into R. Non-proprietry formats, such as plain-text files are best used for recording and storing any field data because they can be used by anyone, without need of special software to view or edit them (British Ecological Society, 2014). Common file extensions include `.txt` or `.CSV` files. CSV stands for Comma Separated Value files. These are simply plain-text files with each line representing a row in the tabular data, and each value being separated by a comma.
+
+One added benefit of usign text-files to store data, is that we can put them under version control. Lets do this now.
+
+*Challenge: add new data to a project directory*
+
+1. Go to the [workshop repository data folder](https://github.com/egouldo/VicBioCon17_data_wrangling/tree/master/data) and download the csv file called `bat_dat.csv`.
+2. Save it to your data folder
+3. Commit the file in git and push to GitHub
+
+*A note on creating CSV Files*
+
+You can transcribe field data into a CSV file using Microsoft Excel or in open-source CSV editors, such as [comma chameleon ](http://comma-chameleon.io). Existing Microsoft Excel spreadsheets can also be converted into `CSV` files.
+
+# Importing your data into R
+
+
 `readr::read_csv()` reads comma delimited files. I.e. tabular data stored as plain-text with each value in a row delimited by a comma, and usually ending in the file extension `.csv`.
 
-- Why CSV?? notes on data format from reproducibility papers:
+readr does allow you to use other data types, but check the package man pages for
 
-British Ecological Society (2014) A Guide to Data Management in Ecology and Evolution. (ed K. Harrison). British Ecological Society. [online]. Available from: www.britishecologicalsociety.org/publications/journals.:
 
-non-proprietry formats OSS, open standard formats. Used by anyone, dont need special software to use these data files, such as .txt or .csv. .CSV is the most common format.
 
-Benefit of text files, is that you can put them under version control.
 
-File/folder name rules (similar rules for variable names and object names syntax)
-- unique
-- descriptive
-- succinct
-- naturall ordered
-- consistent
-- google protocol / hadleys adapted google protocol.
+
+
+
+
+
+
+
 
 describe the project, file contents, location, date. Dont add a version, because this will be covered by version control system. Not sold on adding initials to the file name, because i think good metadata practice can cover this.
 
@@ -128,3 +143,15 @@ View(iris)
 Note that these functions are primarily used for working interactively. Rather than for in a script.
 
 # @TODO cleaning data (going through the )
+
+File/folder name rules (similar rules for variable names and object names syntax)
+- unique
+- descriptive
+- succinct
+- naturall ordered
+- consistent
+- google protocol / hadleys adapted google protocol.
+
+# References
+
+British Ecological Society (2014) A Guide to Data Management in Ecology and Evolution. (ed K. Harrison). British Ecological Society. [online]. Available from: www.britishecologicalsociety.org/publications/journals.
