@@ -26,14 +26,18 @@ You can transcribe field data into a CSV file using Microsoft Excel or in open-s
 # Importing your data into R
 
 
+
 `readr::read_csv()` reads comma delimited files. I.e. tabular data stored as plain-text with each value in a row delimited by a comma, and usually ending in the file extension `.csv`.
 
 readr does allow you to use other data types, but check the package man pages for
 
+@TODO ADD A NOTE ON RELATIVE PATHS HERE, will need this for the correct filepath in the script. Note that if your script is in a sub-folder, that it wont work. (can maybe touch on this later....). Console's spot is in the root.
 
+*Challenge: load data into R*
 
-
-
+1. Return to the script  `01_tidy_data.R` and edit it to import data into your R workspace using readr.
+2. Source the script to load the data into R's workspace.
+3. 
 
 
 
