@@ -2,7 +2,7 @@
 title: "Rmarkdown Documents"
 author: "Elise Gould"
 date: "25/01/2017"
-output: html_document
+output: github_document
 ---
 
 TOpics to cover:

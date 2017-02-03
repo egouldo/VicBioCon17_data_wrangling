@@ -2,7 +2,7 @@
 title: "Putting it all together: Workflows and Best Practice"
 author: "Elise Gould"
 date: "18/01/2017"
-output: html_document
+output: github_document
 ---
 
 ## WHY DOCUMENT YOUR CODE? and How?

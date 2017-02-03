@@ -2,7 +2,7 @@
 title: "README: welcome to the workshop"
 author: "Elise Gould"
 date: "03/02/2017"
-output: html_document
+output: github_document
 ---
 
 # About the structure of this workshop
@@ -29,6 +29,10 @@ In case you want to install individual packages from the tidyverse, rather than 
 
 We will run through the materials in the "./walkthrough" folder. Each "chapter" of the course is written in an 'Rmarkdown' document. Throughout and at the end of each document there are one or more challenges to complete. Each challenge will ask you to implement some of the functions using a real ecological data set. The aim is to work through a series of analysis questions that build on one another to iteratively generate knowledge and understanding about this dataset. We hope to show you how to do this by simultaneously using best-practice workflows for robust, portable and reproducible data analysis. At the end of the workshop you will have a toolbox and a generalisable roadmap for navigating data analysis for your own datasets.
 
+
+# ABout the format ofthe materials
+
+LOTS more information in here than we will cover, with links to additional resources or extra tips on best-practice RStudio use / data management. The point is that you can go back over these materials into the future.
 
 ## About the dataset we will be working with:
 

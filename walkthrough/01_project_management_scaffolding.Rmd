@@ -2,7 +2,7 @@
 title: "Setting up your project: preparing the scaffolding"
 author: "Elise Gould"
 date: "30/01/2017"
-output: html_document
+output: github_document
 ---
 
 # Create a new Github repository

@@ -2,7 +2,7 @@
 title: "tidy_data"
 author: "Elise Gould"
 date: "24/01/2017"
-output: html_document
+output: github_document
 ---
 
 ## What is data tidying:

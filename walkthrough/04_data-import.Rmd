@@ -2,7 +2,7 @@
 title: "Getting your data into R"
 author: "Elise Gould"
 date: "17/01/2017"
-output: html_document
+output: github_document
 ---
 ### *5mins*
 ### @TODO: save CSV file from eco data and import it with readr
