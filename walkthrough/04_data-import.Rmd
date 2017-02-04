@@ -108,14 +108,13 @@ read_csv("site,native_reptile_species, mean_weight_g\nA,5,50\nB,0,.",
 bat_dat <- readr::read_csv("./data/bat_dat.csv")
 ```
 
+# Writing CSV Files
 
+You can write your dataframes as CSV files using the `write_csv()` function. A good point in your data analysis cycle to save your dataframes as CSV's is once you have completed cleaning and tidying your data. Remember from the [project management module](./01_project_management_scaffolding.Rmd), that any modifications to the data set should not be over-written on the original data file. You should save any modifications in a new file in your .`/outputs/` directory.
 
-# Writing CSV Files:
-
-@TODO Hadleys notes on writing CSVs. Necessary for dplyr walkthrough
-
-
-
+```{r eval = FALSE}
+write_csv(x = iris, path = "./output/iris.csv")
+```
 
 ## Overviewing your imported data
 
