@@ -42,6 +42,12 @@ Modeling requires that our analysis questions are precise before we can choose w
 
 This is arguably the most important step of data analysis. Today we will be writing our code within Rmarkdown documents, which allow us to mix code and text to tell a bit of a story about bats in urban Melbourne.
 
+**Aren't we forgetting about data capture?**
+
+yes! This is an important step in dealing with ecological data that is often overlooked in most resources dealing with data science or data-analysis in R. In ecology data is often recorded by hand on field-sheets, and transcribed into a digital copy at a later date. By following the tidy data convention, and other good rules for capturing or collating data, you can minimise the time and difficulty in tidying and cleaning your data before your analysis begins.
+
+@TODO add link to a data capture section, if there is one.
+
 ##  Iterating through these steps: Mario pipelines.
 
 Multiple iterations thorugh that cycle.
@@ -77,10 +83,6 @@ RStudio>Preferences/Settings > General:
 Restore .RData into workspace on start-up: de-select if selected
 Save workspace to .RData on exit: -> NEVER
 ```
-
-
-
-
 
 # References:
 
