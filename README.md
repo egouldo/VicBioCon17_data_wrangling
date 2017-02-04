@@ -1,12 +1,28 @@
 # "Data Wrangling for Ecologists": Course Materials to accompany the workshop Victorian Biodiversity Conference (2017)
 
-Please note these materials are still in active development as of 2 February 2017.
+Please note these materials are still in active development as of 4th February February 2017.
 
 [https://vicbiocon17.dryfta.com/en/](https://vicbiocon17.dryfta.com/en/)
 
 Code here is copyright of Elise Gould, 2017. 
 
 Data copyright Tanja Straka, 2016, paper doi: [doi: 10.1002/ece3.2224](doi: 10.1002/ece3.2224)
+
+# About the structure of this repository, where to find what you need
+
+1. Welcome to the README, you are here.
+
+2. Getting started: setting up your software on your computer
+
+3. data: all the data files you will need for working through challenges and running through provided examples
+
+4. 
+
+assets - you won't need this -- just for rendering the images to appear on the web in github.
+
+src - not needed for the workshop, but preserved her for posteritys sake. These R scripts generated some of the dataset inside the `./data/` folder. Open them up if you would like to take a look at  real-world examples of data-wrangling.
+
+
 
 - ADD LINK TO THIS REPOSOTIRY: WHERE TO FIND IT SO PARTICIPANTS CAN View the docs on their computer and follow instructions.
 
