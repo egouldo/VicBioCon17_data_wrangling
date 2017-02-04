@@ -98,18 +98,21 @@ read_csv("site,native_reptile_species, mean_weight_g\nA,5,50\nB,0,.",
 
 ## Parsing column type specification
 
-
-
-
 *1-minute Challenge: load data into R*
 
 1. Return to the script  `01_tidy_data.R` and edit it to import data into your R workspace using readr. Don't forget to assign it to an informatively named object.
 2. Source the script to load the data into R's workspace.
 3. Commit to git, push to GitHub.
 
+```{r include=FALSE, eval=FALSE}
+bat_dat <- readr::read_csv("./data/bat_dat.csv")
+```
 
 
 
+# Writing CSV Files:
+
+@TODO Hadleys notes on writing CSVs. Necessary for dplyr walkthrough
 
 
 
