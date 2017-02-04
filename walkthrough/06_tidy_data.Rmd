@@ -117,7 +117,7 @@ One observation might be spread across multiple rows.
 
 # COLLATING AND CAPTURING YOUR OWN DATA
 
-# Metadata
+## Metadata
 describe the project, file contents, location, date. Dont add a version, because this will be covered by version control system. Not sold on adding initials to the file name, because i think good metadata practice can cover this.
 
 - filepaths relative vs. hardcoded, R convention for where the working directory is... changes depending on where you are running code from.
@@ -132,4 +132,29 @@ library(tidyverse)
  #dummy_dat <- readr::read_csv(file = ) 
 
 ```
+
+## Filenames, object names, variable names
+
+A note on good naming convention
+
+NO spaces for variable names (doesnt work for object names, spaces in filepaths dont always work when you want to read or write).
+
+Variable (Column) names: be consistent in your style: no caps, typos.. unless you are dealing with species names perhaps, but even then better to keep lowercase, and use a species list with a key-column as the variable names to match agains, should you need. @TODO insert link to species lists challenge.
+- use underscore for spaces between words, 
+- units: good to include in the variable name, unless you are using a metadata scheme with such information (advanced: CSVY with units, or basic: a metadata dataframe) Underscores are good for double clicking in RSTudio and bash, ifyou want to highlight something to copy and paste or surround in brackets, quotaiton marks, you can double click the variable and the whole thing will highlight, wont highlight the full thing if you have dashes.)
+BACKTICKS problem ... annoying and removes the efficiency of dplyr: can't use bare variables.
+- dont forget to 'tab across in RStudio when you forget the name.
+
+Add links to Google convention
+
+
+# 5-minute Challenge: variable name convention, dealing with outputs
+
+1. In your `01_tidy_data.R` script, use the `dplyr::rename()` function to fix the variable names in the dataframe such that they adhere to a variable-namimg ruleset.
+2. Use the sample ruleset above, or use your own -- just be consistent.
+3. Write the file as a CSV file to the correct folder in the project directory. Hint: return to the [data import module](./04_data-import.Rmd) to find the correct function for doing so.
+3. Save, commit to git.
+4. Source the script, commit the CSV file to git
+5. Push all changes to GitHub
+
 
