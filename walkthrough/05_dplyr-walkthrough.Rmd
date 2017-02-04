@@ -43,21 +43,29 @@ Each of the verbs above follow the same syntax:
 - the function / verb returns a new data frame
 - input and output dataframes are *tidy* dataframes for all dplyr verbs
 
-**Filtering and Subsetting**
+**Subsetting Observations (rows)**
 
-Let's get only the values from season 1
+Let's get only the rows where Season is equal to 1. We use the `filter` function. The first argument is the data frame we wish to filter through. The second argument is a logical expression 
 
 ```{r filtering}
-filter(.data = bat_dat, Season == 1)
-
+dplyr::filter(.data = bat_dat, Season == 1)
 ```
 
-Let's get only the following columns, different ways to filter:
-matching, logical conditions, by position, by colnames, telling R to drop cols using the minus sign (every column except for these)
+
+**Subsetting Variables (Columns)**
+
+Let's get only the following columns
 
 ```{r selecting}
-
+dplyr::select(bat_dat, Site, Habitat, Season, Chgouldii)
 ```
+
+
+
+As well as using the bare column names to select a variable. We can also use a suite of helper functions 
+, different ways to filter:
+matching, logical conditions, by position, by colnames, telling R to drop cols using the minus sign (every column except for these)
+
 
 
 **Mutate**
