@@ -13,3 +13,19 @@ TOpics to cover:
 - Explain that its separate isolated world, must load own libraries
 - working directories. Relative to file. When you run the code from the chunk RStudio is smart enough to fix the working directory, but if you run the same line in the console, it will error
 - when to use Rmarkdown versus R Scripts.
+
+MANY different formats, including journal articles for those submitted to elsevier journals - see the rmarkdown rstudio website for list of formats
+
+## FILEPATHS and working directory madness
+
+@TODO ADD A NOTE ON RELATIVE PATHS HERE, will need this for the correct filepath in the script. Note that if your script is in a sub-folder, that it wont work. (can maybe touch on this later....). Console's spot is in the root. Note, this is only an issue with RMarkdown documents.
+
+Running code directly from a script: wd == root folder (where rproj file is). Same as running in console. Same thing happens when you source a script, no matter the location of that script inside your working directory for the project -- i.e. it could be deeply nested and it still wouldnt matter.
+
+RMarkdown files are another story, however...
+
+New features are better, however.
+
+# References and other Resources:
+
+[http://rmarkdown.rstudio.com](http://rmarkdown.rstudio.com)
