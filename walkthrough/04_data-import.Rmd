@@ -49,6 +49,8 @@ Notice that `readr` prints out the column specification, giving the name and typ
 ## Tweaking `read_csv()`
 
 You can control many different aspects of data import using the many arguments of `read_csv()`.
+Often we deal in data collected and given to us by other people, perhaps a consultant or research assistant collected your data. This removes a lot of control over the way the data is formatted. Sometimes people do funny things, like use strange character strings to represent missing values (pro-tip: `NA` is good). If our data comes from a machine in the lab, like a PCR machine log, it might provide metadata or other details about the nature of the collected data. Below are some examples for dealing with these situations.
+
 ```{r}
 args(read_csv)
 ```
@@ -58,13 +60,43 @@ args(read_csv)
 
 `read_csv()` uses the first line of data as the data frame's column names. Sometimes you might have metadata in the first few lines, perhaps as a YAML header or as commented lines (using `#`), other times you might be missing column names in your CSV file. 
 
-*1. Skipping meatdata or comments with the `skip` argument*
+*1. Skipping metadata or comments with the `skip` argument*
 
+Skipping Comments:
 
-*2.  *
+```{r skipping-comments}
+readr::read_csv("./data/iris.csv", comment = "#")
+```
 
-- skipping lines, useful if you have metadata up the top
-- when you don't have column names
+Skipping a specified number of lines:
+
+```{r skip-lines}
+readr::read_csv("./data/iris.csv", skip = 18)
+```
+
+*2. Missing Column Names*
+
+Simply set the `col_names` argument to FALSE
+
+```{r missing-column-names}
+read_csv("A,2,30\nB,5,60", col_names = FALSE) # '\n' tells read_csv to move onto a new line!
+```
+
+Or pass a character vector to `col_names`:
+```{r provide-colnames}
+read_csv("A,2,30\nB,5,60", 
+         col_names = c("site", "native_grass_species", "total_percent_cover")) # c() or concatenate creates a vector
+```
+
+### Specifying Missing Values with characters other than NA
+
+```{r}
+read_csv("site,native_reptile_species, mean_weight_g\nA,5,50\nB,0,.",
+         na = ".")
+
+```
+
+## Parsing column type specification
 
 
 
@@ -77,25 +109,10 @@ args(read_csv)
 
 
 
-- when missing values are represented by a string other than NA in your flat file.
-- parsing in data - column specification
 
 
-# Metadata
-describe the project, file contents, location, date. Dont add a version, because this will be covered by version control system. Not sold on adding initials to the file name, because i think good metadata practice can cover this.
 
-- filepaths relative vs. hardcoded, R convention for where the working directory is... changes depending on where you are running code from.
-        - in the console, the working directory is the root directory for the project.
-        - in an Rmarkdown document, the working directory is the position of the Rmarkdown document..
 
-Don't forget that you need to assign the dataset to an object in R's working memory, using a name of your choice and the special operator `<-`
-
-```{r load-libs-data}
-library(tidyverse) 
- #ecological data wiki? awaiting membership confirmation
- #dummy_dat <- readr::read_csv(file = ) 
-
-```
 
 ## Overviewing your imported data
 
