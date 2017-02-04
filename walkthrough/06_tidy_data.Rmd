@@ -117,21 +117,20 @@ One observation might be spread across multiple rows.
 
 # COLLATING AND CAPTURING YOUR OWN DATA
 
+## Transcribing your data
+
+### Why it is often good to have a relational database or colection of dataframes rather than a single "tidy" dataframe
+
+- a site versus observation dataframe - provide the example in this bat data of finding errors dont want to be transcribing or copying and pasting values when recording data EVER. This can happen when you have multiple observations per sampling unit that depend on what's present. OR in this case when you have repetitive sampling through time... multiple visits at a site.. the site variables dont change necessarily. So you have to enter them by hand twice.
+
+NA's vs missing values: NAs should be written as `NA` truly missing data and 0.
+
 ## Metadata
 describe the project, file contents, location, date. Dont add a version, because this will be covered by version control system. Not sold on adding initials to the file name, because i think good metadata practice can cover this.
 
-- filepaths relative vs. hardcoded, R convention for where the working directory is... changes depending on where you are running code from.
-        - in the console, the working directory is the root directory for the project.
-        - in an Rmarkdown document, the working directory is the position of the Rmarkdown document..
 
-Don't forget that you need to assign the dataset to an object in R's working memory, using a name of your choice and the special operator `<-`
 
-```{r load-libs-data}
-library(tidyverse) 
- #ecological data wiki? awaiting membership confirmation
- #dummy_dat <- readr::read_csv(file = ) 
 
-```
 
 ## Filenames, object names, variable names
 
