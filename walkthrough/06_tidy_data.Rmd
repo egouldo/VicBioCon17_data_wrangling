@@ -112,3 +112,24 @@ We 'melt' or 'gather it by turning columns into rows, this is oft called making 
 One observation might be spread across multiple rows.
 
 *Gather and Spread are not symmetrical*
+
+
+
+# COLLATING AND CAPTURING YOUR OWN DATA
+
+# Metadata
+describe the project, file contents, location, date. Dont add a version, because this will be covered by version control system. Not sold on adding initials to the file name, because i think good metadata practice can cover this.
+
+- filepaths relative vs. hardcoded, R convention for where the working directory is... changes depending on where you are running code from.
+        - in the console, the working directory is the root directory for the project.
+        - in an Rmarkdown document, the working directory is the position of the Rmarkdown document..
+
+Don't forget that you need to assign the dataset to an object in R's working memory, using a name of your choice and the special operator `<-`
+
+```{r load-libs-data}
+library(tidyverse) 
+ #ecological data wiki? awaiting membership confirmation
+ #dummy_dat <- readr::read_csv(file = ) 
+
+```
+
