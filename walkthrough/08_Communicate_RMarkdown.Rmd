@@ -18,6 +18,10 @@ MANY different formats, including journal articles for those submitted to elsevi
 
 ## FILEPATHS and working directory madness
 
+- filepaths relative vs. hardcoded, R convention for where the working directory is... changes depending on where you are running code from.
+        - in the console, the working directory is the root directory for the project.
+        - in an Rmarkdown document, the working directory is the position of the Rmarkdown document..
+
 @TODO ADD A NOTE ON RELATIVE PATHS HERE, will need this for the correct filepath in the script. Note that if your script is in a sub-folder, that it wont work. (can maybe touch on this later....). Console's spot is in the root. Note, this is only an issue with RMarkdown documents.
 
 Running code directly from a script: wd == root folder (where rproj file is). Same as running in console. Same thing happens when you source a script, no matter the location of that script inside your working directory for the project -- i.e. it could be deeply nested and it still wouldnt matter.
