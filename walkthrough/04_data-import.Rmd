@@ -5,46 +5,83 @@ date: "17/01/2017"
 output: github_document
 ---
 
+```{r "setup", include=FALSE}
+require("knitr")
+library('tidyverse')
+opts_knit$set(root.dir = "../")
+```
+
+
 # Storing data and adding it to your project
 
 *Rectangular, text-files*
 
-We will focus on how to read plain-text rectangular files into R. Non-proprietry formats, such as plain-text files are best used for recording and storing any field data because they can be used by anyone, without need of special software to view or edit them (British Ecological Society, 2014). Common file extensions include `.txt` or `.CSV` files. CSV stands for Comma Separated Value files. These are simply plain-text files with each line representing a row in the tabular data, and each value being separated by a comma.
+We will focus on how to read plain-text rectangular files into R. Non-proprietry formats, such as plain-text files are best used for recording and storing field or other data because they can be used by anyone, without need of special software to view or edit them (British Ecological Society, 2014). Common file extensions include `.txt` or `.CSV` files. CSV stands for Comma Separated Value files. These are simply plain-text files with each line representing a row in the tabular data, and each value being separated by a comma.
 
-One added benefit of usign text-files to store data, is that we can put them under version control. Lets do this now.
+One added benefit of using text-files to store data, is that we can put them under version control. Let's do this now.
 
-*Challenge: add new data to a project directory*
+*1-minute Challenge: add some new data to a project directory*
 
 1. Go to the [workshop repository data folder](https://github.com/egouldo/VicBioCon17_data_wrangling/tree/master/data) and download the csv file called `bat_dat.csv`.
 2. Save it to your data folder
 3. Commit the file in git and push to GitHub
 
-*A note on creating CSV Files*
+*A note on creating CSV Files with your own data*
 
-You can transcribe field data into a CSV file using Microsoft Excel or in open-source CSV editors, such as [comma chameleon ](http://comma-chameleon.io). Existing Microsoft Excel spreadsheets can also be converted into `CSV` files.
+You can transcribe data you have collected into a CSV file using Microsoft Excel or in open-source CSV editors, such as [comma chameleon ](http://comma-chameleon.io). Existing Microsoft Excel spreadsheets can also be converted into `CSV` files. See the [tidy data module](./06_tidy_data.Rmd) for tips on how best to format and structure your data. 
 
 # Importing your data into R
 
+The [`readr` package](http://r4ds.had.co.nz/data-import.html) comes with a selection of tools for importing data into R, turning flat files into R dataframes. For importing other non-CSV flat-file types, check the readr package documentation. The function `readr::read_csv()` reads in CSV files. For those familiar with R, the `read_csv()` function is very similar to base Rs `read.csv()`. Here are some reasons to use `readr` to import your flat-files:
+
+- `readr` functions are about 10x faster than their base equivalents, and you can set a progress bar for importing larger files.
+- `readr` functions produce tibbles (more on this below!), and are more careful in how files are imported: character vectors will not be coerced to factors, row names are not used, and column names will not be muddled.
+- They are more reproducible: Behaviour of base R functions can be determined by both your operating system and environment variables, so sometimes code that imports data successfully on your computer will not work on someone else's computer.
+
+Lets import the bat data into R using `read_csv()`
+
+```{r}
+readr::read_csv("./data/bat_dat.csv")
+```
+
+Notice that `readr` prints out the column specification, giving the name and type of each column. This is important for ensuring that the values in a particular column have been read as the right data type. You can manually change the data type if it is read in as the wrong type (see parsing data, below).
+
+## Tweaking `read_csv()`
+
+You can control many different aspects of data import using the many arguments of `read_csv()`.
+```{r}
+args(read_csv)
+```
 
 
-`readr::read_csv()` reads comma delimited files. I.e. tabular data stored as plain-text with each value in a row delimited by a comma, and usually ending in the file extension `.csv`.
+### Skipping the first line
 
-readr does allow you to use other data types, but check the package man pages for
+`read_csv()` uses the first line of data as the data frame's column names. Sometimes you might have metadata in the first few lines, perhaps as a YAML header or as commented lines (using `#`), other times you might be missing column names in your CSV file. 
 
-@TODO ADD A NOTE ON RELATIVE PATHS HERE, will need this for the correct filepath in the script. Note that if your script is in a sub-folder, that it wont work. (can maybe touch on this later....). Console's spot is in the root.
+*1. Skipping meatdata or comments with the `skip` argument*
 
-*Challenge: load data into R*
 
-1. Return to the script  `01_tidy_data.R` and edit it to import data into your R workspace using readr.
+*2.  *
+
+- skipping lines, useful if you have metadata up the top
+- when you don't have column names
+
+
+
+
+*1-minute Challenge: load data into R*
+
+1. Return to the script  `01_tidy_data.R` and edit it to import data into your R workspace using readr. Don't forget to assign it to an informatively named object.
 2. Source the script to load the data into R's workspace.
-3. 
+3. Commit to git, push to GitHub.
 
 
 
+- when missing values are represented by a string other than NA in your flat file.
+- parsing in data - column specification
 
 
-
-
+# Metadata
 describe the project, file contents, location, date. Dont add a version, because this will be covered by version control system. Not sold on adding initials to the file name, because i think good metadata practice can cover this.
 
 - filepaths relative vs. hardcoded, R convention for where the working directory is... changes depending on where you are running code from.
