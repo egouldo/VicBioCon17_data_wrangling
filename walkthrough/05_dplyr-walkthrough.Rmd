@@ -1,15 +1,15 @@
-@---
+---
 title: "A walkthrough of dplyr and tidy data"
 author: "Elise Gould"
 date: "09/01/2017"
 output: github_document
 ---
 
-```{r echo = FALSE, eval=TRUE}
-library(tidyverse)
+```{r echo = FALSE, eval = TRUE, message=FALSE}
+#Load package and data for knitting this document, but hide code from view
+suppressPackageStartupMessages(library(tidyverse))
 bat_dat <- read_csv(file = "../data/bat_dat.csv")
 ```
-
 
 ## What is 'dplyr', and why you should use it for data wrangling
 
