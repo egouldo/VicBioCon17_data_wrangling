@@ -94,11 +94,12 @@ DRY: Do not Repeat Yourself. Any chunk of code that you re-use more than twice s
 
 Any time you wish to *apply* a function defined in your `./R/` folder, it should be loaded using `source()`, and saved into your analysis script, in the example scaffolding above, `analysis.R`.
 
-### Challenge:
+### Challenge 1 (5-minute)
 
 1. Set up your project skeleton by adding new folders according to the project directory template outlined above. Hint: Click on 'New Folder' to add folders.
 
-2. Download the dataset for today's workshop from here: {INSERT LINK TO GITHUB DATASET HERE}. Save it to the appropriate folder.
+2. Download the datasets for today's workshop from here: [https://github.com/egouldo/VicBioCon17_data_wrangling](https://github.com/egouldo/VicBioCon17_data_wrangling). They are called `bat_dat.csv` and `iris.csv` and are in the `./data/` directory.
+3. Save it to the appropriate folder in your project.
 
 ### References:
 
