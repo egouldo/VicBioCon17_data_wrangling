@@ -139,7 +139,15 @@ Some key window functions include:
 - `max()`
 - statistical functions, like `median()`, `sd()`, `var()`. 
 
-## Challenge @TODO
+**Renaming variables**
+
+`dplyr::rename()` takes a comma-separated list of unquoted expressions. On the left-hand side of the expression, you provide the new name of the variable, on the right hand side the current column name.
+
+```{r rename}
+rename(bat_dat, Cg = Chgouldii, Cm = Chmorio)
+```
+
+## 5-minute challenge:  Renaming Variables@TODO
 
 1. Renaming variables challenge
 - I think this is in the tidyr challenge, but we could shift it here. Yes i think we should save reshaping data and some more complicated challenges for the tidy data one.
@@ -147,56 +155,44 @@ Some key window functions include:
 - also want them to remove dots, convert to underscores. same procedure, which ones had dots.
 - do this in the tidy data script
 
-# Writing sentences:
+# Writing sentences, joining verbs with pipes `%>%`
 
-Often we want to combine actions, e.g. you might want to select and filter at the same time.
+So far we've been dealing with individual functions or 'verbs', but what if we want to write sentences so-to-speak? Often we want to combine actions for example, you might want to select and filter at the same time.
 
-Making your code more readable, for future-you and other collaborators PUT THIS HERE OR PUT THIS IN A SECTION THAT BEGINS TO PIECE TOGETHER MULTIPLE DPLYR OPERATIONS?? E.g. http://seananderson.ca/2014/09/13/dplyr-intro.html
+let's look at how we would achieve selecting the first five variables in `bat_dat` and then filtering for more than 50 bat observations for both `Chgouldii` and `Chmorio`:
+```{r no-pipes}
+filter(select(bat_dat, 1:5), Chgouldii > 50, Chmorio > 50)
+```
 
-- Writing sentences, connecting your verbs: `%>%` pipe operator for connecting each operation into a pipeline.
+It's not very easy on the eye to read through these nested functions. Two sequential functions are difficult enough, imagine chaining more than 2? You could assign the first operation to a temporary object, but as your project matures your workspace can become cluttered with objects, which can be an issue if you have large amounts of data.
 
-Future-you is your closest collaborator. To make returning back to code you haven't looked at in ages a breeze, enter the pipe `%>%`.
+And now with pipes:
 
-The pipe simply passes an object on the left hand side as the first argument of a function on the right hand side. You can use them on any object within R, your object doesn't necessarily have to be a data frame. If you wish to pass the object on the left hand side as an argument other than the first, we type a `.` in place of the object within the function on the right hand side.
+```{r pipes}
+select(bat_dat, 1:5) %>%
+        filter(Chgouldii > 50, Chmorio > 50)
+```
+
+> How to read the code: say 'then' when you encounter the pipe at the end of each line.
+
+**So what is the pipe?**
+
+The pipe simply passes an object on the left hand side as the first argument of a function on the right hand side. You can use them on any class of object within R, your object doesn't necessarily have to be a data frame. If you wish to pass the object on the left hand side as an argument other than the first. 
+
+We type a `.` in place of the object within the function on the right hand side:
 
 ```
 x %>% f(y) is the same as f(x,y)
 y %>% f(x, ., z) is the same as f(x, y, z)
 ```
-Here's a trivial example to help you get an idea of how they work, we'll use pipes all throughout the remainder of the workshop.
 
-**A trivial example without pipes**
+**Why you should convert to using pipes?**
 
-```{r no-pipes}
-
-```
-
-
-**And now with pipes**
-
-```{r pipes}
-
-```
-
-How to read the code: say 'then' when you encounter the pipe at the end of each line.
-
-**WHY pipes?**
-
-Your code is more readable: 
-
-- You dont have to read your functions from the inside out, so you can observe the sequence of operations more clearly and with little effort.
-- You are less likely to create intermediate objects, so its easier to keep track of which object is the appropriate object to be working with
-
-Your code is easier to write: 
-
-- Your code is easier to type, flowing from one function to the next, just as your train of thought does
+- More readable code is easier to pick up for future-you and collaborators (no nested-functions): You dont have to read your functions from the inside out, so you can observe the sequence of operations more clearly and with little effort.
+- It is therefore easier to pin-point sources of errors! You can debug line-by-line, running each line at a time until you isolate the command that breaks the chain
+- Your code is easier to type, flowing from one function to the next, just as your train of thought does 
 - You won't miss a closing bracket when you type your code with pipes
-
-
-Your code is easier to debug: 
-
-- you can run each operation line-by-line, isolating which part of your code is failing
-
+- You are less likely to create intermediate objects, so its easier to keep track of which object is the appropriate object to be working with
 
 ### Grouped operations: Split, apply, combine operations
 
@@ -208,7 +204,7 @@ For the full list of window functions, check out the Data Manipulation with dply
 `Help > Cheatsheets > Data Manipulation with dplyr, tidyr`
 ![From the data wrangling cheatsheet](../assets/dplyr_window_function.png)
 
-*Using summary functions with `summarise()`*
+### Examples
 
 At each site, get the number of Chgouldii observations (interested in looking at effect of season)
 
