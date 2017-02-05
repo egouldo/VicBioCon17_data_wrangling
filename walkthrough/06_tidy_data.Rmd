@@ -61,7 +61,7 @@ Below are some useful rules for your variable name convention (they also often a
 - Underscores are good for double clicking in RStudio, if you want to highlight a variable name to copy and paste or surround in brackets / quotation marks, you can double-click the variable and the whole variable name will be highlighted. Only part of the variable will be highlighted if your names contain dashes.
 - Units: should be included in the variable name, unless you are using a metadata scheme (such as a metadata hader, or a separate table containing the metadata)
 
-# 5-minute Challenge: variable name convention, dealing with outputs
+#Challenge 10: variable name convention, dealing with outputs (5-minute)
 
 The variable naming for the `bat_dat` is very inconsistent, and breaks the cardinal rule of containing spaces! 
 
@@ -74,7 +74,6 @@ The variable naming for the `bat_dat` is very inconsistent, and breaks the cardi
 3. Save, commit to git, push to github
 4. Chain your renaming code to your other `bat_dat` code using a pipe
 5. source the script to update the workspace
-
 
 ```{r rename-answer}
 bat_dat %>%
@@ -145,7 +144,7 @@ species_complex_list %>%
         spread(key = species,value = code)
 ```
 
-# Challenge: Gathering and spreading
+# Challenge 11: Gathering and spreading
 
 Along with the bat observations in our `bat_dat` dataset, we have abundance counts for different insert orders.
 
@@ -156,7 +155,7 @@ We would like to create a separate dataframe for bat data, bug data, and environ
 3. Assign this to a dataframe called `bug_dat` and write this to the `./output/` folder
 4. commit, push to github (script and datafile)
 
-```{r bugs-gather-answer}
+```{r bugs-gather-answer, include=FALSE}
 bat_dat %>%
         select(Site, Habitat, Season, Col:Plec) %>%
         gather(key = insect_order, value = abundance, -Site, -Habitat, -Season)
