@@ -1,70 +1,40 @@
 # "Data Wrangling for Ecologists": Course Materials to accompany the workshop Victorian Biodiversity Conference (2017)
 
-Please note these materials are still in active development as of 4th February February 2017.
 
 [https://vicbiocon17.dryfta.com/en/](https://vicbiocon17.dryfta.com/en/)
 
 Code here is copyright of Elise Gould, 2017. 
 
-Data copyright Tanja Straka, 2016, paper doi: [doi: 10.1002/ece3.2224](doi: 10.1002/ece3.2224)
+Data copyright (2016):
+Tanja Maria Straka1,2, Pia Eloise Lentini2, Linda Faye Lumsden3, Brendan Anthony Wintle2 & Rodney van der Ree1,2
+1Australian Research Centre for Urban Ecology, Royal Botanic Gardens Victoria, c/o School of BioSciences, University of Melbourne, Melbourne, VIC, Australia
+2School of BioSciences, University of Melbourne, Melbourne, VIC, Australia
+3Department of Environment, Land, Water and Planning, Arthur Rylah Institute for Environmental Research, 123 Brown Street, Heidelberg, VIC 3084, Australia
+
+paper doi: [doi: 10.1002/ece3.2224](doi: 10.1002/ece3.2224)
 
 # About the structure of this repository, where to find what you need
 
 1. Welcome to the README, you are here.
 
-2. Getting started: setting up your software on your computer
+2. [Getting started: setting up your software on your computer](https://github.com/egouldo/VicBioCon17_data_wrangling/tree/master/getting_started)
 
-3. data: all the data files you will need for working through challenges and running through provided examples
+3. [data: all the data files you will need for working through challenges and running through provided examples](https://github.com/egouldo/VicBioCon17_data_wrangling/tree/master/data)
 
-4. 
+4. [Course content modules](https://github.com/egouldo/VicBioCon17_data_wrangling/tree/master/walkthrough)
 
-assets - you won't need this -- just for rendering the images to appear on the web in github.
+5. assets - you won't need this -- just for rendering the images to appear on the web in github.
 
-src - not needed for the workshop, but preserved her for posteritys sake. These R scripts generated some of the dataset inside the `./data/` folder. Open them up if you would like to take a look at  real-world examples of data-wrangling.
-
-
-
-- ADD LINK TO THIS REPOSOTIRY: WHERE TO FIND IT SO PARTICIPANTS CAN View the docs on their computer and follow instructions.
-
-## Bat Data Analysis Questions to explore:
-
-- whats the most common species?
-        - number of sites observed at 
-        - mean richness
-- respnse variables to explore:
-        - diversity / richness
-        - abundance / activity
-        - relative abundance (percentage of recorded calls of each species, figure 3 in Tanja's paper)
-- what "story" can we tell? what suite of questions can we put together to tell an interesting data analysis story / frame as detective work.
-
-## Code Points to learn:
-
-- data wrangling model
-- Dplyr verbs
-- Data tidying - replacing values, e.g. spelling mistakes
-- species lookup tables
-- Different types of plots:
-        - one response var + discrete predictor var
-        - one response var + continuous predictor var
-        
-        
-### Todos:
-
-- Aptitude / confidence survey for participants (decide where to pitch and cutoff content)
-- Instructions for installing R / Rstudio and all materials
-- Wifi password?
-- schedule (survey / email)
+6. Also not needed but preserved her for my backup. These R scripts generated some of the dataset inside the `./data/` folder. Open them up if you would like to take a look at  real-world examples of data-wrangling.
 
 
-## OVERVIEW:
+
+## Workshop Overview:
 
 
 ### Workshop format and pace
 
 The pace of the workshop will be somewhat influenced by the mix of existing skillsets and experience of the other participants. That being said, all workshop materials will be made available on GitHub afterwards, just in case we don't make it through all the modules on the day or should you wish to review any content in more depth.
-
-
-
 
 The plan is to alternate between running through theory / content, using a traditional lecture set-up, and working through a series of challenge problems on your own computer. There will also be on-screen examples, to which you can follow along as we go. Each of the challenge tasks will build on the previous one, demonstrating how to step through the data-analysis life-cycle, using a real-world data-set. The examples and challenges will teach you how to implement commonly used data-manipulations in ecology using `dplyr` and `tidyr` functions, as well as best-practice workflows for managing your data. Each challenge will be reviewed as a group before moving onto the next module.
 
