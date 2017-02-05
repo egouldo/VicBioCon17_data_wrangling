@@ -1,32 +1,34 @@
 ---
-title: "tidy_data"
+title: "Making Data Tidy"
 author: "Elise Gould"
 date: "24/01/2017"
 output: github_document
 ---
 
-## What is data tidying:
+```{r "setup", include=FALSE}
+require("knitr")
+library('tidyverse')
+opts_knit$set(root.dir = "../")
+```
 
-Wickham, H. (2014) Tidy data. Journal of Statistical Software. 59 (10).
-
-'The act of structuring datasets to facilitate analysis'
-
-Note that 'data preparation is not just a first step, but has to be repeated many times over the course of analysis as new problems come to light, or new data is collected'
-
-## What is tidy data?
-
-Tidy data is a consistent way to organise your data in R. Today we'll focus on the practicalities of making yoru data tidy. For more detail on the underlying theory, Hadley's paper: [http://www.jstatsoft.org/v59/i10/paper](http://www.jstatsoft.org/v59/i10/paper).
-
-It's a standard that makes initial data cleaning easier, it facilitates initial exploration and analysis of the data.
-
-tidy data and tidy tools. Tidy tools take tidy data as their input, and return new outputs that are also tidy.
-
-**The basics:**
+```{r eval=TRUE, echo=FALSE, include=FALSE}
+bat_dat <- readr::read_csv("./data/bat_dat.csv")
+```
 
 
-'tidy datasets provide a standardised way to link the structure of a dataset (its physical layout) with its semantics (its meaning).' Wickham, H. (2014) Tidy data. Journal of Statistical Software. 59(10).
+## Tidy data and tidying data
 
-"rows" and "columns" are not good enough to describe the semantic structure of tabular data. because if you transpose the table, you have a different appearance / layout.
+Now you have a suite of tools for tidying your data. But let's take a step back and consider what this process is and why we do it. Wickham (2004) defines this as 'The act of structuring datasets to facilitate analysis.'
+
+Preparing our data for analysis is not just a first step, but occurs many times over during the course of analysis, as new problems come to light. This is because different analysis questions require differently structured data. But no matter the exact layout of your data is, the data wrangling tools require that your data be *tidy*.
+
+Tidy data is simply put, a consistent way to organise your data in R. It's a standard that makes initial data cleaning easier, it facilitates initial exploration and analysis of the data.
+
+Tidy data and tidy tools: Tidy tools take tidy data as their input, and return new outputs that are also tidy. So if you'd like to use tools such as ggplot, you'll need to know about tidy data.
+
+## Defining tidy data:
+
+'tidy datasets provide a standardised way to link the structure of a dataset (its physical layout) with its semantics (its meaning)', Wickham (2014). See Wickham's paper for a much more thorough treatment of this concept.
 
 A dataset is a collection of values, variables, and observations.
 
@@ -40,120 +42,165 @@ A dataset is a collection of values, variables, and observations.
 - Each observation has its own row.
 - Each value has its own cell.
 
-If you want more details on this, ready hadley's tidy data paper.
+## Why keeping tidy data is important in ecology / conservation
 
-## Why is tidy data important / useful?
+Tidy data is not just useful for analysis, but it can facilitate meta-analyses and longitudinal studies, which prevents expensive and time-consuming data collection from going to waste. In applied ecology and conservation, in particular, we are often data-deficient in terms of understanding responses of management interventions. It is therefore really important that this data be collected and stored in a format that is re-usable and easily understood.
 
-also, ggplot2 works with tidy data, and so does dplyr... so we may as well make our data tidy!
+For more selfish reasons, knowing about tidy data is also useful when planning future field surveys. By knowing the number of samples you plan to take, as well as the design of the survey in terms of hierarchy, and the different response / predictor variables you are sampling, then you can have your empty CSV file ready to go and fill in the file as you record the data.
 
-and NOT just for any data analysis with R, why is it SPECIFICALLY important in ecology / conservation.
+## Variable naming convention, and `rename`ing variables
 
-see the other papers on tidy data and ecology about it facilitating reproducibility and meta-analysis. Or facilitates longitudinal study... revisiting sites, for example.
+A very important aspect of tidy data, is having variable names that are descriptive, and that follow a consistent convention.
 
-Knowing about tidy data is also really important when you are planning future field surveys. By knowing the number of samples you plan to take, as well as the design of the survey in terms of hierarchy, and the different response / predictor variables you are sampling, then you can have your empty CSV file ready to go and fill in the file as you record the data.
+Below are some useful rules for your variable name convention (they also often apply for object names and file names):
 
-each row is a single observation, each column a single variable or type of measurement.
-One column for each type of informaiton. EXCEPT, cross-tab structure data, where columns contain measurements of the same variable (e.g. in differen sites, treatments). Nah, should keep it long I reckon.
-single value per cell (i.e. no units in the cell) You can put the units into a metadata file.
-break taxonomic information up into single components, with one column each for family, genus, species, subspecies, etc. Helps having to split strings later, BUT, is do-able with dplyr.
+- NO spaces for variable names, otherwise you have to use back-ticks
+- No caps, and no CamelCaseing: this will mitigate against case-matching errors.
+- if you are dealing with species names, it's better to keep a separate table with a variable name or code column and its corresponding taxonomic details in the other columns. You can use dplyr's `_join` functionality to merge the datasets together.
+- use underscores, or dots for spaces between words. Use one or the other.
+- Underscores are good for double clicking in RStudio, if you want to highlight a variable name to copy and paste or surround in brackets / quotation marks, you can double-click the variable and the whole variable name will be highlighted. Only part of the variable will be highlighted if your names contain dashes.
+- Units: should be included in the variable name, unless you are using a metadata scheme (such as a metadata hader, or a separate table containing the metadata)
 
-### NULL VALUES
-NULL vs. MISSING values. Most ecological data sets contain missing or empty data values.
-NA, 0. See hadleys guide.
+# 5-minute Challenge: variable name convention, dealing with outputs
 
-### Contextual data
+The variable naming for the `bat_dat` is very inconsistent, and breaks the cardinal rule of containing spaces! 
 
-"Ecological and evolutionary data are often combined with other kinds of data. You can make it easier to com- bine your data with other data sources by including con- textual data that appears across similar data sources. Two of the most common kinds of contextual data in ecology and evolution are taxonomy and geographic location. While this type of data is known and recorded in most studies (e.g, in field notebooks, on maps) it is frequently not included with the data. In general, if you have collected additional data or notes about a study organism or field site, there is a good chance that it will be useful to someone else, so including it with your data when you share it is a good idea. This kind of informat- ion can be included either as part of the data itself (e.g., in a new column or an additional table) or can be includ- ed in the metadata (e.g., the geographic location of the study site). For geographic data it is also important to include the datum (e.g., WGS-84) and sufficient précis- ion (e.g., 4 decimals places if using decimal degrees) to allow the data to be combined with other geographic datasets." White, E., Baldridge, E., Brym, Z., Locey, K., McGlinn, D., Supp, S. (2013) Nine simple ways to make it easier to (re)use your data. IEE. 6, 1–10.
+1. In your `01_tidy_data.R` script, use the `dplyr::rename()` function to fix the variable names in the dataframe such that they adhere to the following variable naming ruleset:
+- Replace spaces with underscores
+- Replace dots with underscores (ignore `Scottspp.`)
+- Replace forward slashes with underscores
+> Hint: identify variables with spaces, dots and dashes interactively using the `glimpse()` function, or programmatically using `select()` and `contains()` inside the console.
+2. Write the file as a CSV file to the correct folder in the project directory. Hint: return to the [data import module](./04_data-import.Rmd) to find the correct function for doing so.
+3. Save, commit to git, push to github
+4. Chain your renaming code to your other `bat_dat` code using a pipe
+5. source the script to update the workspace
 
-# Home Challenge (MOVE TO TIDY DATA MODULE)
+
+```{r rename-answer}
+bat_dat %>%
+        rename(water_depth = `Water Depth`,
+               Imp_5km = `Imp 5km`,
+               Trees_5km = `Trees 5km`,
+               Trees_total_plot = `Trees total.plot`,
+               TreesLarge_20dbh_plot = `TreesLarge>20dbh.plot`,
+               TreesSmall_20dbh_plot = `TreesSmall<20dbh.plot`,
+               Trees_total_plot = `Trees total.plot`,
+               Shrubs_plot = Shrubs.plot,
+               Hollows_total = Hollows.total,
+               CG_Mormlp = `CG/Mormlp`,
+               Nspp_Mmacr = `Nspp/Mmacr`)
+```
+
+
+# Reshaping data
+
+## Separating and Uniting
+
+Check out the species_complex_list.csv file in `./data/`.
+```{r species-complex-list-import}
+species_complex_list <- read_csv("./data/species_complex_list.csv")
+species_complex_list
+```
+
+Imagine we wish to compact the genus and species columns into a single variable, we use `tidyr::unite()`.
+
+- The first argument is the name of the new column name we wish to create.
+- Then list as many variable names as you wish: these will be united.
+- next provide a separator to `sep`
+- If you wish to remove the original column, set it to `TRUE`, otherwise set to `FALSE`.
+
+```{r unite}
+species_complex_list %>%
+        unite(species, genus, species, sep = " ", remove = TRUE)
+```
+
+To convert back, we simply use separate:
+```{r separate}
+species_complex_list %>%
+        unite(species, genus, species, sep = " ", remove = TRUE) %>%
+        separate(col = species, into = c("genus", "species"),sep = " ",remove = TRUE)
+```
+
+## gather and spread: wide to long, messy to tidy and back again.
+
+Often our data isn't in a good form for answering our analysis question. Imagine you wanted to ask, at each site, which bat species/complex had the most observations? Having the bat species as columns doesn't make this question easy to answer. We can use the `gather()` function from `tidyr` to reshape the data.
+
+`gather()` gathers columns into rows. The argument `key` is the new column name where the variables will be placed into, and the argument `value` is the corresponding column name where all the values inside the columns that will be gathered go. Additional arguments using the negative operator are used to tell gather which sites *not* to gather.
+
+```{r gather}
+bat_dat %>%
+        select(1:17) %>%
+        gather(key = species, value = activity_species, - Habitat, - Site, - Season)
+```
+
+*Spreading*
+
+Sometimes one observation might be sprad across multiple rows.
+
+Let's return to the `species_complex_list object`.  Imagine we are creating a table for a report, and we want the code names as column names as the species names as observations or values.
+
+```{r spread}
+species_complex_list %>% 
+        unite(species, genus, species, sep = " ",remove = TRUE) %>% 
+        spread(key = species,value = code)
+```
+
+# Challenge: Gathering and spreading
+
+Along with the bat observations in our `bat_dat` dataset, we have abundance counts for different insert orders.
+
+We would like to create a separate dataframe for bat data, bug data, and environmental variables. And we would like them tidied with `tidyr::gather()` so that we the insect order variables are in a column called `insect_order` and the values are in a column called `abundance`.
+
+1. Within the script `01_tidy_data.R`, Subset the dataset to include the three fixed variables, `Site`, `Habitat`, `Season`, and all the insect order variables from `Col` to `Plec`.
+2. Use `tidyr::gather()` to create the `insect_order` and `abundance` columns.
+3. Assign this to a dataframe called `bug_dat` and write this to the `./output/` folder
+4. commit, push to github (script and datafile)
+
+```{r bugs-gather-answer}
+bat_dat %>%
+        select(Site, Habitat, Season, Col:Plec) %>%
+        gather(key = insect_order, value = abundance, -Site, -Habitat, -Season)
+```
+
+## Tidy Data for Ecology: structuring data with a hierarchical survey design.
+
+Ecological data is often hierarchical because our surveys are. Our sampling is often nested and / or stratified acording to environmental co-variates.
+
+Working from left to right, a good way to format your data is to begin with the sampling units in the first few columns, working from your largest sampling unit, to your smallest sampling unit or observation. The order of variables, and of observations does not affect analysis, a good ordering makes it easier to scan the raw values. We can organise variables based on their role in the analysis, i.e. whether they are fixed by the design of the data collection, or whether they are measured during the course of the experiment. I think htis is a most natural way of thinking about ecological datasets in particular, when we have some hierarchical structure of the data. Fixed variables are always known in advance. Measure variables are those we measure in the study.
+
+Note this is good for thinking about `key-vars` and `measure-vars` when gathering and separating data. Fixed variables should always come first, followed by measured variables. Each should be ordered so that related variables are contiguous. (p5, Wickham, 2014).
+
+### Relational data: one unified dataset divided among multiple dataframes
+
+When do you need multiple tables / relational dataframes? Separate dataframes might be useful if during data collation / transcription, you are writing the same observation more than once, i.e. some variable for a sampling unit / replicate that is higher up the hierarchy than the smallest level of observation.
+
+For example, take a look at the the environmental variables at the first two sites, notice that values are replicated.  This is because there are two entries per site because each site was sampled twice over different seasons. However, for each site there are only one set of distinct observations for each envonmental variable.
+```{r}
+bat_dat %>% 
+        slice(1:4) %>% 
+        select(1:3, Moon:Humidity)
+```
+If you were entering this data by hand using this structure here, you would likely make errors in typing or copying and pasting. In fact, I did find this error when playing around with this dataset, a decimal place had been dropped for several rows.
+
+It is better to avoid this situation to begin with. One solution is to have *multiple*, *relational* data frames. 
+
+That is a series of data frames that comprise one single dataset, and that link to each other through a fixed set of variables. They should be determined by both logical divisions, and the structure of the data.
+
+So for the bat dataset, we might like to have three datasets, though only two are necessary (bats/bugs and site data)
+
+1. Bat data, containing only the observations pertianing to bats
+2. Bug data, containing only the observations pertaining to insects
+3. An environmental covariate dataset, containing information about each site
+
+### Home Challenge
 
 Consider a project requiring data analysis in R that you are currently working on.
 
 - If you have already collected the data, what shape or structure is the data in? Is it 'tidy'? I.e. does each column represent a unique variable, and each row an observation?
-- If you havent collected any data yet, consider the experimental design of your surveys. List any variables you are measuring / recording in the field. What is the smallest unit of sampling in your survey design? What constitutes a replicate, or a pseudo-replicate? What is the largest unit of sampling in your survey design? What constitutes a single 'observation'? Is the number of observations per sampling unit static or dynamic (i.e. changes depending on what species are inside your sampling unit)? Are you able to design the layout of your 'tidy' data frame.
+- If you haven't collected any data yet, consider the experimental design of your surveys / experiment. List any variables you are measuring / recording in the field. What is the smallest unit of sampling in your survey design? What constitutes a replicate, or a pseudo-replicate? What is the largest unit of sampling in your survey design? What constitutes a single 'observation'? Is the number of observations per sampling unit static or dynamic (i.e. changes depending on what species are inside your sampling unit)? Are you able to design the layout of your 'tidy' data frame.
 
-Structuring data with a hierarchical survey design.
+# References
 
-Ecological data is often hierarchical because our surveys are.
+Wickham, H. (2014) Tidy data. Journal of Statistical Software. 59 (10). URL: [http://www.jstatsoft.org/v59/i10/paper](http://www.jstatsoft.org/v59/i10/paper).
 
-Working from left to right, a good way to format your data is to begin with the sampling units in the first few columns, working from your largest sampling unit, to your smallest sampling unit or observation. As hadley says in his tidy data paper: the order of variables, and of observations does not affect analysis, a good orderin gmakes it easier to scan the raw values. We can organise variables based on their role in the analysis, i.e. whether they are fixed by the design of the data collection, or whether they are measured during the course of the experiment. I think htis is a most natural way of thinking about ecological datasets in particular, when we have some hierarchical structure of the data. Fixed variables are always known in advance. Measure variables are those we measure in the study.
-Note this is good for thinking about key-vars and measure-vars when gathering and separating data. Fixed variables should always come first, followed by measured variables. Each should be ordered so that related variables are contiguous. (p5, Wickham, H. (2014) Tidy data. Journal of Statistical Software. 59(10)).
-
-When do you need multiple tables / relational dataframes? If in your tidy dataframe you are writing the same observation more than once, i.e. some variable for a sampling unit / replicate that is higher up the hierarchy than the smallest level of observation. I.e. if you have multiple observations for the smallest replicate, then any variable describing the replicate / sampling unit, will have to be repeated for each observation... This is superfluous, and can cause errors during transcription, so is best to be avoided. It is worth having a second, or even third table for a set of variables describing each level of sampling. Provide example of such structure.
-
-
-### Gather and Spread: wide to long, messy to tidy and back again.
-
-issue: column headers are values, not variables names
-
-pp 5 - 6:
-Often datasets are designed for presentation, rather than for analysis, and so column headers are actually values not variables names.
-Sometimes we don't actually want tidy data. In some cases it can be useful in messy form. It can be stored efficiently for, say completely crossed designs, and can be useful for certain matrix operations.
-Data might not be 'tidy' when we transcribe it from our field data sheets to digital spreadsheets / csv's because its tedious to repeatedly type some variables out. 
-
-Reasons when to use other non-tidy data strucutres (from R4ds):
-
-1. alternative representations have substantial performance or space advantages
-2. specialised fields have evolved their own conventions for storign data that may be quite different to the conventions of tidy data.
-
-See Jeff leeks post on non-tidy data: http://simplystatistics.org/2016/02/17/non-tidy-data/
-
-what do we do when we want our data tidy, but its easier to capture it messy / wide?
-
-*Gathering/Melting*
-
-when one variable might be spread across multiple columns (i.e. common headers are values not variable names).
-We 'melt' or 'gather it by turning columns into rows, this is oft called making datasets long. But this term is imprecise.
-
-
-
-*Spreading/Casting*
-
-One observation might be spread across multiple rows.
-
-*Gather and Spread are not symmetrical*
-
-
-
-# COLLATING AND CAPTURING YOUR OWN DATA
-
-## Transcribing your data
-
-### Why it is often good to have a relational database or colection of dataframes rather than a single "tidy" dataframe
-
-- a site versus observation dataframe - provide the example in this bat data of finding errors dont want to be transcribing or copying and pasting values when recording data EVER. This can happen when you have multiple observations per sampling unit that depend on what's present. OR in this case when you have repetitive sampling through time... multiple visits at a site.. the site variables dont change necessarily. So you have to enter them by hand twice.
-
-NA's vs missing values: NAs should be written as `NA` truly missing data and 0.
-
-## Metadata
-describe the project, file contents, location, date. Dont add a version, because this will be covered by version control system. Not sold on adding initials to the file name, because i think good metadata practice can cover this.
-
-
-
-
-
-## Filenames, object names, variable names
-
-A note on good naming convention
-
-NO spaces for variable names (doesnt work for object names, spaces in filepaths dont always work when you want to read or write).
-
-Variable (Column) names: be consistent in your style: no caps, typos.. unless you are dealing with species names perhaps, but even then better to keep lowercase, and use a species list with a key-column as the variable names to match agains, should you need. @TODO insert link to species lists challenge.
-- use underscore for spaces between words, 
-- units: good to include in the variable name, unless you are using a metadata scheme with such information (advanced: CSVY with units, or basic: a metadata dataframe) Underscores are good for double clicking in RSTudio and bash, ifyou want to highlight something to copy and paste or surround in brackets, quotaiton marks, you can double click the variable and the whole thing will highlight, wont highlight the full thing if you have dashes.)
-BACKTICKS problem ... annoying and removes the efficiency of dplyr: can't use bare variables.
-- dont forget to 'tab across in RStudio when you forget the name.
-
-Add links to Google convention
-
-
-# 5-minute Challenge: variable name convention, dealing with outputs
-
-1. In your `01_tidy_data.R` script, use the `dplyr::rename()` function to fix the variable names in the dataframe such that they adhere to a variable-namimg ruleset.
-2. Use the sample ruleset above, or use your own -- just be consistent.
-3. Write the file as a CSV file to the correct folder in the project directory. Hint: return to the [data import module](./04_data-import.Rmd) to find the correct function for doing so.
-3. Save, commit to git.
-4. Source the script, commit the CSV file to git
-5. Push all changes to GitHub
-
-
+When not to use tidy data: See Jeff leeks post on non-tidy data: http://simplystatistics.org/2016/02/17/non-tidy-data/
