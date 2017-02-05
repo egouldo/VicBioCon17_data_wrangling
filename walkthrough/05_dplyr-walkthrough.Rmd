@@ -252,7 +252,7 @@ bat_dat %>%
         arrange(Season, bin_Cg)
 ```
 
-# 5-minute challenge: Type coercing
+#Challenge 8: Type coercing (5-minutes)
 
 When we imported our bat data earlier, we explicitly coerced some columns to factors but not all of the categorical variables that needed to be converted.
 
@@ -276,7 +276,7 @@ bat_dat <-
 3. Save your script, commit, push to GitHub.
 4. Source your script to update `bat_dat` in your workspace
 
-# 5-minute challenge: Fixing errors, replacing values
+#Challenge 9: Fixing errors, replacing values (5-minute)
 
 Your colleague has spotted a typo in one of the `Site` names. It should be `"Ferny Creek"` not `"Ferny Crrek"`.
 1. Fix this mistake using `mutate()` and `replace()` (though you could use an `ifelse()` statement if you are confident)
