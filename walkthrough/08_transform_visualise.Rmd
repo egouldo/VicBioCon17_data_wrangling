@@ -2,7 +2,10 @@
 title: "Chapter 7: transform & visualise"
 author: "Elise Gould"
 date: "03/02/2017"
-output: github_document
+output: 
+  html_document: 
+    fig_caption: yes
+    keep_md: yes
 ---
 
 ```{r include=FALSE, eval=TRUE}

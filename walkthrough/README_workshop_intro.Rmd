@@ -2,7 +2,10 @@
 title: "README: welcome to the workshop"
 author: "Elise Gould"
 date: "03/02/2017"
-output: github_document
+output: 
+  html_document: 
+    fig_caption: yes
+    keep_md: yes
 ---
 
 # About the structure of this workshop

@@ -2,7 +2,10 @@
 title: "Getting your data into R"
 author: "Elise Gould"
 date: "17/01/2017"
-output: github_document
+output: 
+  html_document: 
+    fig_caption: yes
+    keep_md: yes
 ---
 
 ```{r "setup", include=FALSE}

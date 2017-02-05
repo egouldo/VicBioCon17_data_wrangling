@@ -2,7 +2,10 @@
 title: "Lesson 2: version control for the solo-analyst with git and GitHub"
 author: "Elise Gould"
 date: "24/01/2017"
-output: github_document
+output: 
+  html_document: 
+    fig_caption: yes
+    keep_md: yes
 ---
 
 
