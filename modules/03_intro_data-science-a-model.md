@@ -1,0 +1,59 @@
+# A conceptual model of data analysis
+Elise Gould  
+09/01/2017  
+
+# A framework for data analysis
+
+So what is data wrangling and how does it fit into a broader framework of data analysis / or what others might call data science?
+
+To answer the first question, it is easier to start with the second. Almost all data analysis problems can fit into the workflow below.
+
+![A conceptual model of data science by Hadley Wickham: http://r4ds.had.co.nz/diagrams/data-science.png](../assets/data-science.png)
+
+**1. Import** We need to get our data into R to be able to do any analysis on it using R. This involves importing the data, which is usually stored in a file, database, or perhaps on a web-based API. We will focus on using data stored in a text-file for this course.
+
+Structure of data in Ecology and Conservation... relational data.... 
+
+**2. Tidy** 
+
+Tidying our data doesn't simply mean ensuring that there are no errors that might have occurred during the data capture / transcription stage. "Tidy" data means that it is stored with a consistent structure that matches "the semantics of the dataset." We will explore this in more detail later. But for now, tidy data is stored such that each column is a variable, and each row is an 'observation.' Hadley argues that tidy data allows you to focus on understanding your data and dealing with pertinent questions of your data rather than on constantly shaping it.
+
+
+**3. Transform**
+
+Once we have tidy data, we must transform it. Transforming data could include any of the following actions:
+
+- Focusing in on individual observations of interest, such as all observations for a particular response variable, like diversity, at a single transect.
+- Computing summary variables, such as counts, or means. An example of a count variable might be the diversity of some group of target species at a quadrat, like number of different bat species. If we sampled multiple quadrats at a site, perhaps we might like to take the mean and standard deviation of bat diversity across all quadrats to account for any spatial heterogeneity.
+- Creating new variables that are functions of existing variables, perhaps because you wish to change the scale or units of an existing variable.
+
+**4. Knowledge Generation: Visualise**
+
+Visualisations can highlight unexpected observations, or new questions about the data. It can also tell you whether you need to collect more or even different data. 
+
+*5. Knowledge Generation: Model*
+
+Modeling requires that our analysis questions are precise before we can choose what and how to model. We are going to skip this step in this workshop. If you wish to learn about modelling, check out  [Hadley's chapter on modelling in R for Data Science](http://r4ds.had.co.nz/model-intro.html).
+
+**6. Communicate**
+
+This is arguably the most important step of data analysis. Today we will be writing our code within Rmarkdown documents, which allow us to mix code and text to tell a bit of a story about bats in urban Melbourne.
+
+**Aren't we forgetting about data capture?**
+
+yes! This is an important step in dealing with ecological data that is often overlooked in most resources dealing with data science or data-analysis in R. In ecology data is often recorded by hand on field-sheets, and transcribed into a digital copy at a later date. By following the tidy data convention, and other good rules for capturing or collating data, you can minimise the time and difficulty in tidying and cleaning your data before your analysis begins.
+
+
+##  Multiple iterations thorugh the cycle.
+
+Often we have different analysis questions we would like to answer because we are building an understanding of our dataset with different questions, or perhaps using different sets of tools. So stepping through this cycle is not a singular linear iteration through this cycle from start to finish, but rather a messy repetetitious cycling through these different steps. For example, we often need to transform our data differently to answer different questions.
+
+Also, we can use modelling and visualisation as our tools to understand our data, but each is complementary in that they have different strengths and weaknesses, so we need to do both. And in doing so, we might need to iterate through the cycle again (This idea is hadley's.)
+
+
+# Challenge 3 (1-minute):
+
+1. Open a new RScript, save it as `01_tidy_data.R` in the root project directory.
+2. Write an informative document title using the comment function (start line with `#` symbol)
+3. Load all the tidyverse libraries within the script.
+4. Save the script, make a commit with a good commit message and push to GitHub.

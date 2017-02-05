@@ -1,0 +1,361 @@
+# Making Data Tidy
+Elise Gould  
+24/01/2017  
+
+
+
+
+
+
+## Tidy data and tidying data
+
+Now you have a suite of tools for tidying your data. But let's take a step back and consider what this process is and why we do it. Wickham (2004) defines this as 'The act of structuring datasets to facilitate analysis.'
+
+Preparing our data for analysis is not just a first step, but occurs many times over during the course of analysis, as new problems come to light. This is because different analysis questions require differently structured data. But no matter the exact layout of your data is, the data wrangling tools require that your data be *tidy*.
+
+Tidy data is simply put, a consistent way to organise your data in R. It's a standard that makes initial data cleaning easier, it facilitates initial exploration and analysis of the data.
+
+Tidy data and tidy tools: Tidy tools take tidy data as their input, and return new outputs that are also tidy. So if you'd like to use tools such as ggplot, you'll need to know about tidy data.
+
+## Defining tidy data:
+
+'tidy datasets provide a standardised way to link the structure of a dataset (its physical layout) with its semantics (its meaning)', Wickham (2014). See Wickham's paper for a much more thorough treatment of this concept.
+
+A dataset is a collection of values, variables, and observations.
+
+- Values are usually either numbers (if quantitative), or strings (if qualitative). They are organised in two ways:
+- Every value belongs to a variable: A variable is contains all values that measure the same underlying attribute (e.g. height, temp, duration) across units.
+- AND an observation: An observation contains all values measured on the same unit, which could be a person, a day etc. across attributes or variables.
+
+*Appearance / layout of tidy data*
+
+- Each variable is represented by a single column.
+- Each observation has its own row.
+- Each value has its own cell.
+
+## Why keeping tidy data is important in ecology / conservation
+
+Tidy data is not just useful for analysis, but it can facilitate meta-analyses and longitudinal studies, which prevents expensive and time-consuming data collection from going to waste. In applied ecology and conservation, in particular, we are often data-deficient in terms of understanding responses of management interventions. It is therefore really important that this data be collected and stored in a format that is re-usable and easily understood.
+
+For more selfish reasons, knowing about tidy data is also useful when planning future field surveys. By knowing the number of samples you plan to take, as well as the design of the survey in terms of hierarchy, and the different response / predictor variables you are sampling, then you can have your empty CSV file ready to go and fill in the file as you record the data.
+
+## Variable naming convention, and `rename`ing variables
+
+A very important aspect of tidy data, is having variable names that are descriptive, and that follow a consistent convention.
+
+Below are some useful rules for your variable name convention (they also often apply for object names and file names):
+
+- NO spaces for variable names, otherwise you have to use back-ticks
+- No caps, and no CamelCaseing: this will mitigate against case-matching errors.
+- if you are dealing with species names, it's better to keep a separate table with a variable name or code column and its corresponding taxonomic details in the other columns. You can use dplyr's `_join` functionality to merge the datasets together.
+- use underscores, or dots for spaces between words. Use one or the other.
+- Underscores are good for double clicking in RStudio, if you want to highlight a variable name to copy and paste or surround in brackets / quotation marks, you can double-click the variable and the whole variable name will be highlighted. Only part of the variable will be highlighted if your names contain dashes.
+- Units: should be included in the variable name, unless you are using a metadata scheme (such as a metadata hader, or a separate table containing the metadata)
+
+#Challenge 10: variable name convention, dealing with outputs (5-minute)
+
+The variable naming for the `bat_dat` is very inconsistent, and breaks the cardinal rule of containing spaces! 
+
+1. In your `01_tidy_data.R` script, use the `dplyr::rename()` function to fix the variable names in the dataframe such that they adhere to the following variable naming ruleset:
+- Replace spaces with underscores
+- Replace dots with underscores (ignore `Scottspp.`)
+- Replace forward slashes with underscores
+> Hint: identify variables with spaces, dots and dashes interactively using the `glimpse()` function, or programmatically using `select()` and `contains()` inside the console.
+2. Write the file as a CSV file to the correct folder in the project directory. Hint: return to the [data import module](./04_data-import.Rmd) to find the correct function for doing so.
+3. Save, commit to git, push to github
+4. Chain your renaming code to your other `bat_dat` code using a pipe
+5. source the script to update the workspace
+
+
+```r
+bat_dat %>%
+        rename(water_depth = `Water Depth`,
+               Imp_5km = `Imp 5km`,
+               Trees_5km = `Trees 5km`,
+               Trees_total_plot = `Trees total.plot`,
+               TreesLarge_20dbh_plot = `TreesLarge>20dbh.plot`,
+               TreesSmall_20dbh_plot = `TreesSmall<20dbh.plot`,
+               Trees_total_plot = `Trees total.plot`,
+               Shrubs_plot = Shrubs.plot,
+               Hollows_total = Hollows.total,
+               CG_Mormlp = `CG/Mormlp`,
+               Nspp_Mmacr = `Nspp/Mmacr`)
+```
+
+```
+## # A tibble: 188 × 83
+##           Site Habitat Season Chgouldii Chmorio CG_Mormlp MormII Mschocean
+##          <chr>   <int>  <int>     <int>   <int>     <int>  <int>     <int>
+## 1  Albert Park       1      1       151       0         6      0         0
+## 2  Albert Park       1      2        38       2         1      0         1
+## 3        Amber       1      1         3      10         0      0         0
+## 4        Amber       1      2         6       9         1      0         0
+## 5        Avoca       1      1         0       0         0      0         0
+## 6        Avoca       1      2        13      72         1      0         0
+## 7        Banjo       1      1        52       3         0      0         0
+## 8        Banjo       1      2        17       0         1      0         0
+## 9    Blackburn       1      1       117       1         7      1         0
+## 10   Blackburn       1      2         0       1         0      0         0
+## # ... with 178 more rows, and 75 more variables: Nyctspp <int>,
+## #   Mmacropus <int>, Nspp_Mmacr <int>, Scotspp. <int>, Taustralis <int>,
+## #   Vdarlingtoni <int>, Vregulus <int>, Vvulturnus <int>,
+## #   Unidentified <int>, BatSpecies <int>, BatActivity <int>, Col <int>,
+## #   Dip <int>, Eph <int>, Hem <int>, Lep <int>, Hym <int>, Tri <int>,
+## #   Manto <int>, Psoc <int>, Orth <int>, Neur <int>, Derm <int>,
+## #   Bla <int>, Iso <int>, Odo <int>, Plec <int>, Insectabundance <int>,
+## #   TotalOrder <int>, Moon <int>, NatEx <int>, Bioregion <int>,
+## #   Size <dbl>, SQQ <dbl>, water_depth <dbl>, Imp_5km <dbl>, Imp2km <dbl>,
+## #   Imp1km <dbl>, Imp500m <dbl>, NDVI2km <dbl>, NDVI1km <dbl>,
+## #   NDVI500m <dbl>, Trees_5km <int>, Trees2km <int>, Trees1km <int>,
+## #   Trees500m <int>, House500 <dbl>, House1km <dbl>, House2km <dbl>,
+## #   House5km <dbl>, Light500m <dbl>, Light1km <dbl>, Light2km <dbl>,
+## #   Light5km <dbl>, Road500m <dbl>, Road1km <dbl>, Road2km <dbl>,
+## #   Road5km <dbl>, Distriver <dbl>, Distwetland <dbl>, Distwater <dbl>,
+## #   Distbushland <dbl>, Aqvegcov <dbl>, EphemVeg <dbl>,
+## #   TreeCoverage <dbl>, TreesLarge_20dbh_plot <int>,
+## #   TreesSmall_20dbh_plot <int>, Trees_total_plot <int>,
+## #   Shrubs_plot <int>, Hollows_total <int>, Otherroostsnumber.total <int>,
+## #   TotalRoost <int>, Distance1sttree <dbl>, Temp <dbl>, Humidity <dbl>
+```
+
+
+# Reshaping data
+
+## Separating and Uniting
+
+Check out the species_complex_list.csv file in `./data/`.
+
+```r
+species_complex_list <- read_csv("./data/species_complex_list.csv")
+```
+
+```
+## Parsed with column specification:
+## cols(
+##   code = col_character(),
+##   type = col_character(),
+##   genus = col_character(),
+##   species = col_character()
+## )
+```
+
+```r
+species_complex_list
+```
+
+```
+## # A tibble: 13 × 4
+##     code    type        genus            species
+##    <chr>   <chr>        <chr>              <chr>
+## 1     Aa species  Austronomus          australis
+## 2     Cg species Chalinolobus            gouldii
+## 3     Mp species  Mormopterus          planiceps
+## 4    Moo species  Miniopterus orianae oceanensis
+## 5     Sc species  Scotorepens               spp.
+## 6     Cm species Chalinolobus              morio
+## 7     Vd species   Vespadelus        darlingtoni
+## 8     Vr species   Vespadelus            regulus
+## 9     Vv species   Vespadelus          vulturnus
+## 10    Mm species       Myotis           macropus
+## 11    Ny species  Nyctophilus               spp.
+## 12  CgMp complex Chalinolobus            gouldii
+## 13  CgMp complex  Mormopterus          planiceps
+```
+
+Imagine we wish to compact the genus and species columns into a single variable, we use `tidyr::unite()`.
+
+- The first argument is the name of the new column name we wish to create.
+- Then list as many variable names as you wish: these will be united.
+- next provide a separator to `sep`
+- If you wish to remove the original column, set it to `TRUE`, otherwise set to `FALSE`.
+
+
+```r
+species_complex_list %>%
+        unite(species, genus, species, sep = " ", remove = TRUE)
+```
+
+```
+## # A tibble: 13 × 3
+##     code    type                        species
+## *  <chr>   <chr>                          <chr>
+## 1     Aa species          Austronomus australis
+## 2     Cg species           Chalinolobus gouldii
+## 3     Mp species          Mormopterus planiceps
+## 4    Moo species Miniopterus orianae oceanensis
+## 5     Sc species               Scotorepens spp.
+## 6     Cm species             Chalinolobus morio
+## 7     Vd species         Vespadelus darlingtoni
+## 8     Vr species             Vespadelus regulus
+## 9     Vv species           Vespadelus vulturnus
+## 10    Mm species                Myotis macropus
+## 11    Ny species               Nyctophilus spp.
+## 12  CgMp complex           Chalinolobus gouldii
+## 13  CgMp complex          Mormopterus planiceps
+```
+
+To convert back, we simply use separate:
+
+```r
+species_complex_list %>%
+        unite(species, genus, species, sep = " ", remove = TRUE) %>%
+        separate(col = species, into = c("genus", "species"),sep = " ",remove = TRUE)
+```
+
+```
+## Warning: Too many values at 1 locations: 4
+```
+
+```
+## # A tibble: 13 × 4
+##     code    type        genus     species
+## *  <chr>   <chr>        <chr>       <chr>
+## 1     Aa species  Austronomus   australis
+## 2     Cg species Chalinolobus     gouldii
+## 3     Mp species  Mormopterus   planiceps
+## 4    Moo species  Miniopterus     orianae
+## 5     Sc species  Scotorepens        spp.
+## 6     Cm species Chalinolobus       morio
+## 7     Vd species   Vespadelus darlingtoni
+## 8     Vr species   Vespadelus     regulus
+## 9     Vv species   Vespadelus   vulturnus
+## 10    Mm species       Myotis    macropus
+## 11    Ny species  Nyctophilus        spp.
+## 12  CgMp complex Chalinolobus     gouldii
+## 13  CgMp complex  Mormopterus   planiceps
+```
+
+## gather and spread: wide to long, messy to tidy and back again.
+
+Often our data isn't in a good form for answering our analysis question. Imagine you wanted to ask, at each site, which bat species/complex had the most observations? Having the bat species as columns doesn't make this question easy to answer. We can use the `gather()` function from `tidyr` to reshape the data.
+
+`gather()` gathers columns into rows. The argument `key` is the new column name where the variables will be placed into, and the argument `value` is the corresponding column name where all the values inside the columns that will be gathered go. Additional arguments using the negative operator are used to tell gather which sites *not* to gather.
+
+
+```r
+bat_dat %>%
+        select(1:17) %>%
+        gather(key = species, value = activity_species, - Habitat, - Site, - Season)
+```
+
+```
+## # A tibble: 2,632 × 5
+##           Site Habitat Season   species activity_species
+##          <chr>   <int>  <int>     <chr>            <int>
+## 1  Albert Park       1      1 Chgouldii              151
+## 2  Albert Park       1      2 Chgouldii               38
+## 3        Amber       1      1 Chgouldii                3
+## 4        Amber       1      2 Chgouldii                6
+## 5        Avoca       1      1 Chgouldii                0
+## 6        Avoca       1      2 Chgouldii               13
+## 7        Banjo       1      1 Chgouldii               52
+## 8        Banjo       1      2 Chgouldii               17
+## 9    Blackburn       1      1 Chgouldii              117
+## 10   Blackburn       1      2 Chgouldii                0
+## # ... with 2,622 more rows
+```
+
+*Spreading*
+
+Sometimes one observation might be sprad across multiple rows.
+
+Let's return to the `species_complex_list object`.  Imagine we are creating a table for a report, and we want the code names as column names as the species names as observations or values.
+
+
+```r
+species_complex_list %>% 
+        unite(species, genus, species, sep = " ",remove = TRUE) %>% 
+        spread(key = species,value = code)
+```
+
+```
+## # A tibble: 2 × 12
+##      type `Austronomus australis` `Chalinolobus gouldii`
+## *   <chr>                   <chr>                  <chr>
+## 1 complex                    <NA>                   CgMp
+## 2 species                      Aa                     Cg
+## # ... with 9 more variables: `Chalinolobus morio` <chr>, `Miniopterus
+## #   orianae oceanensis` <chr>, `Mormopterus planiceps` <chr>, `Myotis
+## #   macropus` <chr>, `Nyctophilus spp.` <chr>, `Scotorepens spp.` <chr>,
+## #   `Vespadelus darlingtoni` <chr>, `Vespadelus regulus` <chr>,
+## #   `Vespadelus vulturnus` <chr>
+```
+
+# Challenge 11: Gathering and spreading
+
+Along with the bat observations in our `bat_dat` dataset, we have abundance counts for different insert orders.
+
+We would like to create a separate dataframe for bat data, bug data, and environmental variables. And we would like them tidied with `tidyr::gather()` so that we the insect order variables are in a column called `insect_order` and the values are in a column called `abundance`.
+
+1. Within the script `01_tidy_data.R`, Subset the dataset to include the three fixed variables, `Site`, `Habitat`, `Season`, and all the insect order variables from `Col` to `Plec`.
+2. Use `tidyr::gather()` to create the `insect_order` and `abundance` columns.
+3. Assign this to a dataframe called `bug_dat` and write this to the `./output/` folder
+4. commit, push to github (script and datafile)
+
+
+
+## Tidy Data for Ecology: structuring data with a hierarchical survey design.
+
+Ecological data is often hierarchical because our surveys are. Our sampling is often nested and / or stratified acording to environmental co-variates.
+
+Working from left to right, a good way to format your data is to begin with the sampling units in the first few columns, working from your largest sampling unit, to your smallest sampling unit or observation. The order of variables, and of observations does not affect analysis, a good ordering makes it easier to scan the raw values. We can organise variables based on their role in the analysis, i.e. whether they are fixed by the design of the data collection, or whether they are measured during the course of the experiment. I think htis is a most natural way of thinking about ecological datasets in particular, when we have some hierarchical structure of the data. Fixed variables are always known in advance. Measure variables are those we measure in the study.
+
+Note this is good for thinking about `key-vars` and `measure-vars` when gathering and separating data. Fixed variables should always come first, followed by measured variables. Each should be ordered so that related variables are contiguous. (p5, Wickham, 2014).
+
+### Relational data: one unified dataset divided among multiple dataframes
+
+When do you need multiple tables / relational dataframes? Separate dataframes might be useful if during data collation / transcription, you are writing the same observation more than once, i.e. some variable for a sampling unit / replicate that is higher up the hierarchy than the smallest level of observation.
+
+For example, take a look at the the environmental variables at the first two sites, notice that values are replicated.  This is because there are two entries per site because each site was sampled twice over different seasons. However, for each site there are only one set of distinct observations for each envonmental variable.
+
+```r
+bat_dat %>% 
+        slice(1:4) %>% 
+        select(1:3, Moon:Humidity)
+```
+
+```
+## # A tibble: 4 × 49
+##          Site Habitat Season  Moon NatEx Bioregion       Size       SQQ
+##         <chr>   <int>  <int> <int> <int>     <int>      <dbl>     <dbl>
+## 1 Albert Park       1      1     2     2         1 508500.000 6.3525324
+## 2 Albert Park       1      2     2     2         1 508500.000 6.3525324
+## 3       Amber       1      1     2     1         4   3353.508 0.5117749
+## 4       Amber       1      2     1     1         4   3353.508 0.5117749
+## # ... with 41 more variables: `Water Depth` <dbl>, `Imp 5km` <dbl>,
+## #   Imp2km <dbl>, Imp1km <dbl>, Imp500m <dbl>, NDVI2km <dbl>,
+## #   NDVI1km <dbl>, NDVI500m <dbl>, `Trees 5km` <int>, Trees2km <int>,
+## #   Trees1km <int>, Trees500m <int>, House500 <dbl>, House1km <dbl>,
+## #   House2km <dbl>, House5km <dbl>, Light500m <dbl>, Light1km <dbl>,
+## #   Light2km <dbl>, Light5km <dbl>, Road500m <dbl>, Road1km <dbl>,
+## #   Road2km <dbl>, Road5km <dbl>, Distriver <dbl>, Distwetland <dbl>,
+## #   Distwater <dbl>, Distbushland <dbl>, Aqvegcov <dbl>, EphemVeg <dbl>,
+## #   TreeCoverage <dbl>, `TreesLarge>20dbh.plot` <int>,
+## #   `TreesSmall<20dbh.plot` <int>, `Trees total.plot` <int>,
+## #   Shrubs.plot <int>, Hollows.total <int>, Otherroostsnumber.total <int>,
+## #   TotalRoost <int>, Distance1sttree <dbl>, Temp <dbl>, Humidity <dbl>
+```
+If you were entering this data by hand using this structure here, you would likely make errors in typing or copying and pasting. In fact, I did find this error when playing around with this dataset, a decimal place had been dropped for several rows.
+
+It is better to avoid this situation to begin with. One solution is to have *multiple*, *relational* data frames. 
+
+That is a series of data frames that comprise one single dataset, and that link to each other through a fixed set of variables. They should be determined by both logical divisions, and the structure of the data.
+
+So for the bat dataset, we might like to have three datasets, though only two are necessary (bats/bugs and site data)
+
+1. Bat data, containing only the observations pertianing to bats
+2. Bug data, containing only the observations pertaining to insects
+3. An environmental covariate dataset, containing information about each site
+
+### Home Challenge
+
+Consider a project requiring data analysis in R that you are currently working on.
+
+- If you have already collected the data, what shape or structure is the data in? Is it 'tidy'? I.e. does each column represent a unique variable, and each row an observation?
+- If you haven't collected any data yet, consider the experimental design of your surveys / experiment. List any variables you are measuring / recording in the field. What is the smallest unit of sampling in your survey design? What constitutes a replicate, or a pseudo-replicate? What is the largest unit of sampling in your survey design? What constitutes a single 'observation'? Is the number of observations per sampling unit static or dynamic (i.e. changes depending on what species are inside your sampling unit)? Are you able to design the layout of your 'tidy' data frame.
+
+# References
+
+Wickham, H. (2014) Tidy data. Journal of Statistical Software. 59 (10). URL: [http://www.jstatsoft.org/v59/i10/paper](http://www.jstatsoft.org/v59/i10/paper).
+
+When not to use tidy data: See Jeff leeks post on non-tidy data: http://simplystatistics.org/2016/02/17/non-tidy-data/
