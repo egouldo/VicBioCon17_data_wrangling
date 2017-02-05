@@ -110,32 +110,42 @@ dplyr::mutate(bat_dat, Taust_Vdarl = Taustralis + Vdarlingtoni)
 ```
 - Change existing ones:
 
-To alter an existing variable we use the name of that variable in the name-value pair argument to `mutate()`, and then provide some computation on the right as we did for creating a new variable with `mutate()`.
+To alter an existing variable we use the name of that variable in the name-value pair argument to `mutate()`, and then provide some computation to that variable on the right.
 
-Imagine there was an error at some point during data collation and a decimal place was shifted, let's pretend it was for House500. 
+Imagine there was an error at some point during data collation and a decimal place was shifted, let's pretend it was for the variable `House500`. 
 
 
 ```{r mutate-existing}
-mutate()
+mutate(bat_dat, House500 = House500 / 10)
 ```
 
+**Make new variables summarised from existing variables**
 
-*Using window functions with mutate*
+Like mutate `summarise()` also uses name-value pairs of expressions. On the left-hand side is the name of the summary variable you wish to create, on the right hand side of the `=` is an expression that uses a summary function.
 
-For the full list of window functions, check out the Data Manipulation with dplyr and tidyr Cheatsheet:
-`Help > Cheatsheets > Data Manipulation with dplyr, tidyr`
+Sumary functions take a vector of values and return a single value, such as `mean()` or `sum()`. This can be represented visually by:
+![summary_function](../assets/dplyr_summary_function.png)
+Let's take the mean number of Chgouldii observations in 
+```{r summarise}
+summarise(bat_dat, mean_Chgouldii = mean(Chgouldii))
+```
+Observe how 188 observations have now been reduced to 1 value. Because the resultant vector is shorter than the input vector, this means we can no longer have a nice, square data frame, consequently, all other variables have been dropped.
 
-**Summarise**
+Some key window functions include:
 
+- `first()`
+- `last()`
+- `min()`
+- `max()`
+- statistical functions, like `median()`, `sd()`, `var()`. 
 
-## Challenges
+## Challenge @TODO
 
 1. Renaming variables challenge
 - I think this is in the tidyr challenge, but we could shift it here. Yes i think we should save reshaping data and some more complicated challenges for the tidy data one.
 - we want to remove the spaces in some of the variables, you could approach this in different wasym but both are interactive type 'glimpse()' into the console and look visually. But chance you might miss some. Alternatively you can do it using a combination of programmatics and manually. The full programmatic way would probably pipe in the answer or have nested arguments. But leave this for now. we want people to use the helper functions... contains `" "` for space.
 - also want them to remove dots, convert to underscores. same procedure, which ones had dots.
 - do this in the tidy data script
-
 
 # Writing sentences:
 
@@ -189,6 +199,16 @@ Your code is easier to debug:
 
 
 ### Grouped operations: Split, apply, combine operations
+
+
+*Using window functions with `mutate()`*
+
+`mutate()` uses window functions, which are functions that take a vector of values, and return another vector of values, with the output vector being the same length as the input vector. They are most useful when performing operations on groups of data.
+For the full list of window functions, check out the Data Manipulation with dplyr and tidyr Cheatsheet:
+`Help > Cheatsheets > Data Manipulation with dplyr, tidyr`
+![From the data wrangling cheatsheet](../assets/dplyr_window_function.png)
+
+*Using summary functions with `summarise()`*
 
 At each site, get the number of Chgouldii observations (interested in looking at effect of season)
 
