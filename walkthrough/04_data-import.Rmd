@@ -22,9 +22,9 @@ One added benefit of using text-files to store data, is that we can put them und
 
 *1-minute Challenge: add some new data to a project directory*
 
-1. Go to the [workshop repository data folder](https://github.com/egouldo/VicBioCon17_data_wrangling/tree/master/data) and download the csv file called `bat_dat.csv`.
-2. Save it to your data folder
-3. Commit the file in git and push to GitHub
+> 1. Go to the [workshop repository data folder](https://github.com/egouldo/VicBioCon17_data_wrangling/tree/master/data) and download the csv files called `bat_dat.csv` and `iris.csv`
+> 2. Save them to your data folder
+> 3. Commit the files in git and push to GitHub
 
 *A note on creating CSV Files with your own data*
 
@@ -40,7 +40,7 @@ The [`readr` package](http://r4ds.had.co.nz/data-import.html) comes with a selec
 
 Lets import the bat data into R using `read_csv()`
 
-```{r}
+```{r read_csv-example}
 readr::read_csv("./data/bat_dat.csv")
 ```
 
@@ -49,12 +49,11 @@ Notice that `readr` prints out the column specification, giving the name and typ
 ## Tweaking `read_csv()`
 
 You can control many different aspects of data import using the many arguments of `read_csv()`.
-Often we deal in data collected and given to us by other people, perhaps a consultant or research assistant collected your data. This removes a lot of control over the way the data is formatted. Sometimes people do funny things, like use strange character strings to represent missing values (pro-tip: `NA` is good). If our data comes from a machine in the lab, like a PCR machine log, it might provide metadata or other details about the nature of the collected data. Below are some examples for dealing with these situations.
-
-```{r}
+```{r args_read_csv}
 args(read_csv)
 ```
 
+Often we deal in data collected and given to us by other people, perhaps a consultant or research assistant collected your data. This removes a lot of control over the way the data is formatted. Sometimes people do funny things, like use strange character strings to represent missing values (pro-tip: `NA` is good). If our data comes from a machine in the lab, like a PCR machine log, it might provide metadata or other details about the nature of the collected data. Below are some examples for dealing with these situations.
 
 ### Skipping the first line
 
@@ -90,54 +89,90 @@ read_csv("A,2,30\nB,5,60",
 
 ### Specifying Missing Values with characters other than NA
 
-```{r}
+```{r non-standard-NAs}
 read_csv("site,native_reptile_species, mean_weight_g\nA,5,50\nB,0,.",
          na = ".")
 
 ```
 
-## Parsing column type specification
-
 *1-minute Challenge: load data into R*
 
-1. Return to the script  `01_tidy_data.R` and edit it to import data into your R workspace using readr. Don't forget to assign it to an informatively named object.
-2. Source the script to load the data into R's workspace.
-3. Commit to git, push to GitHub.
+> 1. Return to the script  `01_tidy_data.R` and edit it to import data into your R workspace using readr. Don't forget to assign it to an informatively named object.
+> 2. Source the script to load the data into R's workspace.
+> 3. Commit to git, push to GitHub.
 
-```{r include=FALSE, eval=FALSE}
+```{r read-bat-dat-answer, include=FALSE, eval=FALSE}
 bat_dat <- readr::read_csv("./data/bat_dat.csv")
+```
+
+## Parsing column type specification
+
+`readr` will automatically detect the type of values for each column (take a look back at the output from when we read in the bat and iris datasets). However, sometimes we would like to override the default options and provide more specialised types of data. For example, sometimes we might want R to treat a column as a logical or a date rather than as an integer or character vector. 
+
+If any unexpected values occur that dont match your specification, `readr` will tell you which row, column, and what the exact problem is for that value. This is a really good way of ensuring that there are no erroneous values within your dataset, perhaps introduced by transcription error.
+
+Because readr inspects only the first 1000 rows to guess the data type, it is not always perfect. This is another reason to manually supply column types during import. It is good practice to supply column types upon import, that way you can ensure that your import code is consistent and reproducible. 
+
+However, sometimes it might be unreasonable to supply column types, for example when you have species names as the values or observations in a column. In that instance it is worth modifying the variable after import, we'll get to that in [the dplyr module using `mutate()`](./05_dplyr-walkthrough.Rmd).
+
+*We can specify column types using the `col_types` argument*
+
+Here's an example using the `iris.csv` dataset:
+
+```{r iris-parsing-example}
+read_csv("./data/iris.csv", comment = "#", 
+         col_types = cols(
+                 Sepal.Length = col_double(),
+                 Sepal.Width = col_double(),
+                 Petal.Length = col_double(),
+                 Petal.Width = col_double(),
+                 Species = col_factor(c("setosa", "versicolor", "virginica"))
+         ))
+```
+
+For a full list of the column type options, see the column type help page in the readr package documentaiton `vignette("column-types", package = "readr")`.
+
+Values for the `Season` variable in `bat_dat` were entered using integers. `readr` consequently read them in as integers, but in actuality this variable should be a factor, because the values represent categories or classes rather than true counts.
+
+```{r factor-parsing-example}
+bat_dat <- readr::read_csv("./data/bat_dat.csv", 
+                           col_types = cols(
+                                   Season = col_factor(levels = c(1,2))
+                           ))
+```
+
+*5-minute challenge: parsing column type specification*
+
+> 1. Edit your data import command from the previous challenge, so that you supply column types for the the columns:
+
+```
+Habitat == factor, levels: 0, 1
+Season == factor, levels: 1,2
+Bioregion == factor, levels: 1 to 4, NA.
+```
+> 2. Hint: you can call `dplyr::distinct(bat_dat, Season)` to show the unique values for the Season column. Repeat for each variable independently to check what levels to supply to the `col_factor` argument.
+> 3. Save, commit and push your script changes to GitHub
+> 4. Source the file to update the object in R's workspace.
+
+```{r parsing-challenge-answer, include=FALSE}
+bat_dat <- readr::read_csv("./data/bat_dat.csv", 
+                           col_types = cols(Season = col_factor(levels = c(1,2)),
+                                            Habitat = col_factor(levels = c(0,1)),
+                                            Bioregion = col_factor(levels = c(1:4,NA))
+                                            ))
 ```
 
 # Writing CSV Files
 
 You can write your dataframes as CSV files using the `write_csv()` function. A good point in your data analysis cycle to save your dataframes as CSV's is once you have completed cleaning and tidying your data. Remember from the [project management module](./01_project_management_scaffolding.Rmd), that any modifications to the data set should not be over-written on the original data file. You should save any modifications in a new file in your .`/outputs/` directory.
 
-```{r eval = FALSE}
+```{r write-csv, eval = FALSE}
 write_csv(x = iris, path = "./output/iris.csv")
 ```
 
-## Overviewing your imported data
+# Overviewing your imported data
 
 Once your data has been imported into R, it's useful to examine it to firstly get a sense of your data, and secondly to aid in diagnosing any inaccuracies that might have occurred either during data capture, data transcription from hard to digital, if your field data was recorded on paper, or perhaps there was an error during the import of the data into R (sometimes R can convert your column to the wrong 'type' e.g. a character instead of numeric value). Overviewing your data after import is simple yet critical task and should take place before any data wrangling or analysis - it could potentially save future-you much time down and heartache down the track.
-
-### QA checks (could go here... OR we could include some specific code to do this after learning our dplyr verbs)
-
-from British Ecological Society (2014) A Guide to Data Management in Ecology and Evolution. (ed K. Harrison). British Ecological Society. [online]. Available from: www.britishecologicalsociety.org/publications/journals.
-
-- ID estimated values, missing values, or double entries
-- stat analyses to check for questionable or impossible values and outliers (boxplots could be good for this)
-- check format of the data for consistency across the dataset (glimpse, and View can help with this)
-- checking the data against similar data to ID potential problems
-
-White, E., Baldridge, E., Brym, Z., Locey, K., McGlinn, D., Supp, S. (2013) Nine simple ways to make it easier to (re)use your data. IEE. 6, 1–10.
-
--  If a column should contain numeric values, check that there are no non-numeric values in the data. 
-- Can force check this, using readr, and specifying what col type each should be. it also imputes what each col type should be, and pretty sure gives you a warning when there are inconsistencies. will it coerce it? {} @TODO: use this as an example...
--  Check that empty cells actually represent missing data, and not mistakes in data entry, and indicate that they are empty using the appropriate null values. 
-- @TODO {} How to check this... have an exercise on finding missing values.
--  Check for consistency in unit of measurement, data type (e.g., numeric, character), naming scheme (e.g., taxonomy, location), etc.
-- correct colnames, missing variables? number of rows, missing observations? `print`ing a `tbl` and `glimpse`, and `View`ing your data object are useful ways to check for these. highlight, WHAT you are looking for. perhaps provide a list of things to look for when using these functions. we could create some mistakes... as we have with the wrong spelling.
-- duplicates
 
 *Printing in the console*
 
@@ -164,7 +199,6 @@ Only the data that can fit on the screen will be displayed. Note that when print
 - `<fctr>` factors, representing categorical variables with a fixed number of possible values
 - `<date>` date
 
-
 In programming language, dplyr functions are said not to have 'side-effects', meaning that unless you assign any of your changes to an object, your code is simply printed the console, rather than being saved to the object in R's memory.
 
 
@@ -187,33 +221,40 @@ dplyr::glimpse(iris)
 
 The base utilities `View()` function allows you to navigate your data within RStudio in a spread-sheet like format.You can sort or order your your rows on a particular variable, by hitting the up or down arrow on each column heading. You can also filter rows based on ranges for one or more variables. This functionality is great for building a mental-picture of your data, and for checking on the outputs of your code as you go about wrangling your data. 
 
-**Challenge (easy)**
+*interactive vs. scripted work in RStudio*
 
-Run the following line in your console. 
+The functions above are primarily used for working interactively, rather than in a script. Working interactively helps you to build a mental picture of your dataset as you wrangle. It is a good idea to run any code you write in scripts in the console as you progress, testing that it works as you go.
 
-1. In the pop-up window, try sorting your data on one variable
-2. Experiment with filtering on one or more rows.
+**1-minute Challenge: interactice sorting and filtering**
+
+> Run the following line in your console. 
 
 ```{r View, eval=FALSE}
-View(iris)
+View(iris) # in the popup window sort, order and filter
 ```
+> 1. In the pop-up window, try sorting your data on one variable
+> 2. Experiment with filtering on one or more rows.
 
-### interactive vs. scripted work
 
-Note that these functions are primarily used for working interactively. Rather than for in a script.
+## A QA check-list and their remedies
 
-# @TODO cleaning data (going through the )
+Below are some questions (non-exhaustive list) to consider in the data cleaning and tidying phase, before proceding with your analysis questions.
 
-File/folder name rules (similar rules for variable names and object names syntax)
-- unique
-- descriptive
-- succinct
-- naturall ordered
-- consistent
-- google protocol / hadleys adapted google protocol.
+- Check that column data-types are correct, e.g. if a column should contain numeric values, check that there are no non-numeric values
+        - data parsing with `readr` can help against this. 
+-  Do empty cells actually represent missing data, and not mistakes in data entry? Do they indicate that they are empty using the appropriate null values?
+        - Use the `View` function to filter for NA values.
+-  Check for consistency in unit of measurement, naming scheme (e.g., taxonomy, location), etc.
+        - `View`, and statistical analyses to look for outliers, e.g. boxplots
+- correct colnames, missing variables? number of rows, missing observations? 
+        - `print`ing a `tbl` and `glimpse`, and `View`ing your data object are useful ways to check for these. 
+- duplicate entries
+        - call `dplyr::distinct()` on whole dataset, use the `print()`, `View()` and `glimpse()` functions
 
 # References
 
 [R for Data Science: Data Import with readr](http://r4ds.had.co.nz/data-import.html)
 
 British Ecological Society (2014) A Guide to Data Management in Ecology and Evolution. (ed K. Harrison). British Ecological Society. [online]. Available from: www.britishecologicalsociety.org/publications/journals.
+
+White, E., Baldridge, E., Brym, Z., Locey, K., McGlinn, D., Supp, S. (2013) Nine simple ways to make it easier to (re)use your data. IEE. 6, 1–10.
