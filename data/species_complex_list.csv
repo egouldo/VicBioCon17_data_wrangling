@@ -1,0 +1,14 @@
+code,type,genus,species
+Aa,species,Austronomus,australis
+Cg,species,Chalinolobus,gouldii
+Mp,species,Mormopterus,planiceps
+Moo,species,Miniopterus,orianae oceanensis
+Sc,species,Scotorepens,spp.
+Cm,species,Chalinolobus,morio
+Vd,species,Vespadelus,darlingtoni
+Vr,species,Vespadelus,regulus
+Vv,species,Vespadelus,vulturnus
+Mm,species,Myotis,macropus
+Ny,species,Nyctophilus,spp.
+CgMp,complex,Chalinolobus,gouldii
+CgMp,complex,Mormopterus,planiceps
