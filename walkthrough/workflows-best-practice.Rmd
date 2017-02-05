@@ -113,6 +113,51 @@ My rules:
 
 - put as MUCH as you can in R. All changes should occurr here. NOT in excel.
 
-### Setting up a new project
+# tidy data for ecology
+
+each row is a single observation, each column a single variable or type of measurement.
+One column for each type of informaiton. EXCEPT, cross-tab structure data, where columns contain measurements of the same variable (e.g. in differen sites, treatments). Nah, should keep it long I reckon.
+single value per cell (i.e. no units in the cell) You can put the units into a metadata file.
+break taxonomic information up into single components, with one column each for family, genus, species, subspecies, etc. Helps having to split strings later, BUT, is do-able with dplyr.
+
+# Metadata for ecology:
+
+### Contextual data
+
+"Ecological and evolutionary data are often combined with other kinds of data. You can make it easier to com- bine your data with other data sources by including con- textual data that appears across similar data sources. Two of the most common kinds of contextual data in ecology and evolution are taxonomy and geographic location. While this type of data is known and recorded in most studies (e.g, in field notebooks, on maps) it is frequently not included with the data. In general, if you have collected additional data or notes about a study organism or field site, there is a good chance that it will be useful to someone else, so including it with your data when you share it is a good idea. This kind of informat- ion can be included either as part of the data itself (e.g., in a new column or an additional table) or can be includ- ed in the metadata (e.g., the geographic location of the study site). For geographic data it is also important to include the datum (e.g., WGS-84) and sufficient précis- ion (e.g., 4 decimals places if using decimal degrees) to allow the data to be combined with other geographic datasets." White, E., Baldridge, E., Brym, Z., Locey, K., McGlinn, D., Supp, S. (2013) Nine simple ways to make it easier to (re)use your data. IEE. 6, 1–10.
+
+## Metadata
+describe the project, file contents, location, date. Dont add a version, because this will be covered by version control system. Not sold on adding initials to the file name, because i think good metadata practice can cover this.
+2
+
+issue: column headers are values, not variables names
+
+pp 5 - 6:
+Often datasets are designed for presentation, rather than for analysis, and so column headers are actually values not variables names.
+Sometimes we don't actually want tidy data. In some cases it can be useful in messy form. It can be stored efficiently for, say completely crossed designs, and can be useful for certain matrix operations.
+Data might not be 'tidy' when we transcribe it from our field data sheets to digital spreadsheets / csv's because its tedious to repeatedly type some variables out. 
+
+what do we do when we want our data tidy, but its easier to capture it messy / wide?
+
+### When NOT to use tidy data:
+
+Reasons when to use other non-tidy data strucutres (from R4ds):
+
+1. alternative representations have substantial performance or space advantages
+2. specialised fields have evolved their own conventions for storing data that may be quite different to the conventions of tidy data.
+*A note on R's memory, scripts and the console* @TODO COMPLETE THIS
+
+workspace vs. scripts. what's a workspace
+
+R's memory is usually reset at the end of each session, or at least it should be (i.e. each time you quit the project or close RStudio). Although you can opt to save the workspace at the end of the session automatically (it is written as an `.RData` file). This is a sure way to encounter errors, although it can be convenient. Errors can be encounted if you have modified the code generating an R object.
 
 
+in RStudio you can opt to load any objects that you had in Rs memory at time of closing. But this is a sure way to encounter errors, especially if you have edited your code in an editor, but havent sent those commands to the console to update the object. It is best practice to NOT save the 'workspace', or all of the in-memory objects, at the 
+
+Ensure you have the following settings in-place for RStudio:
+
+```
+RStudio>Preferences/Settings > General:
+Restore .RData into workspace on start-up: de-select if selected
+Save workspace to .RData on exit: -> NEVER
+```
