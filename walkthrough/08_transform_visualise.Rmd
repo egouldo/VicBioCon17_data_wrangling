@@ -69,7 +69,7 @@ geom_errorbar(aes(ymin = mean_richness - se_richness,
 
 ```{r plot-answer, eval = FALSE, include=FALSE}
 ggplot(data = richness_by_season, 
-       aes(x = Habitat, y = mean_richness, fill = Season)) +
+       aes(x = Habitat, y = mean_richness, fill = factor(Season))) +
         geom_bar(stat = "identity", position = position_dodge()) +
         geom_errorbar(aes(ymin = mean_richness - se_richness, 
                           ymax = mean_richness + se_richness), 
