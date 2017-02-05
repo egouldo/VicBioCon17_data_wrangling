@@ -15,7 +15,7 @@ bat_dat <- read_csv("../data/bat_dat.csv")
 
 An RMarkdown file is a record of your research. It can act as a lab-notebook where you can perform exploratory data analyses or other experiments before proceeding with your main analysis (e.g. deciding what covariates to include in a model). It mixes code and text so that others can fully reproduce your analysis and that readers can understand your analysis story and code.
 
-*1-minute Challenge*
+*Challenge 12 (1-minute)*
 
 - Create an RMarkdown document inside the `./doc/` folder called `bat_data_exploration.Rmd`
 
@@ -24,7 +24,7 @@ An RMarkdown file is a record of your research. It can act as a lab-notebook whe
 - Save, commit, and push to github
 - We will examine this document and step through each of the different components together
 
-## Basics components of an RMarkdown document
+## Basic components of an RMarkdown document
 
 *YAML header*
 
@@ -72,7 +72,7 @@ However, when you knit an RMarkdown document, it is taken to be the location of 
 
 This means that when importing data into an Rmarkdown document, you must load data *relative to the position of the RMarkdown file*, otherwise the knitting will fail.
 
-*2-minute challenge: Modify your Rmarkdown file and load data*
+*Challenge 13: Modify your Rmarkdown file and load data (2-minute)*
 
 1. Edit the heading to change the title of the document to whatever you like
 2. Delete everything below the YAML header / template
@@ -83,7 +83,7 @@ tip: Hit the tab button to bring up a list of directories as you are writing the
 6. Print the object, and knit the document to see what happens
 7. Save, commit, push
 
-*10-minute challenge*
+*Challenge 14: 10-minute challenge*
 
 - In your first chunk, source the function we created called `se.R` within the `./R/` directory. This loads the function into the Rmarkdown environment.
 - Create another new chunk called `bat-summary-vars`
