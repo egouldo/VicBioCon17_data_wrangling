@@ -20,9 +20,9 @@ We will focus on how to read plain-text rectangular files into R. Non-proprietry
 
 One added benefit of using text-files to store data, is that we can put them under version control. Let's do this now.
 
-*1-minute Challenge: add some new data to a project directory*
+*Challenge 4: add some new data to a project directory (1-minute)*
 
-> 1. Go to the [workshop repository data folder](https://github.com/egouldo/VicBioCon17_data_wrangling/tree/master/data) and download the csv files called `bat_dat.csv` and `iris.csv`
+> 1. If you didn't already in module 1, go to the [workshop repository data folder](https://github.com/egouldo/VicBioCon17_data_wrangling/tree/master/data) and download the csv files called `bat_dat.csv` and `iris.csv`
 > 2. Save them to your data folder
 > 3. Commit the files in git and push to GitHub
 
@@ -95,7 +95,7 @@ read_csv("site,native_reptile_species, mean_weight_g\nA,5,50\nB,0,.",
 
 ```
 
-*1-minute Challenge: load data into R*
+*Challenge 5: load data into R (1-minute)*
 
 > 1. Return to the script  `01_tidy_data.R` and edit it to import data into your R workspace using readr. Don't forget to assign it to an informatively named object.
 > 2. Source the script to load the data into R's workspace.
@@ -141,7 +141,7 @@ bat_dat <- readr::read_csv("./data/bat_dat.csv",
                            ))
 ```
 
-*5-minute challenge: parsing column type specification*
+*Challenge 6: parsing column type specification 5-minute*
 
 > 1. Edit your data import command from the previous challenge, so that you supply column types for the the columns:
 
@@ -178,7 +178,7 @@ Once your data has been imported into R, it's useful to examine it to firstly ge
 
 Looking at your data frame in the console often clogs your console, and doesn't tell you much about the type of data in each column. The column names might often be obscured. If your console is completely clogged by a dataframe with many rows, you might not even be able to see the first few rows.
 
-**Challenge (easy)**
+**Challenge 7 (interactive)**
 
 Run each line of code in the console below.
 
@@ -225,7 +225,7 @@ The base utilities `View()` function allows you to navigate your data within RSt
 
 The functions above are primarily used for working interactively, rather than in a script. Working interactively helps you to build a mental picture of your dataset as you wrangle. It is a good idea to run any code you write in scripts in the console as you progress, testing that it works as you go.
 
-**1-minute Challenge: interactice sorting and filtering**
+**Challenge 7a: interactive sorting and filtering (1-minute)**
 
 > Run the following line in your console. 
 
