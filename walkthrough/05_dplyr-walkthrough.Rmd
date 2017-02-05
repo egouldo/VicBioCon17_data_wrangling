@@ -196,26 +196,54 @@ y %>% f(x, ., z) is the same as f(x, y, z)
 
 ### Grouped operations: Split, apply, combine operations
 
+The ability to combine the above functionality to perform grouped operations is the real source of power in dplyr. The `dplyr::group_by()` function groups data into rows with the same value of a given variable, such that we can perform some summary or mutate computation for each group. 
+
+The `dplyr::group_by()` function takes one or more unquoted column names as its arguments.
+
+We can represent these two instances visually:
+![grouped operations with `summarise()` and `mutate()`](../assets/dplyr_grouped_operations.png)
+
+With ecological data, you will find that you often want to group by some combination of sampling unit, or other site-based environmental co-variate. You will almost always perform grouped operations on variables that are categorical variables, such as on factors, integer or character vectors, rather than on variables that are continuous, like numeric ones.
+
+At each site, get the number of Chgouldii observations (interested in looking at effect of season)
+
+Does the mean number of Chgouldii observations change from one season to the next?
+
+```{r mean-gouldii-by-season}
+bat_dat %>%
+        select(1:4) %>%
+        group_by(Season) %>%
+        summarise(mean_Cg = mean(Chgouldii))
+```
+
+Let's `group_by()` both `Season` and `Bioregion` this time. 
+
+The grouping occurs sequentially, grouping within groups, beginning from the first variable supplied on the left hand side, working towards the right.
+
+We can supply more than one expression to our summarise function, often when we compute the mean, we also want to compute the standard error of the mean:
+```{r more-than-one-}
+# Define a standard error function called se:
+se <- function(x) {
+        sqrt(var(x, na.rm = TRUE) / length(na.omit(x)))
+}
+
+# Apply the function to the Chgouldii column
+bat_dat %>%
+        select(1:4, Bioregion) %>%
+        group_by(Bioregion, Season) %>%
+        summarise(mean_Cg = mean(Chgouldii),
+                  se_Cg = se(Chgouldii))
+```
 
 *Using window functions with `mutate()`*
+Just as `summarise()` uses window functions, `mutate()` uses window functions, which are functions that take a vector of values, and return another vector of values, with the output vector being the same length as the input vector. They are most useful when performing operations on groups of data.
 
-`mutate()` uses window functions, which are functions that take a vector of values, and return another vector of values, with the output vector being the same length as the input vector. They are most useful when performing operations on groups of data.
 For the full list of window functions, check out the Data Manipulation with dplyr and tidyr Cheatsheet:
 `Help > Cheatsheets > Data Manipulation with dplyr, tidyr`
 ![From the data wrangling cheatsheet](../assets/dplyr_window_function.png)
 
-### Examples
 
-At each site, get the number of Chgouldii observations (interested in looking at effect of season)
 
-```{r}
-
-```
-
-For each season get the site with the highest number of Chgouldii observations.
-```{r}
-
-```
 
 
 
