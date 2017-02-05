@@ -5,6 +5,15 @@ date: "18/01/2017"
 output: github_document
 ---
 
+
+File/folder name rules (similar rules for variable names and object names syntax)
+- unique
+- descriptive
+- succinct
+- naturall ordered
+- consistent
+- google protocol / hadleys adapted google protocol.
+
 ## WHY DOCUMENT YOUR CODE? and How?
 Helps people USE your code.
 
