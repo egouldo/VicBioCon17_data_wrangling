@@ -1,6 +1,0 @@
----
-title: "09_advanced_wrangling"
-author: "Elise Gould"
-date: "03/02/2017"
-output: github_document
----
