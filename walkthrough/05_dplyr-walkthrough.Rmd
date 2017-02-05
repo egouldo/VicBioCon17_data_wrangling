@@ -1,5 +1,5 @@
 ---
-title: "A walkthrough of dplyr and tidy data"
+title: "Dplyr: The basics"
 author: "Elise Gould"
 date: "09/01/2017"
 output: github_document
@@ -13,17 +13,15 @@ bat_dat <- read_csv(file = "../data/bat_dat.csv")
 
 ## What is 'dplyr', and why you should use it for data wrangling
 
-dplyr makes wrangling your data frames a breeze. dplyr is a metaphorical set of ‘pliers’ for wrangling your data frames (d-plyr, duh), to do things like row- or column-wise subsetting, conduct group-wise operations on multiple subsets of data, or merge data frame and matching rows by value rather than position. 
+Data wrangling is the messy process of cleaning, re-shaping and re-organising data from the raw format you imported into R into another format that allows for some analysis.
 
-Everything you can do in dplyr, you can do in base R. So why bother? dplyr is expressive, and verb-focused, rather than object-focused, meaning that common data manipulation problems take less code and less mental effort to write. This means it's easy for your collaborators (including your future-self) to read. Moreover, much of dplyr’s work is implemented behind the scenes in C++ code, making wrangling larger data frames lightning-fast! 
+dplyr makes wrangling your data frames a breeze. dplyr is a metaphorical set of ‘pliers’ for wrangling your data frames, row- or column-wise subsetting, conduct group-wise operations on multiple subsets of data, or merge data frame and matching rows by value rather than position. 
 
+Everything you can do in dplyr, you can do in base R. So why bother? dplyr is expressive, and verb-focused, rather than object-focused, meaning that common data manipulation problems take less code and less mental effort to write. This means it's easy for your collaborators (including your future-self) to read. This will become more apparent as you become more familiar with using dplyr on your own data. Moreover, much of dplyr’s work is implemented behind the scenes in C++ code, making wrangling larger data frames lightning-fast! 
 
 ## Dplyr, a "grammar" of data manipulation
 
-
 ### Learning our verbs and writing sentences:
-
-@TODO (Lets do this in order of the data wrangling workflow)
 
 - row-wise subsetting: `filter()` takes logical conditions as arguments
 - column-wise subsetting: `select()` takes column names or tidyr functions to select matching columns
@@ -38,44 +36,108 @@ Everything you can do in dplyr, you can do in base R. So why bother? dplyr is ex
 
 Each of the verbs above follow the same syntax:
 
-- first argument is a data-frame
-- subsequent arguments describe what to do to that data frame, using the variable names (no quote, i.e. 'bare'). you refer to columns in the data frame directly, no need to use the $ operator.
-- the function / verb returns a new data frame
-- input and output dataframes are *tidy* dataframes for all dplyr verbs
+- The first argument is a data-frame
+- subsequent arguments describe what to do to that data frame, using the variable names (unquoted or 'bare'). Columns are referred to directly, without need to use the `$` operator.
+- the function returns a new data frame
+- input and output dataframes are *tidy* dataframes for all dplyr verbs (we will get to this in the [next module](./06_tidy_data.Rmd))
 
 **Subsetting Observations (rows)**
 
-Let's get only the rows where Season is equal to 1. We use the `filter` function. The first argument is the data frame we wish to filter through. The second argument is a logical expression 
+Let's subset only the rows where Season is equal to 1. We use the `dplyr::filter()` function. 
+- The first argument is the data frame we wish to filter through. 
+- The second argument is a logical expression (two or more values separated by the [logical operators](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Logic.html): `==`, `!=`, `&`, `|`, etc., returning a logical, `TRUE` or `FALSE`). Try in console: `?Comparison` or `?base::logic`.
 
-```{r filtering}
+```{r filter-one-expression}
 dplyr::filter(.data = bat_dat, Season == 1)
 ```
 
+You can filter based on multiple variables. Let's get the sites from `Season 1`, and where there were more than 100 recordings of `Chgouldii`. How many sites are there where this was the case?
+
+```{r filter-multiple-expresions}
+dplyr::filter(.data = bat_dat, Season == 1, Chgouldii > 100)
+```
+
+Here are three other very useful filtering functions:
+
+1. Remove duplicate rows with `dplyr::distinct()`
+```{r distinct}
+distinct(bat_dat) #no optional args given, uses all variables
+distinct(bat_dat, Site) # give a variable as an argument, that var will determine uniqueness
+```
+2. Select rows by position with `dplyr::slice()`
+```{r slice}
+slice(bat_dat, 23)
+slice(bat_dat, c(1:5, 11)) # More than one argument? concatenate
+```
+
+3. Get the top *n* entries with `dplyr::top_n()`
+The second argument is *n*, and the third argument is the variable you wish to use for ordering.
+```{r top-n}
+top_n(bat_dat, 1 , Mmacropus)
+```
 
 **Subsetting Variables (Columns)**
 
-Let's get only the following columns
+Let's get only the following columns with `dplyr::select()`: `Site`, `Habitat`, `Season`, `Chgouldii`
 
 ```{r selecting}
 dplyr::select(bat_dat, Site, Habitat, Season, Chgouldii)
 ```
+We can also tell R that we wish it to drop some variables from our data:
+```{r de-selecting-vars}
+dplyr::select(bat_dat, -Humidity)
+```
+
+As well as using the bare column names to select a variable. We can also use a suite of helper functions to match column names. This is useful when we have many variables we wish to subset by, but want to minimise typing. For the full suite of helper functions, type `?select` in the console. Some important ones are:
+
+- `contains()`
+- `ends_with()`
+- `starts_with()`
+- `matches()`
+
+```{r select-starts-with}
+select(bat_dat, starts_with("dist")) # not case sensitive unless we tell R so
+```
+
+**Alter existing or create new variables with `mutate()`**
+After the first data frame argument, `mutate()` takes one or more name-value pairs.
+Which is simply the name of a new or existing variable, followed by an `=` and some expression making computations from existing variables.
+
+- Add new variables:
+Let's compute the sum of the counts for `Taustralis` and `Vdarlingtoni` species (call `View` for easy )
+```{r mutate-new}
+dplyr::mutate(bat_dat, Taust_Vdarl = Taustralis + Vdarlingtoni)
+```
+- Change existing ones:
+
+To alter an existing variable we use the name of that variable in the name-value pair argument to `mutate()`, and then provide some computation on the right as we did for creating a new variable with `mutate()`.
+
+Imagine there was an error at some point during data collation and a decimal place was shifted, let's pretend it was for House500. 
 
 
-
-As well as using the bare column names to select a variable. We can also use a suite of helper functions 
-, different ways to filter:
-matching, logical conditions, by position, by colnames, telling R to drop cols using the minus sign (every column except for these)
-
+```{r mutate-existing}
+mutate()
+```
 
 
-**Mutate**
+*Using window functions with mutate*
+
+For the full list of window functions, check out the Data Manipulation with dplyr and tidyr Cheatsheet:
+`Help > Cheatsheets > Data Manipulation with dplyr, tidyr`
 
 **Summarise**
 
 
-** **
+## Challenges
 
-## Writing sentences:
+1. Renaming variables challenge
+- I think this is in the tidyr challenge, but we could shift it here. Yes i think we should save reshaping data and some more complicated challenges for the tidy data one.
+- we want to remove the spaces in some of the variables, you could approach this in different wasym but both are interactive type 'glimpse()' into the console and look visually. But chance you might miss some. Alternatively you can do it using a combination of programmatics and manually. The full programmatic way would probably pipe in the answer or have nested arguments. But leave this for now. we want people to use the helper functions... contains `" "` for space.
+- also want them to remove dots, convert to underscores. same procedure, which ones had dots.
+- do this in the tidy data script
+
+
+# Writing sentences:
 
 Often we want to combine actions, e.g. you might want to select and filter at the same time.
 
@@ -128,3 +190,24 @@ Your code is easier to debug:
 
 ### Grouped operations: Split, apply, combine operations
 
+At each site, get the number of Chgouldii observations (interested in looking at effect of season)
+
+```{r}
+
+```
+
+For each season get the site with the highest number of Chgouldii observations.
+```{r}
+
+```
+
+
+
+```{r}
+bat_dat %>% select(1:19, -BatSpecies) %>% 
+        mutate(check_bat_activity = Chgouldii +  `CG/Mormlp` + MormII + Mschocean + Nyctspp +  Mmacropus + `Nspp/Mmacr` + Scotspp. + Taustralis + Chmorio + Vdarlingtoni +  Vregulus +  Vvulturnus +  Unidentified)
+```
+
+# References and Resources
+
+Dplyr and tidyr vignettes: type into R's console: `browseVignettes(package = c("dplyr", "tidyr"))`
