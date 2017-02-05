@@ -53,32 +53,30 @@ Using GitHub in addition to running git locally on your computer requires two mo
 4. `Push`ing your changes made on your local computer to GitHub
 5. If you have made any changes to the GitHub repository on the website, or else you are collaborating with others that have pushed changes to GitHub, you will need to ensure that those changes are downloaded to your computer by `pull`ing them.
 
-## Challenge: A walkthrough with git and github in RStudio
+## Challenge 2: A walkthrough with git and github in RStudio
 
-1. Create a new R script, called `se.R`. . Write the following inside the script and save it in in the `./R/` folder because it is a function.
-
+- Create a new R script, called `se.R`. . Write the following inside the script and save it in in the `./R/` folder because it is a function.
 ```{r, eval = FALSE}
 se <- function(x){
         sqrt(var(x) / length(x))
 }
 ```
+- Open up the git tab. Note that There are question marks besides the file because it is not yet known or tracked by git. 
+- When you check the box next to this file, the question marks change to an `A`, indicating that the file has been added to the stage. 
 
-2. Open up the git tab. Note that There are question marks besides the file because it is not yet known or tracked by git. 
-
-3. When you check the box next to this file, the question marks change to an `A`, indicating that the file has been added to the stage. 
 This means that we want that file to be a part of the next revision of the project...
 
 ![Create the file](../assets/git/01_create_file.png)
 
 The file has not yet been version controlled though, we have simply moved it to the staging area, indicating that we *intend* to add it to the next revision. So we have to `commit` the file.
 
-4. hit the commit button, and you will see the review window appear
+- hit the commit button, and you will see the review window appear
 
 ![add the file to staging area and review changes](../assets/git/02_add_file_review_changes.png)
 
 Note the green text appearing in green. This window is the 'diff' window and shows you what exact changes have occurred in the file. Green represents additions, red represents deletions.
 
-5. Enter an informative commit message in the appropriate window. And press 'commit'
+- Enter an informative commit message in the appropriate window. And press 'commit'
 
 ```
 Add function that computes standard error of the mean
@@ -135,9 +133,9 @@ Pulling is useful when changes have been made to the online repository perhaps b
 
 We are going to update the README on GitHub itself.
 
-1. Click on the README.md file in the list of files within the repository home page on GitHub.
-2. Click on the pen icon to open the file editor.
-3. Paste the text below into the README file.
+- Click on the README.md file in the list of files within the repository home page on GitHub.
+- Click on the pen icon to open the file editor.
+- Paste the text below into the README file.
 
 ```
 # VicBioCon17 README
@@ -175,7 +173,7 @@ Freire, J., Bonnet, P., & Shasha, D. (2012, May). Computational reproducibility:
 Piwowar, H. A., Day, R. S., Fridsma, D. B. (2007) Sharing Detailed Research Data Is Associated with Increased Citation Rate (ed J. Ioannidis). PLoS One. 2, e308–5.
 ```
 
-4. Scroll down to the bottom of the screen. Write an informative commit message, such as: `Add notes on good README contents` Hit 'Commit changes', selecting 'commit directly to the `master` branch.
+- Scroll down to the bottom of the screen. Write an informative commit message, such as: `Add notes on good README contents` Hit 'Commit changes', selecting 'commit directly to the `master` branch.
 
 ![Using GitHub to make and commit changes](../assets/git/06_committing_within_GitHub.png)
 
