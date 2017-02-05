@@ -41,6 +41,8 @@ Each of the verbs above follow the same syntax:
 - the function returns a new data frame
 - input and output dataframes are *tidy* dataframes for all dplyr verbs (we will get to this in the [next module](./06_tidy_data.Rmd))
 
+Importantly, dplyr functions don't have side-effects, this means that the your data wrangling won't update the object you are working with unless you use the assignment operator `<-` to overwrite that object, or write to a new object.
+
 **Subsetting Observations (rows)**
 
 Let's subset only the rows where Season is equal to 1. We use the `dplyr::filter()` function. 
