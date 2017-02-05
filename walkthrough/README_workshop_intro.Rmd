@@ -38,7 +38,13 @@ We will run through the materials in the "./walkthrough" folder. Each "chapter" 
 
 # About the format ofthe materials
 
-LOTS more information in here than we will cover, with links to additional resources or extra tips on best-practice RStudio use / data management. The point is that you can go back over these materials into the future.
+Lots more information included in here than we will cover on the day, with links to additional resources or extra tips on best-practice RStudio use / data management. The point is that you can go back over these materials into the future.
 
 ## About the dataset we will be working with:
+
+We will be working with the two datasets:
+1. Iris, shipped with R
+2. data from the paper: Straka, T. M., Lentini, P. E., Lumsden, L. F., Wintle, B. A., & Ree, R. (2016). Urban bat communities are affected by wetland size, quality, and pollution levels. Ecology and Evolution, 6(14), 4761-4774.
+
+Pia can tell us a little bit about how this dataset was colected.
 
