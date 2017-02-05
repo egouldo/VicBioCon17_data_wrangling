@@ -21,7 +21,7 @@ paper doi: [doi: 10.1002/ece3.2224](doi: 10.1002/ece3.2224)
 
 3. [data: all the data files you will need for working through challenges and running through provided examples](https://github.com/egouldo/VicBioCon17_data_wrangling/tree/master/data)
 
-4. [Course content modules](https://github.com/egouldo/VicBioCon17_data_wrangling/tree/master/walkthrough)
+4. [Course content modules](https://github.com/egouldo/VicBioCon17_data_wrangling/tree/master/modules)
 
 5. assets - you won't need this -- just for rendering the images to appear on the web in github.
 
