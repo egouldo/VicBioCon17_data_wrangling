@@ -46,44 +46,17 @@ This is arguably the most important step of data analysis. Today we will be writ
 
 yes! This is an important step in dealing with ecological data that is often overlooked in most resources dealing with data science or data-analysis in R. In ecology data is often recorded by hand on field-sheets, and transcribed into a digital copy at a later date. By following the tidy data convention, and other good rules for capturing or collating data, you can minimise the time and difficulty in tidying and cleaning your data before your analysis begins.
 
-@TODO add link to a data capture section, if there is one.
 
-##  Iterating through these steps: Mario pipelines.
+##  Multiple iterations thorugh the cycle.
 
-Multiple iterations thorugh that cycle.
+Often we have different analysis questions we would like to answer because we are building an understanding of our dataset with different questions, or perhaps using different sets of tools. So stepping through this cycle is not a singular linear iteration through this cycle from start to finish, but rather a messy repetetitious cycling through these different steps. For example, we often need to transform our data differently to answer different questions.
 
-Often we have different analysis questions we would like to answer. Often because we are building an understanding of our dataset with different questions, or perhaps using different sets of tools. So stepping through this cycle is not a singular linear iteration through this cycle from start to finish, but rather a messy repetetitious cycling through these different steps. For example, we often need to transform our data differently to answer different questions.
+Also, we can use modelling and visualisation as our tools to understand our data, but each is complementary in that they have different strengths and weaknesses, so we need to do both. And in doing so, we might need to iterate through the cycle again (This idea is hadley's.)
 
-Also, we can use modelling and visualisation as our tools to understand our data, but each is complementary in that they have different strengths and weaknesses, so we need to do both. And in doing so, we might need to iterate through the cycle again (This idea is hadleys.)
 
-analysis vs. programming questions.. see notes for Libby. These different steps in the model of data science are programming questions, essentially questions about what we do to the data and how. However our overall workflow might look different when we consider the series of analyses we do to build a picture of our dataset that generates new knowledge and understanding.
+# Challenge 3 (1-minute):
 
-### An example...
-
-# Challenge:
-
-1. Open a new RScript, save it as `tidy_data.R` in the root project directory.
+1. Open a new RScript, save it as `01_tidy_data.R` in the root project directory.
 2. Write an informative document title using the comment function (start line with `#` symbol)
 3. Load all the tidyverse libraries within the script.
 4. Save the script, make a commit with a good commit message and push to GitHub.
-
-*A note on R's memory, scripts and the console* @TODO COMPLETE THIS
-
-workspace vs. scripts. what's a workspace
-
-R's memory is usually reset at the end of each session, or at least it should be (i.e. each time you quit the project or close RStudio). Although you can opt to save the workspace at the end of the session automatically (it is written as an `.RData` file). This is a sure way to encounter errors, although it can be convenient. Errors can be encounted if you have modified the code generating an R object.
-
-
-in RStudio you can opt to load any objects that you had in Rs memory at time of closing. But this is a sure way to encounter errors, especially if you have edited your code in an editor, but havent sent those commands to the console to update the object. It is best practice to NOT save the 'workspace', or all of the in-memory objects, at the 
-
-Ensure you have the following settings in-place for RStudio:
-
-```
-RStudio>Preferences/Settings > General:
-Restore .RData into workspace on start-up: de-select if selected
-Save workspace to .RData on exit: -> NEVER
-```
-
-# References:
-
-These notes have been informed by Hadley Wickham's book R4DS.
