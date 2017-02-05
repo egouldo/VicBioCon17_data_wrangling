@@ -147,14 +147,6 @@ Some key window functions include:
 rename(bat_dat, Cg = Chgouldii, Cm = Chmorio)
 ```
 
-## 5-minute challenge:  Renaming Variables@TODO
-
-1. Renaming variables challenge
-- I think this is in the tidyr challenge, but we could shift it here. Yes i think we should save reshaping data and some more complicated challenges for the tidy data one.
-- we want to remove the spaces in some of the variables, you could approach this in different wasym but both are interactive type 'glimpse()' into the console and look visually. But chance you might miss some. Alternatively you can do it using a combination of programmatics and manually. The full programmatic way would probably pipe in the answer or have nested arguments. But leave this for now. we want people to use the helper functions... contains `" "` for space.
-- also want them to remove dots, convert to underscores. same procedure, which ones had dots.
-- do this in the tidy data script
-
 # Writing sentences, joining verbs with pipes `%>%`
 
 So far we've been dealing with individual functions or 'verbs', but what if we want to write sentences so-to-speak? Often we want to combine actions for example, you might want to select and filter at the same time.
@@ -221,7 +213,7 @@ Let's `group_by()` both `Season` and `Bioregion` this time.
 The grouping occurs sequentially, grouping within groups, beginning from the first variable supplied on the left hand side, working towards the right.
 
 We can supply more than one expression to our summarise function, often when we compute the mean, we also want to compute the standard error of the mean:
-```{r more-than-one-}
+```{r more-than-one-group}
 # Define a standard error function called se:
 se <- function(x) {
         sqrt(var(x, na.rm = TRUE) / length(na.omit(x)))
@@ -238,20 +230,73 @@ bat_dat %>%
 *Using window functions with `mutate()`*
 Just as `summarise()` uses window functions, `mutate()` uses window functions, which are functions that take a vector of values, and return another vector of values, with the output vector being the same length as the input vector. They are most useful when performing operations on groups of data.
 
+Some useful window functions include:
+- `between()` Are values between a and b?
+- `min_rank()` Ranks with ties
+- `ntile()` bins vectors into buckets
+- `cumsum()` Cumulative sum
+- `cummean()` Cumulative mean
+
 For the full list of window functions, check out the Data Manipulation with dplyr and tidyr Cheatsheet:
 `Help > Cheatsheets > Data Manipulation with dplyr, tidyr`
 ![From the data wrangling cheatsheet](../assets/dplyr_window_function.png)
+As a trivial example, let's bin the `Chgouldii` obsrevations into 5 equally sized bins:
 
-
-
-
-
-
-```{r}
-bat_dat %>% select(1:19, -BatSpecies) %>% 
-        mutate(check_bat_activity = Chgouldii +  `CG/Mormlp` + MormII + Mschocean + Nyctspp +  Mmacropus + `Nspp/Mmacr` + Scotspp. + Taustralis + Chmorio + Vdarlingtoni +  Vregulus +  Vvulturnus +  Unidentified)
+```{r grouped-mutate-window-function}
+bat_dat %>%
+        select(1:4) %>%
+        group_by(Season) %>%
+        mutate(bin_Cg = ntile(Chgouldii,n = 5)) %>%
+        arrange(Season, bin_Cg)
 ```
+
+# 5-minute challenge: Type coercing
+
+When we imported our bat data earlier, we explicitly coerced some columns to factors but not all of the categorical variables that needed to be converted.
+
+1. Within your script `01_tidy_data.R`, convert the following columns to factors using the `mutate()` function:
+```
+Moon
+NatEx
+Bioregion  
+```
+Hint: you can coerce integer variables to factor using `as.factor()` from base R.
+Tip: You can experiment in the console as you go to see if your code works
+Tip: In RStudio, with the cursor inside your mutate function, you can hit 'tab' to bring up a list of variables within your data frame (purple tags), use the arrow keys to find the variable you are looking for and hit enter to paste the variable name into your code. You can type the first one or two letters of the variable name to narrow down the list before hitting tab.
+```{r include = FALSE, eval=TRUE, echo = FALSE}
+bat_dat <- 
+        bat_dat %>%
+        mutate(Moon = as.factor(Moon),
+               NatEx = as.factor(NatEx),
+               Bioregion = as.factor(Bioregion))
+```
+2. Don't forget that dplyr functions don't have side effects, so you need to assign this to the `bat_dat` variable inside your script.
+3. Save your script, commit, push to GitHub.
+4. Source your script to update `bat_dat` in your workspace
+
+# 5-minute challenge: Fixing errors, replacing values
+
+Your colleague has spotted a typo in one of the `Site` names. It should be `"Ferny Creek"` not `"Ferny Crrek"`.
+1. Fix this mistake using `mutate()` and `replace()` (though you could use an `ifelse()` statement if you are confident)
+Hint, provide the following arguments to replace in this order:
+- The unquoted variable name you wish to replace values within
+-  A logical expression of what to look for with the column name on the RHS, and the incorrect value as a character string on the RHS
+-  A character string value containing the replacement site name.
+```{r include = FALSE}
+# Either
+bat_dat <- bat_dat %>% 
+        mutate(Site = replace(Site, Site == "Ferny Crrek", "Ferny Creek"))
+# Or
+bat_dat <- bat_dat %>% 
+        mutate(Site = ifelse(Site == "Ferny Crrek", "Ferny Creek", Site))
+
+```
+2. instead of re-assigning this to the `bat_dat` object separately, chain it onto your code from the previous challenge using the `%>%` operator.
+3. Save, commit, push to GitHub
+4. Source your script to update `bat_dat` in your workspace
 
 # References and Resources
 
 Dplyr and tidyr vignettes: type into R's console: `browseVignettes(package = c("dplyr", "tidyr"))`
+
+[Data Manipulation with dplyr, tidyr cheatsheet](), I have a copy printed out at my desk.
