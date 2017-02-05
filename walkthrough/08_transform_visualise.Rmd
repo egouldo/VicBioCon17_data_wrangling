@@ -76,3 +76,7 @@ ggplot(data = richness_by_season,
                       width = 0.1,
                       position = position_dodge(0.9)) # shifts the error bars over the correct bar
 ```
+
+# Resources:
+
+[Ggplot2 cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/12/ggplot2-cheatsheet-2.0.pdf)
