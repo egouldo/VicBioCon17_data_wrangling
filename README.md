@@ -6,7 +6,7 @@
 Code here is copyright of Elise Gould, 2017. 
 
 Data copyright (2016):
-Tanja Maria Straka (1,2), Pia Eloise Lentini (2), Linda Faye Lumsden (3), Brendan Anthony Wintle2 & Rodney van der Ree (1,2)
+Tanja Maria Straka (1,2), Pia Eloise Lentini (2), Linda Faye Lumsden (3), Brendan Anthony Wintle (2) & Rodney van der Ree (1,2)
 
 1. Australian Research Centre for Urban Ecology, Royal Botanic Gardens Victoria, c/o School of BioSciences, University of Melbourne, Melbourne, VIC, Australia
 2. School of BioSciences, University of Melbourne, Melbourne, VIC, Australia
