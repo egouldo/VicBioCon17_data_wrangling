@@ -6,12 +6,13 @@
 Code here is copyright of Elise Gould, 2017. 
 
 Data copyright (2016):
-Tanja Maria Straka1,2, Pia Eloise Lentini2, Linda Faye Lumsden3, Brendan Anthony Wintle2 & Rodney van der Ree1,2
-1Australian Research Centre for Urban Ecology, Royal Botanic Gardens Victoria, c/o School of BioSciences, University of Melbourne, Melbourne, VIC, Australia
-2School of BioSciences, University of Melbourne, Melbourne, VIC, Australia
-3Department of Environment, Land, Water and Planning, Arthur Rylah Institute for Environmental Research, 123 Brown Street, Heidelberg, VIC 3084, Australia
+Tanja Maria Straka (1,2), Pia Eloise Lentini (2), Linda Faye Lumsden (3), Brendan Anthony Wintle2 & Rodney van der Ree (1,2)
 
-paper doi: [doi: 10.1002/ece3.2224](doi: 10.1002/ece3.2224)
+1. Australian Research Centre for Urban Ecology, Royal Botanic Gardens Victoria, c/o School of BioSciences, University of Melbourne, Melbourne, VIC, Australia
+2. School of BioSciences, University of Melbourne, Melbourne, VIC, Australia
+3. Department of Environment, Land, Water and Planning, Arthur Rylah Institute for Environmental Research, 123 Brown Street, Heidelberg, VIC 3084, Australia
+
+[paper doi: 10.1002/ece3.2224](doi: 10.1002/ece3.2224)
 
 # About the structure of this repository, where to find what you need
 
@@ -26,6 +27,8 @@ paper doi: [doi: 10.1002/ece3.2224](doi: 10.1002/ece3.2224)
 5. assets - you won't need this -- just for rendering the images to appear on the web in github.
 
 6. Also not needed but preserved her for my backup. These R scripts generated some of the dataset inside the `./data/` folder. Open them up if you would like to take a look at  real-world examples of data-wrangling.
+
+7. ANSWERS to the challenges may be found in this repository: [https://github.com/egouldo/VicBioCon17_participant_repo](https://github.com/egouldo/VicBioCon17_participant_repo). After completing all the challenges, your repository should mirror that repository.
 
 
 
