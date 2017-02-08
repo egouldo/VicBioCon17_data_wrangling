@@ -101,7 +101,8 @@ Any time you wish to *apply* a function defined in your `./R/` folder, it should
 
 1. Set up your project skeleton by adding new folders according to the project directory template outlined above. Hint: Click on 'New Folder' to add folders.
 
-2. Download the datasets for today's workshop from here: [https://github.com/egouldo/VicBioCon17_data_wrangling](https://github.com/egouldo/VicBioCon17_data_wrangling). They are called `bat_dat.csv` and `iris.csv` and are in the `./data/` directory.
+2. Download the datasets for today's workshop from here: [https://github.com/egouldo/VicBioCon17_data_wrangling](https://github.com/egouldo/VicBioCon17_data_wrangling). They are called `bat_dat.csv` and `iris.csv` and are in the `./data/` directory. You can download them by: clicking on the filename for the relevant document within the folder view, when viewing each individual file within GitHub, right-click on the "raw" button, and select "save target as", "download file as", etc (specific option will depend on your computer's operating system). ![download_data](../assets/download_data.png)
+
 3. Save it to the appropriate folder in your project.
 
 ### References:
