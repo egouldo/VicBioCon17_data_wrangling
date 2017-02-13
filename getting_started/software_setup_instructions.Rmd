@@ -8,7 +8,10 @@ output: github_document
 # For all operating systems: Set-up your GitHub account
 
 Go to [www.github.com](www.github.com) and activate a GitHub account. Ensure you use your University email address, if you have one (should contain `.edu`), this will get you free private repositories.
+
 If you don't have an `.edu` email address, set up your free acounty anyway, noting that there will be a limitation on the number of private repositories you can create.
+
+To apply your education "discount", go here: [https://education.github.com](https://education.github.com).
 
 # Installation Guide For Windows
 
