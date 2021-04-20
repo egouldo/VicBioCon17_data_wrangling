@@ -1,5 +1,5 @@
 # Getting your data into R
-Elise Gould  
+Elliot Gould  
 17/01/2017  
 
 
