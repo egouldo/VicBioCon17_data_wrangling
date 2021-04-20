@@ -1,0 +1,9 @@
+---
+title: "Wrangling Ecological Data with R using *tidyverse*"
+author: "Elliot Gould"
+date: "`r Sys.Date()`"
+site:: bookdown::bookdown_site
+output: bookdown::gitbook
+---
+
+# Welcome {-}
