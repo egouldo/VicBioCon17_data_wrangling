@@ -1,6 +1,6 @@
 ---
 title: "Chapter 7: transform & visualise"
-author: "Elise Gould"
+author: "Elliot Gould"
 date: "03/02/2017"
 output: 
   html_document: 

@@ -1,6 +1,6 @@
 ---
 title: "Lesson 2: version control for the solo-analyst with git and GitHub"
-author: "Elise Gould"
+author: "Elliot Gould"
 date: "24/01/2017"
 output: 
   html_document: 

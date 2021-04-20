@@ -1,6 +1,6 @@
 ---
 title: "Making Data Tidy"
-author: "Elise Gould"
+author: "Elliot Gould"
 date: "24/01/2017"
 output: 
   html_document: 

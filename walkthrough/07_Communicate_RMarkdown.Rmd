@@ -1,6 +1,6 @@
 ---
 title: "Rmarkdown Documents"
-author: "Elise Gould"
+author: "Elliot Gould"
 date: "25/01/2017"
 output: 
   html_document: 
