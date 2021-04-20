@@ -1,5 +1,5 @@
 # Lesson 2: version control for the solo-analyst with git and GitHub
-Elise Gould  
+Elliot Gould  
 24/01/2017  
 
 
