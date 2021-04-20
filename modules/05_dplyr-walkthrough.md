@@ -1,5 +1,5 @@
 # Dplyr: The basics
-Elise Gould  
+Elliot Gould  
 09/01/2017  
 
 
