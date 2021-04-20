@@ -1,5 +1,5 @@
 # Setting up your project: preparing the scaffolding
-Elise Gould  
+Elliot Gould  
 30/01/2017  
 
 # Create a new Github repository
