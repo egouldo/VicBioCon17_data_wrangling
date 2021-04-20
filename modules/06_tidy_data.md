@@ -1,5 +1,5 @@
 # Making Data Tidy
-Elise Gould  
+Elliot Gould  
 24/01/2017  
 
 
