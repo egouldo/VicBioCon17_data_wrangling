@@ -1,5 +1,5 @@
 # A conceptual model of data analysis
-Elise Gould  
+Elliot Gould  
 09/01/2017  
 
 # A framework for data analysis
